@@ -1,3 +1,18 @@
+# exclude everything
+Output/*
+Configuration/*
+__pycache__/*
+.idea/*
+.spyproject/*
+__pycache__/
+.idea/
+.spyproject/
+.~lock*
+
+# exception to the rule
+!Output/.gitkeep
+!Configuration/.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
