@@ -24,15 +24,11 @@ class Frame_Export_Files:
     export_combined_pdf = None
     export_combined_eps = None
     export_combined_jpg = None
-    padding_x = None
-    padding_y = None
     dpi_label = None
     dpi_entry = None
 
     def __init__(self, window, gui):
         self.gui = gui
-        self.padding_x = 70
-        self.padding_y = 40
         self.frame_export_files = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
         self.label = tk.Label(master=self.frame_export_files, text='Export mass-radius plot: ', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=0)
