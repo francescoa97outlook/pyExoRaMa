@@ -298,39 +298,39 @@ class Frame_Run_Plot:
         self.gui = gui
         self.number_element_plot_density = 5
         self.frame_run_plot = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
-        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Mp/Mp(%) ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Mp/Mp(%) ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=0)
         self.mass_step = tk.Entry(master=self.frame_run_plot, width=10)
         self.mass_step.grid(column=1, row=0)
         self.mass_step.insert(-1, "50")
-        self.mass_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.massStepBackBtn, bg="#cc0099", font=('Sans', '8', 'bold'))
+        self.mass_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.massStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
         self.mass_back_step_btn.grid(column=2, row=0)
-        self.mass_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.massRunBtn, bg="#ffff00", font=('Sans', '8', 'bold'))
+        self.mass_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.massRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
         self.mass_start_step_btn.grid(column=3, row=0)
-        self.mass_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.massStepForwardBtn, bg="#c65353", font=('Sans', '8', 'bold'))
+        self.mass_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.massStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
         self.mass_next_step_btn.grid(column=4, row=0)
-        self.mass_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '8', 'bold'), command=self.massChangeVerse)
+        self.mass_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '9', 'bold'), command=self.massChangeVerse)
         self.mass_verse_btn.grid(column=5, row=0)
-        self.mass_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '8', 'bold'), borderwidth=2, relief="ridge")
+        self.mass_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.mass_label_verse.grid(column=6, row=0)
-        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text=" Plot Current Situation ", bg="#00ff00", font=('Sans', '8', 'bold'),
+        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text=" Plot Current Situation ", bg="#00ff00", font=('Sans', '9', 'bold'),
                                                     command=self.plotCurrentSituation)
         self.plot_current_situation_btn.grid(column=7, row=0, rowspan=2)
-        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%) ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%) ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
         self.radius_step = tk.Entry(master=self.frame_run_plot, width=10)
         self.radius_step.grid(column=1, row=1)
         self.radius_step.insert(-1, "20")
-        self.radius_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.radiusStepBackBtn, bg="#cc0099", font=('Sans', '8', 'bold'))
+        self.radius_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.radiusStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
         self.radius_back_step_btn.grid(column=2, row=1)
-        self.radius_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.radiusRunBtn, bg="#ffff00", font=('Sans', '8', 'bold'))
+        self.radius_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.radiusRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
         self.radius_start_step_btn.grid(column=3, row=1)
-        self.radius_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.radiusStepForwardBtn, bg="#c65353", font=('Sans', '8', 'bold'))
+        self.radius_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.radiusStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
         self.radius_next_step_btn.grid(column=4, row=1)
-        self.radius_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '8', 'bold'),
+        self.radius_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '9', 'bold'),
                                           command=self.radiusChangeVerse)
         self.radius_verse_btn.grid(column=5, row=1)
-        self.radius_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '8', 'bold'), borderwidth=2, relief="ridge")
+        self.radius_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.radius_label_verse.grid(column=6, row=1)
         self.frame_run_plot.pack(padx=3, pady=3)
 
@@ -504,6 +504,8 @@ class Frame_Run_Plot:
                                self.index_rad_max: float(subelem[6])}
                     if self.check_teq:
                         new_row[self.index_teq] = float(subelem[7])
+                    if self.check_age_host:
+                        new_row[self.index_age_host] = float(subelem[8])
                     self.subsetdata = self.subsetdata.append(new_row, ignore_index=True)
         self.names = np.array(self.subsetdata[0])
 

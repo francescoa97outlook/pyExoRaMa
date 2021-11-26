@@ -53,59 +53,68 @@ class Frame_Constrains:
     conf_entry = None
     load_file = None
     save_file = None
+    radius_expressed = None
+    radius_expressed_var = None
+    mass_expressed = None
+    mass_expressed_var = None
+    age_expressed = None
+    age_expressed_var = None
+    character_delete_row = None
+    character_delete_row_var = None
+    character_delete_row_entry = None
 
     def __init__(self, window, gui):
         self.gui = gui
         self.frame_constrains = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
 
         self.label = tk.Label(master=self.frame_constrains,
-                              text='Check the constrains that will/can be applied to the dataframe.\nAdd the right column index for each constrains according to your input file.\nPlease, note that the planet\'s mass and radius are mandatory, like their sigma.\nThe software will assume that the planet name is located in the first column.\nNB those constrains are valid for the Tepcat files. \nCI = Column Index',
-                              fg="green", font=('Sans', '8', 'bold'))
+                              text='Check the constrains that will/can be applied to the dataframe.\nAdd the right column index for each constrains according to your input file.\nPlease, note that the planet\'s mass and radius are mandatory, like their sigma.\nThe software will assume that the planet name is located in the first column.\nNB those constrains are valid for the Tepcat files. \nCN = Column Number',
+                              fg="green", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=0, columnspan=7, rowspan=3)
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Filename ', fg="#66ccff", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Filename (no .csv) ', fg="#66ccff", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=7, row=0)
         self.conf_entry = tk.Entry(master=self.frame_constrains)
         self.conf_entry.grid(padx=3, column=8, row=0)
         self.conf_entry.insert(tk.END, "configuration")
 
-        self.save_file = tk.Button(master=self.frame_constrains, width=20, text=" Save File ", bg="#66ccff", font=('Sans', '8', 'bold'), command=self.saveFileFunc)
+        self.save_file = tk.Button(master=self.frame_constrains, width=20, text=" Save File ", bg="#66ccff", font=('Sans', '13', 'bold'), command=self.saveFileFunc)
         self.save_file.grid(padx=3, column=7, row=1, columnspan=2)
 
-        self.runPlot = tk.Button(master=self.frame_constrains, width=20, text=" Load File ", bg="#cc9900", font=('Sans', '8', 'bold'), command=self.loadFileFunc)
+        self.runPlot = tk.Button(master=self.frame_constrains, width=20, text=" Load File ", bg="#cc9900", font=('Sans', '13', 'bold'), command=self.loadFileFunc)
         self.runPlot.grid(padx=3, pady=3, column=7, row=2, columnspan=2)
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=3)
         self.mass_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.mass_planet_entry.grid(padx=3, column=0, row=4)
         self.mass_planet_entry.insert(tk.END, "26")
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet \u03C3 Min CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet \u03C3 Min CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=1, row=3, columnspan=2)
         self.mass_planet_sigma_min_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.mass_planet_sigma_min_entry.grid(padx=3, column=1, row=4, columnspan=2)
         self.mass_planet_sigma_min_entry.insert(tk.END, "27")
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet \u03C3 Max CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet \u03C3 Max CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=3, row=3, columnspan=2)
         self.mass_planet_sigma_max_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.mass_planet_sigma_max_entry.grid(padx=3, column=3, row=4, columnspan=2)
         self.mass_planet_sigma_max_entry.insert(tk.END, "28")
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=5, row=3)
         self.radius_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.radius_planet_entry.grid(padx=3, column=5, row=4)
         self.radius_planet_entry.insert(tk.END, "29")
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet \u03C3 Min CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet \u03C3 Min CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=6, row=3, columnspan=2)
         self.radius_planet_sigma_min_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.radius_planet_sigma_min_entry.grid(padx=3, column=6, row=4, columnspan=2)
         self.radius_planet_sigma_min_entry.insert(tk.END, "30")
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet \u03C3 Max CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Radius Planet \u03C3 Max CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=8, row=3, columnspan=2)
         self.radius_planet_sigma_max_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.radius_planet_sigma_max_entry.grid(padx=3, column=8, row=4, columnspan=2)
@@ -113,94 +122,94 @@ class Frame_Constrains:
 
         self.label = tk.Label(master=self.frame_constrains,
                               text=' ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ',
-                              fg="blue", font=('Sans', '8', 'bold'))
+                              fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=5, columnspan=9)
 
         self.t_eff_star_check_var = tk.BooleanVar()
-        self.t_eff_star_check = tk.Checkbutton(master=self.frame_constrains, text=" T Star [K] ", variable=self.t_eff_star_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.t_eff_star_check = tk.Checkbutton(master=self.frame_constrains, text=" T Star [K] ", variable=self.t_eff_star_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.t_eff_star_check_var.set(True)
         self.t_eff_star_check.grid(padx=3, column=0, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=7)
         self.t_eff_star_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.t_eff_star_entry.grid(padx=3, column=0, row=8)
         self.t_eff_star_entry.insert(tk.END, "1")
 
         self.Fe_H_check_var = tk.BooleanVar()
-        self.Fe_H_check = tk.Checkbutton(master=self.frame_constrains, text=" [Fe/H] ", variable=self.Fe_H_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.Fe_H_check = tk.Checkbutton(master=self.frame_constrains, text=" [Fe/H] ", variable=self.Fe_H_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.Fe_H_check_var.set(True)
         self.Fe_H_check.grid(padx=3, column=1, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=1, row=7)
         self.Fe_H_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.Fe_H_entry.grid(padx=3, column=1, row=8)
         self.Fe_H_entry.insert(tk.END, "4")
 
         self.M_star_check_var = tk.BooleanVar()
-        self.M_star_check = tk.Checkbutton(master=self.frame_constrains, text=" M☉ ", variable=self.M_star_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.M_star_check = tk.Checkbutton(master=self.frame_constrains, text=" M☉ ", variable=self.M_star_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.M_star_check_var.set(True)
         self.M_star_check.grid(padx=3, column=2, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=2, row=7)
         self.M_star_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.M_star_entry.grid(padx=3, column=2, row=8)
         self.M_star_entry.insert(tk.END, "7")
 
         self.R_star_check_var = tk.BooleanVar()
-        self.R_star_check = tk.Checkbutton(master=self.frame_constrains, text=" R☉ ", variable=self.R_star_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.R_star_check = tk.Checkbutton(master=self.frame_constrains, text=" R☉ ", variable=self.R_star_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.R_star_check_var.set(True)
         self.R_star_check.grid(padx=3, column=3, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=3, row=7)
         self.R_star_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.R_star_entry.grid(padx=3, column=3, row=8)
         self.R_star_entry.insert(tk.END, "10")
 
         self.P_orb_planet_check_var = tk.BooleanVar()
-        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb (days) ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb (days) ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.P_orb_planet_check_var.set(True)
         self.P_orb_planet_check.grid(padx=3, column=4, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=4, row=7)
         self.P_orb_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.P_orb_planet_entry.grid(padx=3, column=4, row=8)
         self.P_orb_planet_entry.insert(tk.END, "19")
 
         self.semi_major_axes_planet_check_var = tk.BooleanVar()
-        self.semi_major_axes_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" a orb (AU) ", variable=self.semi_major_axes_planet_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.semi_major_axes_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" a orb (AU) ", variable=self.semi_major_axes_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.semi_major_axes_planet_check_var.set(True)
         self.semi_major_axes_planet_check.grid(padx=3, column=5, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=5, row=7)
         self.semi_major_axes_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.semi_major_axes_planet_entry.grid(padx=3, column=5, row=8)
         self.semi_major_axes_planet_entry.insert(tk.END, "23")
 
         self.eccentricity_planet_check_var = tk.BooleanVar()
-        self.eccentricity_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" Eccentricity ", variable=self.eccentricity_planet_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.eccentricity_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" Eccentricity ", variable=self.eccentricity_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.eccentricity_planet_check_var.set(True)
         self.eccentricity_planet_check.grid(padx=3, column=6, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=6, row=7)
         self.eccentricity_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.eccentricity_planet_entry.grid(padx=3, column=6, row=8)
         self.eccentricity_planet_entry.insert(tk.END, "20")
 
         self.T_eq_planet_check_var = tk.BooleanVar()
-        self.T_eq_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" T eq (K) ", variable=self.T_eq_planet_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.T_eq_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" T eq (K) ", variable=self.T_eq_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.T_eq_planet_check_var.set(True)
         self.T_eq_planet_check.grid(padx=3, column=7, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=7, row=7)
         self.T_eq_planet_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.T_eq_planet_entry.grid(padx=3, column=7, row=8)
         self.T_eq_planet_entry.insert(tk.END, "38")
 
         self.age_host_check_var = tk.BooleanVar()
-        self.age_host_check = tk.Checkbutton(master=self.frame_constrains, text=" Age Host (Gyr) ", variable=self.age_host_check_var, fg="#cc3300", font=('Sans', '8', 'bold'))
+        self.age_host_check = tk.Checkbutton(master=self.frame_constrains, text=" Age (Myr) ", variable=self.age_host_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.age_host_check_var.set(False)
         self.age_host_check.grid(padx=3, column=8, row=6)
-        self.label = tk.Label(master=self.frame_constrains, text=' CI ', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=8, row=7)
         self.age_host_entry = tk.Entry(master=self.frame_constrains, width=10)
         self.age_host_entry.grid(padx=3, column=8, row=8)
@@ -208,27 +217,43 @@ class Frame_Constrains:
 
         self.label = tk.Label(master=self.frame_constrains,
                               text=' ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ',
-                              fg="blue", font=('Sans', '8', 'bold'))
+                              fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=9, columnspan=9)
 
         words_mass = ["Earth Mass", "Jupiter Mass"]
-        self.label = tk.Label(master=self.frame_constrains, text=' Mass expressed in:  ', fg="blue", font=('Sans', '8', 'bold'))
-        self.label.grid(padx=3, column=2, row=10, columnspan=2)
+        self.label = tk.Label(master=self.frame_constrains, text=' Mass expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label.grid(padx=3, column=0, row=10, columnspan=2)
         self.mass_expressed_var = tk.StringVar()
         self.mass_expressed = tk.OptionMenu(self.frame_constrains, self.mass_expressed_var, *words_mass)
-        self.mass_expressed.grid(padx=3, column=4, row=10)
+        self.mass_expressed.grid(padx=3, column=2, row=10)
         self.mass_expressed_var.set("Jupiter Mass")
 
         words_radius = ["Earth Radius", "Jupiter Radius"]
-        self.label = tk.Label(master=self.frame_constrains, text=' Radius expressed in:  ', fg="blue", font=('Sans', '8', 'bold'))
-        self.label.grid(padx=3, column=5, row=10, columnspan=2)
+        self.label = tk.Label(master=self.frame_constrains, text=' Radius expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label.grid(padx=3, column=3, row=10, columnspan=2)
         self.radius_expressed_var = tk.StringVar()
         self.radius_expressed = tk.OptionMenu(self.frame_constrains, self.radius_expressed_var, *words_radius)
-        self.radius_expressed.grid(padx=3, column=7, row=10)
+        self.radius_expressed.grid(padx=3, column=5, row=10)
         self.radius_expressed_var.set("Jupiter Radius")
 
+        words_age = ["Gyr", "Myr"]
+        self.label = tk.Label(master=self.frame_constrains, text=' Year expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label.grid(padx=3, column=6, row=10, columnspan=2)
+        self.age_expressed_var = tk.StringVar()
+        self.age_expressed = tk.OptionMenu(self.frame_constrains, self.age_expressed_var, *words_age)
+        self.age_expressed.grid(padx=3, column=8, row=10)
+        self.age_expressed_var.set("Myr")
+
+        self.character_delete_row_var = tk.BooleanVar()
+        self.character_delete_row = tk.Checkbutton(master=self.frame_constrains, text=" The catalogue contains rows that must not be considered starting with the character: ", variable=self.character_delete_row_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.character_delete_row_var.set(False)
+        self.character_delete_row.grid(padx=3, column=0, columnspan=6, row=11)
+        self.character_delete_row_entry = tk.Entry(master=self.frame_constrains, width=10)
+        self.character_delete_row_entry.grid(padx=3, column=6, row=11)
+        self.character_delete_row_entry.insert(tk.END, "#")
+
         self.runPlot = tk.Button(master=self.frame_constrains, width=50, height=2, text=" Run Algorithm ", bg="#00ff00", font=('Sans', '15', 'bold'), command=self.RunGuiPlot)
-        self.runPlot.grid(padx=3, pady=3, column=0, row=11, columnspan=9)
+        self.runPlot.grid(padx=3, pady=3, column=0, row=12, columnspan=9)
 
         self.frame_constrains.pack(padx=3, pady=3)
         for child in self.frame_constrains.winfo_children():
@@ -292,8 +317,14 @@ class Frame_Constrains:
             radius_coeff = 11.2
         else:
             radius_coeff = 1
+        if self.age_expressed_var.get() == "Myr":
+            age_coeff = 1000
+        else:
+            age_coeff = 1
+        if self.character_delete_row_var.get():
+            data0 = data0[~data0[0].str.startswith(self.character_delete_row_entry.get())]
         self.gui.window.destroy()
-        gui = GUI_Plot.Gui.GUI_Planet(data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
+        gui = GUI_Plot.Gui.GUI_Planet(data0, mass_coeff, radius_coeff, age_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                                       index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb,
                                       check_a_orb, check_teq, check_mass_star, check_radius_star)
         gui.window.mainloop()
@@ -325,9 +356,10 @@ class Frame_Constrains:
         check_age_host = self.age_host_check_var.get()
         mass_expr = self.mass_expressed_var.get()
         radius_expr = self.radius_expressed_var.get()
+        age_expr = self.age_expressed_var.get()
         df = pd.DataFrame({"Index": [str(index_mass_p), str(index_mass_min), str(index_mass_max), str(index_rad_p), str(index_min_rad), str(index_rad_max), str(index_tstar), str(index_FeH), str(index_mass_star), str(index_radius_star), str(index_p_orb),
-                                     str(index_a_orb), str(index_ecc), str(index_teq), str(index_age_host), mass_expr],
-                           "Check": ["True", "True", "True", "True", "True", "True", str(check_tstar), str(check_FeH), str(check_mass_star), str(check_radius_star), str(check_p_orb), str(check_a_orb), str(check_ecc), str(check_teq), str(check_age_host), radius_expr]})
+                                     str(index_a_orb), str(index_ecc), str(index_teq), str(index_age_host), mass_expr, age_expr],
+                           "Check": ["True", "True", "True", "True", "True", "True", str(check_tstar), str(check_FeH), str(check_mass_star), str(check_radius_star), str(check_p_orb), str(check_a_orb), str(check_ecc), str(check_teq), str(check_age_host), radius_expr, " "]})
         df.to_csv("Configuration" + os.sep + self.conf_entry.get() + ".csv")
 
     def loadFileFunc(self):
@@ -364,6 +396,7 @@ class Frame_Constrains:
         self.age_host_entry.delete('0', tk.END)
         self.age_host_entry.insert(tk.END, str(df.iloc[14]['Index']))
         self.mass_expressed_var.set(str(df.iloc[15]['Index']))
+        self.age_expressed_var.set(str(df.iloc[16]['Index']))
         self.t_eff_star_check_var.set(str(df.iloc[6]['Check']))
         self.Fe_H_check_var.set(str(df.iloc[7]['Check']))
         self.M_star_check_var.set(str(df.iloc[8]['Check']))
