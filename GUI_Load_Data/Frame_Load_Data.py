@@ -84,5 +84,6 @@ class Frame_Load_Data:
 
     def openFileFunc(self):
         filename = askopenfilename(initialdir="Data")
-        self.text.delete('1.0', tk.END)
-        self.text.insert(tk.END, filename)
+        if filename != '':
+            self.text.delete('1.0', tk.END)
+            self.text.insert(tk.END, filename)

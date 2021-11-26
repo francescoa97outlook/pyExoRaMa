@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+from tkinter import messagebox as msgbox
 from tkinter.filedialog import askopenfilename
 
 import pandas as pd
@@ -260,69 +261,73 @@ class Frame_Constrains:
             child.configure(state='disable')
 
     def RunGuiPlot(self):
-        index_ecc = int(self.eccentricity_planet_entry.get())
-        index_FeH = int(self.Fe_H_entry.get())
-        index_tstar = int(self.t_eff_star_entry.get())
-        index_p_orb = int(self.P_orb_planet_entry.get())
-        index_a_orb = int(self.semi_major_axes_planet_entry.get())
-        index_teq = int(self.T_eq_planet_entry.get())
-        index_mass_star = int(self.M_star_entry.get())
-        index_radius_star = int(self.R_star_entry.get())
-        index_rad_p = int(self.radius_planet_entry.get())
-        index_rad_max = int(self.radius_planet_sigma_max_entry.get())
-        index_min_rad = int(self.radius_planet_sigma_min_entry.get())
-        index_mass_p = int(self.mass_planet_entry.get())
-        index_mass_min = int(self.mass_planet_sigma_min_entry.get())
-        index_mass_max = int(self.mass_planet_sigma_max_entry.get())
-        index_age_host = int(self.age_host_entry.get())
-        check_ecc = self.eccentricity_planet_check_var.get()
-        check_FeH = self.Fe_H_check_var.get()
-        check_tstar = self.t_eff_star_check_var.get()
-        check_p_orb = self.P_orb_planet_check_var.get()
-        check_a_orb = self.semi_major_axes_planet_check_var.get()
-        check_teq = self.T_eq_planet_check_var.get()
-        check_mass_star = self.M_star_check_var.get()
-        check_radius_star = self.R_star_check_var.get()
-        check_age_host = self.age_host_check_var.get()
-        data0 = self.gui.frame_load_data.data0
-        data0 = deleteRow(data0, index_mass_p)
-        data0 = deleteRow(data0, index_mass_min)
-        data0 = deleteRow(data0, index_mass_max)
-        data0 = deleteRow(data0, index_rad_p)
-        data0 = deleteRow(data0, index_min_rad)
-        data0 = deleteRow(data0, index_rad_max)
-        if check_a_orb:
-            data0 = deleteRow(data0, index_a_orb)
-        if check_ecc:
-            data0 = deleteRow(data0, index_ecc)
-        if check_p_orb:
-            data0 = deleteRow(data0, index_p_orb)
-        if check_age_host:
-            data0 = deleteRow(data0, index_age_host)
-        if check_tstar:
-            data0 = deleteRow(data0, index_tstar)
-        if check_mass_star:
-            data0 = deleteRow(data0, index_mass_star)
-        if check_radius_star:
-            data0 = deleteRow(data0, index_radius_star)
-        if check_teq:
-            data0 = deleteRow(data0, index_teq)
-        if check_FeH:
-            data0 = deleteRow(data0, index_FeH)
-        if self.mass_expressed_var.get() == "Jupiter Mass":
-            mass_coeff = 317.8
-        else:
-            mass_coeff = 1
-        if self.radius_expressed_var.get() == "Jupiter Radius":
-            radius_coeff = 11.2
-        else:
-            radius_coeff = 1
-        if self.age_expressed_var.get() == "Myr":
-            age_coeff = 1000
-        else:
-            age_coeff = 1
-        if self.character_delete_row_var.get():
-            data0 = data0[~data0[0].str.startswith(self.character_delete_row_entry.get())]
+        try:
+            index_ecc = int(self.eccentricity_planet_entry.get())
+            index_FeH = int(self.Fe_H_entry.get())
+            index_tstar = int(self.t_eff_star_entry.get())
+            index_p_orb = int(self.P_orb_planet_entry.get())
+            index_a_orb = int(self.semi_major_axes_planet_entry.get())
+            index_teq = int(self.T_eq_planet_entry.get())
+            index_mass_star = int(self.M_star_entry.get())
+            index_radius_star = int(self.R_star_entry.get())
+            index_rad_p = int(self.radius_planet_entry.get())
+            index_rad_max = int(self.radius_planet_sigma_max_entry.get())
+            index_min_rad = int(self.radius_planet_sigma_min_entry.get())
+            index_mass_p = int(self.mass_planet_entry.get())
+            index_mass_min = int(self.mass_planet_sigma_min_entry.get())
+            index_mass_max = int(self.mass_planet_sigma_max_entry.get())
+            index_age_host = int(self.age_host_entry.get())
+            check_ecc = self.eccentricity_planet_check_var.get()
+            check_FeH = self.Fe_H_check_var.get()
+            check_tstar = self.t_eff_star_check_var.get()
+            check_p_orb = self.P_orb_planet_check_var.get()
+            check_a_orb = self.semi_major_axes_planet_check_var.get()
+            check_teq = self.T_eq_planet_check_var.get()
+            check_mass_star = self.M_star_check_var.get()
+            check_radius_star = self.R_star_check_var.get()
+            check_age_host = self.age_host_check_var.get()
+            data0 = self.gui.frame_load_data.data0
+            data0 = deleteRow(data0, index_mass_p)
+            data0 = deleteRow(data0, index_mass_min)
+            data0 = deleteRow(data0, index_mass_max)
+            data0 = deleteRow(data0, index_rad_p)
+            data0 = deleteRow(data0, index_min_rad)
+            data0 = deleteRow(data0, index_rad_max)
+            if check_a_orb:
+                data0 = deleteRow(data0, index_a_orb)
+            if check_ecc:
+                data0 = deleteRow(data0, index_ecc)
+            if check_p_orb:
+                data0 = deleteRow(data0, index_p_orb)
+            if check_age_host:
+                data0 = deleteRow(data0, index_age_host)
+            if check_tstar:
+                data0 = deleteRow(data0, index_tstar)
+            if check_mass_star:
+                data0 = deleteRow(data0, index_mass_star)
+            if check_radius_star:
+                data0 = deleteRow(data0, index_radius_star)
+            if check_teq:
+                data0 = deleteRow(data0, index_teq)
+            if check_FeH:
+                data0 = deleteRow(data0, index_FeH)
+            if self.mass_expressed_var.get() == "Jupiter Mass":
+                mass_coeff = 317.8
+            else:
+                mass_coeff = 1
+            if self.radius_expressed_var.get() == "Jupiter Radius":
+                radius_coeff = 11.2
+            else:
+                radius_coeff = 1
+            if self.age_expressed_var.get() == "Myr":
+                age_coeff = 1000
+            else:
+                age_coeff = 1
+            if self.character_delete_row_var.get():
+                data0 = data0[~data0[0].str.startswith(self.character_delete_row_entry.get())]
+        except:
+            msgbox.showerror(title="ERROR", message="Check the rightness of your column numbers and/or checks")
+            return
         self.gui.window.destroy()
         gui = GUI_Plot.Gui.GUI_Planet(data0, mass_coeff, radius_coeff, age_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                                       index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb,
@@ -364,6 +369,8 @@ class Frame_Constrains:
 
     def loadFileFunc(self):
         filename = askopenfilename(initialdir="Configuration")
+        if filename == '':
+            return
         df = pd.read_csv(filename)
         self.mass_planet_entry.delete('0', tk.END)
         self.mass_planet_entry.insert(tk.END, str(df.iloc[0]['Index']))
