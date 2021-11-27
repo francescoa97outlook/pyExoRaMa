@@ -36,27 +36,27 @@ class Frame_Load_Data:
         self.openFile = tk.Button(master=self.frame_load_Data, text=" Open File ", bg="orange", font=('Sans', '13', 'bold'), command=self.openFileFunc)
         self.openFile.grid(column=9, row=0)
 
-        self.loadData = tk.Button(master=self.frame_load_Data, width=30, height=2, text=" Load Data ", bg="#00ff00", font=('Sans', '13', 'bold'), command=self.loadDataFunc)
-        self.loadData.grid(column=0, columnspan=10, row=1)
-
         self.label = tk.Label(master=self.frame_load_Data, text=' Skiprow * ', fg="blue", font=('Sans', '13', 'bold'))
-        self.label.grid(column=0, row=2)
+        self.label.grid(column=0, row=1)
 
         self.skiprow = tk.Entry(master=self.frame_load_Data, width=10)
-        self.skiprow.grid(column=1, row=2)
+        self.skiprow.grid(column=1, row=1)
         self.skiprow.insert(tk.END, "1")
 
         self.delim_whitespace_var = tk.BooleanVar()
         self.delim_whitespace = tk.Checkbutton(master=self.frame_load_Data, text=" Delim_whitespace ** ", variable=self.delim_whitespace_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.delim_whitespace_var.set(True)
-        self.delim_whitespace.grid(column=5, row=2)
+        self.delim_whitespace.grid(column=5, row=1)
 
         self.label = tk.Label(master=self.frame_load_Data, text=' Delimiter *** ', fg="blue", font=('Sans', '13', 'bold'))
-        self.label.grid(column=8, row=2)
+        self.label.grid(column=8, row=1)
 
         self.delimiter = tk.Entry(master=self.frame_load_Data, width=10)
-        self.delimiter.grid(column=9, row=2)
+        self.delimiter.grid(column=9, row=1)
         self.delimiter.insert(tk.END, "None")
+
+        self.loadData = tk.Button(master=self.frame_load_Data, width=30, height=2, text=" Load Data ", bg="#00ff00", font=('Sans', '13', 'bold'), command=self.loadDataFunc)
+        self.loadData.grid(column=0, columnspan=10, row=2)
 
         self.label = tk.Label(master=self.frame_load_Data,
                               text='NB: header is automatically skipped\n* In some cases (like Tepcat catalogue) skiprow should remain at least 1 to avoid the reading of merged columns (or column names)\n** Check if your table uses space as delimiter\n*** The columns delimiter\n\nClick the button below for more information',
