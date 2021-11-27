@@ -27,7 +27,7 @@ class Frame_New_Planet:
         self.label_new_planet_check_var = tk.IntVar()
         self.label_new_planet_check = tk.Checkbutton(master=self.frame_new_planet, text="Show label(s)?", variable=self.label_new_planet_check_var, fg="#cc3300", font=('Sans', '9', 'bold'))
         self.label_new_planet_check.grid(column=2, row=0)
-        self.label_input = tk.Label(master=self.frame_new_planet, text='Input example: [\"planet-name\", m(M⊕), \u03C3m+, \u03C3m-, r(R⊕), \u03C3r+, \u03C3r-, T_eq(K), Age]%[...]', fg="blue", font=('Sans', '9', 'bold'))
+        self.label_input = tk.Label(master=self.frame_new_planet, text='Input example: [\"planet-name\", Mass, \u03C3m+, \u03C3m-, Radius, \u03C3r+, \u03C3r-, T_eq(K), Age]%[...]', fg="blue", font=('Sans', '9', 'bold'))
         self.label_input.grid(column=0, row=1, columnspan=3)
         self.text_input = tk.Text(master=self.frame_new_planet, height=7)
         self.text_input.grid(column=0, row=2, columnspan=3)
