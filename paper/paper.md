@@ -1,39 +1,48 @@
 ---
-title: 'PlanetRadiusMass: A Python tool for exoplanets visualization and manipulation'
+title: 'A python tool for visualizing and analysing the mass-radius diagram of exoplanets within a multi-dimensional framework'
 tags:
   - Python
   - Astronomy
   - Exoplanets
   - Mass
   - Radius
-  - Envelope
+  - Composition
+  - Structure
 authors:
-  - name: Amadori F.^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Francesco Amadori #^[first author] # note this makes a footnote saying 'co-first author'
     orcid: 0000-0003-1316-1033
     affiliation: 1 # (Multiple affiliations must be quoted)
-  - name: Damasso Mario ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Mario Damasso # ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+    orcid: 0000-0001-9984-4278
     affiliation: 1
+  - name: Li Zeng # ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+    orcid: 0000-0003-1957-6635
+    affiliation: 2, 3
 affiliations:
  - name: INAF-Astrophysical Observatory of Torino, Via Osservatorio 20, Pino T.se (To), Italy
    index: 1
+ - name: Department of Earth and Planetary Sciences, Harvard University, 20 Oxford Street, Cambridge, MA 02138, USA
+   index: 2
+ - name: Harvard-Smithsonian Center for Astrophysics, 60 Garden Street, Cambridge, MA 02138, USA
+   index: 3
 date: 26th November 2021
 bibliography: paper.bib
-
 ---
 
 # Summary
 
-[FARE INSIEME]
+We present the python version of the plotting tool originally developed with Mathematica by @Zeng:2021. Our work was motivated by the fact that python is a very popular programming language within the community of astrophysicists, to whom the software is addressed. The code created by @Zeng:2021 represents a very useful tool for visualizing and manipulating data in a multi-dimensional parameter space, and our transposition to python -- with some new utilities with respect to the original version -- can be accessed by a larger number of users interested in exoplanet studies.
 
 # Tool Purpose
 
-[FARE INSIEME]
+@Zeng:2021 presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e. planets discovered in orbit around stars different than the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We addrees the reader to the orginal paper [@Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the the planetary mass and radius to many other physical data related to exoplanets and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition, gives the possibility to identify important patterns which can help interpreting observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and intepreted by @Zeng:2021 thanks to this tool).
+Our python version, which is entirely based on the original code, has a few new utilities which allow the users, for example, to personalise more their own analysis. **mettere un riferimento a possibili sviluppi futuri del software? Per esempio, che la sua modularità può essere usata per includere altri parametri di interesse? La possibilità di espandere il codice, anche a livello individuale, è senz'altro un valore aggiunto (anche se sarebbe bello che gli sviluppatori restassimo sempre noi)**
 
 # Tool Description and Instructions
 
 This tool is divided in two different GUIs that call each other.
 
-## First GUI
+##### First GUI
 
 ![GUI that helps the user to personalized the imports process](Import_Catalogue_Helper.PNG)
 
@@ -41,7 +50,7 @@ As the figure above shows, the interface is divided into two macro frames:
 -   First frame contains all the widgets used to import the catalog rightness. The user can load his personal exoplanets catalog both by pasting a link (in case the file is from the internet, like the default chosen) or by clicking on the "Open File" button and selecting it from the disk. After that, the user should personalize the import parameters (i.e. skiprow, delimiter) by adapting them to his file. All the parameters information can be found by following the GUI instructions and clicking on the yellow button named "Pandas documentation read_csv", to open the documentation in the browser.
 -   Second frame contains the widgets used to adapt the code to the catalog. Six columns are mandatory to fill to run the tool correctly, which are the planet mass and radius plus their sigma errors (superior and inferior). Note that in case a catalog uses only one column to describe both the superior and inferior sigma, the user has just to write the same column index for both of them. Just below, nine planet characteristics are not mandatory but are useful if the user wants to add more filters to the selection of planets that will be plotted in the following GUI. In case a field is selected, the user must provide the corresponding column index in the appropriate text field. The last part of this frame contains two dropdown menus that indicate if the masses and radius are expressed using the Jovian or Earth characteristics, while the last is used to select the unit of measurement of the age column in the catalog (if present). The final personalization widget (if checked) indicates the character used to delete all the rows that contain it in the first column. At the end of the personalization, the user should press the button "Run Algorithm" to transfer all the important information to the second GUI, which is the core of the tool.
 
-## Second GUI
+##### Second GUI
 
 ![GUI for the plots visualization](Manipulate_Planet_Code.PNG)
 
