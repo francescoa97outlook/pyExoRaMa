@@ -87,3 +87,6 @@ class Frame_Load_Data:
         if filename != '':
             self.text.delete('1.0', tk.END)
             self.text.insert(tk.END, filename)
+        else:
+            self.text.delete('1.0', tk.END)
+            self.text.insert(tk.END, "https://www.astro.keele.ac.uk/jkt/tepcat/allplanets-ascii.txt")
