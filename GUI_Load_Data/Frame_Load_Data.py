@@ -1,4 +1,5 @@
 import tkinter as tk
+import numpy as np
 from tkinter import messagebox as msgbox
 import pandas as pd
 import webbrowser
@@ -84,7 +85,7 @@ class Frame_Load_Data:
 
     def openFileFunc(self):
         filename = askopenfilename(initialdir="Data")
-        if filename != '':
+        if filename != '' and len(filename) != 0:
             self.text.delete('1.0', tk.END)
             self.text.insert(tk.END, filename)
         else:
