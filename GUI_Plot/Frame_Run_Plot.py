@@ -264,6 +264,8 @@ class Frame_Run_Plot:
     check_mass_star = None
     check_radius_star = None
     check_age_host = None
+    choose_filter_map_var = None
+    choose_filter_map = None
 
     def __init__(self, window, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                  index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq,
@@ -315,7 +317,7 @@ class Frame_Run_Plot:
         self.mass_label_verse.grid(column=6, row=0)
         self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text=" Plot Current Situation ", bg="#00ff00", font=('Sans', '9', 'bold'),
                                                     command=self.plotCurrentSituation)
-        self.plot_current_situation_btn.grid(column=7, row=0, rowspan=2)
+        self.plot_current_situation_btn.grid(column=7, row=0)
         self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%) ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
         self.radius_step = tk.Entry(master=self.frame_run_plot, width=10)
@@ -332,6 +334,11 @@ class Frame_Run_Plot:
         self.radius_verse_btn.grid(column=5, row=1)
         self.radius_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.radius_label_verse.grid(column=6, row=1)
+        options_list = ["Planet Mass", "Planet Radius", "Planet Temp", "Star Mass", "Star Radius", "Star Temp", "[Fe/H]", "Eccentricity", "Age", "Orbital Period", "Semi-major axis"]
+        self.choose_filter_map_var = tk.StringVar()
+        self.choose_filter_map = tk.OptionMenu(self.frame_run_plot, self.choose_filter_map_var, *options_list)
+        self.choose_filter_map.grid(column=7, row=1)
+        self.choose_filter_map_var.set("Planet Temp")
         self.frame_run_plot.pack(padx=3, pady=3)
 
     def massStepBackBtn(self):
@@ -613,7 +620,8 @@ class Frame_Run_Plot:
             self.plotMassRadiusHydrogenCentralDensity()
         self.plotPlanetTepCat()
         self.plotPlanetSolarSystem()
-        self.plotPlanetInput()
+        if self.add1:
+            self.plotPlanetInput()
         self.gui.frame_output_plot.mass_radius_plot.axes.minorticks_off()
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
         self.gui.frame_output_plot.mass_radius_plot.axes.set_ylim(ymin=self.rmin, ymax=self.rmax)
@@ -713,70 +721,126 @@ class Frame_Run_Plot:
         deltaYp = np.array(self.subsetdata[self.index_rad_max])
         deltaXm = np.array(self.subsetdata[self.index_mass_min])
         deltaXp = np.array(self.subsetdata[self.index_mass_max])
-        if self.check_teq:
-            teq = np.array(self.subsetdata[self.index_teq])
-        else:
-            teq = None
         d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        if self.check_teq:
-            teq1 = teq[np.logical_and(deltaXm != 0, deltaXp != 0)]
+        filter_cmap = self.choose_filter_map_var.get()
+        
+        check = 0
+        filter_arr = None
+        space = "              "
+        if self.choose_filter_map_var.get() == "Planet Temp":
+            if self.check_teq:
+                filter_arr = np.array(self.subsetdata[self.index_teq])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Planet Mass":
+            space = "         "
+            filter_arr = np.array(self.subsetdata[self.index_mass_p])
+            check = 1
+        elif self.choose_filter_map_var.get() == "Planet Radius":
+            filter_arr = np.array(self.subsetdata[self.index_rad_p])
+            check = 1
+        elif self.choose_filter_map_var.get() == "Star Temp":
+            space = "        "
+            if self.check_tstar:
+                filter_arr = np.array(self.subsetdata[self.index_tstar])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Star Mass":
+            space = "        "
+            if self.check_mass_star:
+                filter_arr = np.array(self.subsetdata[self.index_mass_star])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Star Radius":
+            if self.check_radius_star:
+                filter_arr = np.array(self.subsetdata[self.index_radius_star])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Eccentricity":
+            space = "               "
+            if self.check_ecc:
+                filter_arr = np.array(self.subsetdata[self.index_ecc])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Semi-major axis":
+            space = "                     "
+            if self.check_a_orb:
+                filter_arr = np.array(self.subsetdata[self.index_a_orb])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Orbital Period":
+            space = "                 "
+            if self.check_p_orb:
+                filter_arr = np.array(self.subsetdata[self.index_p_orb])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Age":
+            space = "       "
+            if self.check_age_host:
+                filter_arr = np.array(self.subsetdata[self.index_age_host])
+                check = 1
         else:
-            teq1 = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100)
+            space = "    "
+            if self.check_FeH:
+                filter_arr = np.array(self.subsetdata[self.index_FeH])
+                check = 1
+        min = 1
+        max = 3000
+        if filter_arr is not None:
+            max = np.max(filter_arr)
+            min = np.min(filter_arr)
+        if check:
+            filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
+        else:
+            filter1 = None
+        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
-        if self.check_teq:
+        if check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
             if self.cbl is not None:
                 self.cbl.remove()
-            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[0, 3000])
-            self.cbl.ax.set_title("    Teq(K)", fontsize=8)
+            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[min, max])
+            self.cbl.ax.set_title(space + filter_cmap, fontsize=8)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
-            if self.check_teq:
-                teq1 = teq[np.logical_and(deltaXm == 0, deltaXp != 0)]
+            if check:
+                filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
             else:
-                teq1 = None
+                filter1 = None
             d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='v')
+                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
-            if self.check_teq:
-                teq1 = teq[np.logical_and(deltaXm != 0, deltaXp == 0)]
+            if check:
+                filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
             else:
-                teq1 = None
+                filter1 = None
             d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='^')
+                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
-        if self.check_teq:
-            teq1 = teq[np.logical_and(deltaXm == 0, deltaXp == 0)]
+        if check:
+            filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
         else:
-            teq1 = None
+            filter1 = None
         d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='D')
+            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         self.annot = self.gui.frame_output_plot.mass_radius_plot.axes.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
@@ -847,62 +911,107 @@ class Frame_Run_Plot:
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        if self.check_teq:
-            teq = np.array(tempSubData[self.index_teq])
+        check = 0
+        filter_arr = None
+        if self.choose_filter_map_var.get() == "Planet Temp":
+            if self.check_teq:
+                filter_arr = np.array(tempSubData[self.index_teq])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Planet Mass":
+            filter_arr = np.array(tempSubData[self.index_mass_p])
+            check = 1
+        elif self.choose_filter_map_var.get() == "Planet Radius":
+            filter_arr = np.array(tempSubData[self.index_rad_p])
+            check = 1
+        elif self.choose_filter_map_var.get() == "Star Temp":
+            if self.check_tstar:
+                filter_arr = np.array(tempSubData[self.index_tstar])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Star Mass":
+            if self.check_mass_star:
+                filter_arr = np.array(tempSubData[self.index_mass_star])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Star Radius":
+            if self.check_radius_star:
+                filter_arr = np.array(tempSubData[self.index_radius_star])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Eccentricity":
+            if self.check_ecc:
+                filter_arr = np.array(tempSubData[self.index_ecc])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Semi-major axis":
+            if self.check_a_orb:
+                filter_arr = np.array(tempSubData[self.index_a_orb])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Orbital Period":
+            if self.check_p_orb:
+                filter_arr = np.array(tempSubData[self.index_p_orb])
+                check = 1
+        elif self.choose_filter_map_var.get() == "Age":
+            if self.check_age_host:
+                filter_arr = np.array(tempSubData[self.index_age_host])
+                check = 1
         else:
-            teq = None
+            if self.check_FeH:
+                filter_arr = np.array(tempSubData[self.index_FeH])
+                check = 1
+        min = 1
+        max = 3000
+        if filter_arr is not None:
+            max = np.max(filter_arr)
+            min = np.min(filter_arr)
+        if check:
+            filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
+        else:
+            filter1 = None
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
         names = np.array(tempSubData[0])
-        if self.check_teq:
-            teq1 = teq[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        else:
-            teq1 = None
-        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0,
-                                                            vmax=3000, zorder=103)
+        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min,
+                                                            vmax=max, zorder=103)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
-            if self.check_teq:
-                teq1 = teq[np.logical_and(deltaXm == 0, deltaXp != 0)]
+            if check:
+                filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
             else:
-                teq1 = None
+                filter1 = None
             d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='v')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
-            if self.check_teq:
-                teq1 = teq[np.logical_and(deltaXm != 0, deltaXp == 0)]
+            if check:
+                filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
             else:
-                teq1 = None
+                filter1 = None
             d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='^')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
-        if self.check_teq:
-            teq1 = teq[np.logical_and(deltaXm == 0, deltaXp == 0)]
+        if check:
+            filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
         else:
-            teq1 = None
+            filter1 = None
         d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=teq1, cmap=plt.cm.get_cmap("jet"), vmin=0, vmax=3000, edgecolors="black", zorder=100, marker='D')
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if self.add2:
