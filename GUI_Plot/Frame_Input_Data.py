@@ -57,7 +57,7 @@ class Frame_Input_Data:
         # Pure Hydrogen
         self.frame_pure_hydrogen = Frame_Pure_Hydrogen.Frame_Pure_Hydrogen(self.frame_input_master, gui)
         # New Planet
-        self.frame_new_planet = Frame_New_Planet.Frame_New_Planet(self.frame_input_master, gui, check_teq)
+        self.frame_new_planet = Frame_New_Planet.Frame_New_Planet(self.frame_input_master, gui, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star)
         # Export File
         self.frame_export_file = Frame_Export_Files.Frame_Export_Files(self.frame_input_master, gui)
         # PACK
