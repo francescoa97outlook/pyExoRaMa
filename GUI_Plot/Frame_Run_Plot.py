@@ -300,45 +300,48 @@ class Frame_Run_Plot:
         self.gui = gui
         self.number_element_plot_density = 5
         self.frame_run_plot = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
-        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Mp/Mp(%) ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Mp/Mp(%)', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=0)
-        self.mass_step = tk.Entry(master=self.frame_run_plot, width=10)
+        self.mass_step = tk.Entry(master=self.frame_run_plot, width=4)
         self.mass_step.grid(column=1, row=0)
         self.mass_step.insert(-1, "50")
-        self.mass_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.massStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
+        self.mass_back_step_btn = tk.Button(master=self.frame_run_plot, text="-", command=self.massStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
         self.mass_back_step_btn.grid(column=2, row=0)
-        self.mass_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.massRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
+        self.mass_start_step_btn = tk.Button(master=self.frame_run_plot, text="\u25B6", command=self.massRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
         self.mass_start_step_btn.grid(column=3, row=0)
-        self.mass_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.massStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
+        self.mass_next_step_btn = tk.Button(master=self.frame_run_plot, text="+", command=self.massStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
         self.mass_next_step_btn.grid(column=4, row=0)
-        self.mass_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '9', 'bold'), command=self.massChangeVerse)
+        self.mass_verse_btn = tk.Button(master=self.frame_run_plot, text="Verse", bg="#669999", font=('Sans', '9', 'bold'), command=self.massChangeVerse)
         self.mass_verse_btn.grid(column=5, row=0)
-        self.mass_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
+        self.mass_label_verse = tk.Label(master=self.frame_run_plot, text='Forward', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.mass_label_verse.grid(column=6, row=0)
-        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text=" Plot Current Situation ", bg="#00ff00", font=('Sans', '9', 'bold'),
-                                                    command=self.plotCurrentSituation)
-        self.plot_current_situation_btn.grid(column=7, row=0)
-        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%) ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_run_plot, text='Choose scatter plot characterization:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=7, row=0, columnspan=2)
+        self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%)', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
-        self.radius_step = tk.Entry(master=self.frame_run_plot, width=10)
+        self.radius_step = tk.Entry(master=self.frame_run_plot, width=4)
         self.radius_step.grid(column=1, row=1)
         self.radius_step.insert(-1, "20")
-        self.radius_back_step_btn = tk.Button(master=self.frame_run_plot, text=" - ", command=self.radiusStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
+        self.radius_back_step_btn = tk.Button(master=self.frame_run_plot, text="-", command=self.radiusStepBackBtn, bg="#cc0099", font=('Sans', '9', 'bold'))
         self.radius_back_step_btn.grid(column=2, row=1)
-        self.radius_start_step_btn = tk.Button(master=self.frame_run_plot, text=" \u25B6 ", command=self.radiusRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
+        self.radius_start_step_btn = tk.Button(master=self.frame_run_plot, text="\u25B6", command=self.radiusRunBtn, bg="#ffff00", font=('Sans', '9', 'bold'))
         self.radius_start_step_btn.grid(column=3, row=1)
-        self.radius_next_step_btn = tk.Button(master=self.frame_run_plot, text=" + ", command=self.radiusStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
+        self.radius_next_step_btn = tk.Button(master=self.frame_run_plot, text="+", command=self.radiusStepForwardBtn, bg="#c65353", font=('Sans', '9', 'bold'))
         self.radius_next_step_btn.grid(column=4, row=1)
-        self.radius_verse_btn = tk.Button(master=self.frame_run_plot, text=" Change Verse ", bg="#669999", font=('Sans', '9', 'bold'),
+        self.radius_verse_btn = tk.Button(master=self.frame_run_plot, text="Verse", bg="#669999", font=('Sans', '9', 'bold'),
                                           command=self.radiusChangeVerse)
         self.radius_verse_btn.grid(column=5, row=1)
-        self.radius_label_verse = tk.Label(master=self.frame_run_plot, text=' Forward ', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
+        self.radius_label_verse = tk.Label(master=self.frame_run_plot, text='Forward', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.radius_label_verse.grid(column=6, row=1)
         options_list = ["Planet Mass", "Planet Radius", "Planet Temp", "Star Mass", "Star Radius", "Star Temp", "[Fe/H]", "Eccentricity", "Age", "Orbital Period", "Semi-major axis"]
         self.choose_filter_map_var = tk.StringVar()
         self.choose_filter_map = tk.OptionMenu(self.frame_run_plot, self.choose_filter_map_var, *options_list)
         self.choose_filter_map.grid(column=7, row=1)
         self.choose_filter_map_var.set("Planet Temp")
+        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text="Plot Current Situation",
+                                                    bg="#00ff00", font=('Sans', '9', 'bold'),
+                                                    command=self.plotCurrentSituation)
+        self.plot_current_situation_btn.grid(column=8, row=1)
         self.frame_run_plot.pack(padx=3, pady=3)
 
     def massStepBackBtn(self):
@@ -353,11 +356,11 @@ class Frame_Run_Plot:
         self.executeRoutine(int(self.mass_step.get()), int(self.radius_step.get()))
 
     def massRunBtn(self):
-        if self.mass_start_step_btn["text"] == " \u25B6 ":
+        if self.mass_start_step_btn["text"] == "\u25B6":
             self.global_stop_mass = False
-            self.mass_start_step_btn["text"] = " \u23F8 "
+            self.mass_start_step_btn["text"] = "\u23F8"
             var_start = int(self.mass_step.get())
-            if self.mass_label_verse["text"] == " Forward ":
+            if self.mass_label_verse["text"] == "Forward":
                 var_stop = 100
                 var_step = 1
             else:
@@ -372,15 +375,15 @@ class Frame_Run_Plot:
                 self.executeRoutine(i, int(self.radius_step.get()))
                 self.gui.window.update()
         else:
-            self.mass_start_step_btn["text"] = " \u25B6 "
+            self.mass_start_step_btn["text"] = "\u25B6"
             self.global_stop_mass = True
             self.gui.window.update()
 
     def massChangeVerse(self):
-        if self.mass_label_verse["text"] == " Forward ":
-            self.mass_label_verse["text"] = " Backward "
+        if self.mass_label_verse["text"] == "Forward":
+            self.mass_label_verse["text"] = "Backward"
         else:
-            self.mass_label_verse["text"] = " Forward "
+            self.mass_label_verse["text"] = "Forward"
 
     def plotCurrentSituation(self):
         self.executeRoutine(int(self.mass_step.get()), int(self.radius_step.get()))
@@ -397,11 +400,11 @@ class Frame_Run_Plot:
         self.executeRoutine(int(self.mass_step.get()), int(self.radius_step.get()))
 
     def radiusRunBtn(self):
-        if self.radius_start_step_btn["text"] == " \u25B6 ":
+        if self.radius_start_step_btn["text"] == "\u25B6":
             self.global_stop_radius = False
-            self.radius_start_step_btn["text"] = " \u23F8 "
+            self.radius_start_step_btn["text"] = "\u23F8"
             var_start = int(self.radius_step.get())
-            if self.radius_label_verse["text"] == " Forward ":
+            if self.radius_label_verse["text"] == "Forward":
                 var_stop = 100
                 var_step = 1
             else:
@@ -416,15 +419,15 @@ class Frame_Run_Plot:
                 self.executeRoutine(int(self.mass_step.get()), i)
                 self.gui.window.update()
         else:
-            self.radius_start_step_btn["text"] = " \u25B6 "
+            self.radius_start_step_btn["text"] = "\u25B6"
             self.global_stop_radius = True
             self.gui.window.update()
 
     def radiusChangeVerse(self):
-        if self.radius_label_verse["text"] == " Forward ":
-            self.radius_label_verse["text"] = " Backward "
+        if self.radius_label_verse["text"] == "Forward":
+            self.radius_label_verse["text"] = "Backward"
         else:
-            self.radius_label_verse["text"] = " Forward "
+            self.radius_label_verse["text"] = "Forward"
 
     def dataAcquisition(self, sigmaMpercent, sigmaRpercent):
         self.mmin = float(self.gui.frame_input_master.frame_scale_plot.mass_min.get())
@@ -782,23 +785,23 @@ class Frame_Run_Plot:
             if self.check_FeH:
                 filter_arr = np.array(self.subsetdata[self.index_FeH])
                 check = 1
-        min = 1
-        max = 3000
+        min_val = 1
+        max_val = 3000
         if filter_arr is not None:
-            max = np.max(filter_arr)
-            min = np.min(filter_arr)
+            max_val = np.max(filter_arr)
+            min_val = np.min(filter_arr)
         if check:
             filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
         else:
             filter1 = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100)
+        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
             if self.cbl is not None:
                 self.cbl.remove()
-            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[min, max])
+            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[min_val, max_val])
             self.cbl.ax.set_title(space + filter_cmap, fontsize=8)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
@@ -812,7 +815,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='v')
+                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
@@ -826,7 +829,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='^')
+                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
@@ -840,7 +843,7 @@ class Frame_Run_Plot:
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='D')
+            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         self.annot = self.gui.frame_output_plot.mass_radius_plot.axes.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
@@ -955,11 +958,11 @@ class Frame_Run_Plot:
             if self.check_FeH:
                 filter_arr = np.array(tempSubData[self.index_FeH])
                 check = 1
-        min = 1
-        max = 3000
+        min_val = 1
+        max_val = 3000
         if filter_arr is not None:
-            max = np.max(filter_arr)
-            min = np.min(filter_arr)
+            max_val = np.max(filter_arr)
+            min_val = np.min(filter_arr)
         if check:
             filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
         else:
@@ -967,8 +970,8 @@ class Frame_Run_Plot:
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
         names = np.array(tempSubData[0])
-        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min,
-                                                            vmax=max, zorder=103)
+        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val,
+                                                            vmax=max_val, zorder=103)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104)
         if self.index_mass_min != self.index_mass_max:
@@ -983,7 +986,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='v')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
@@ -997,7 +1000,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='^')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
@@ -1011,7 +1014,7 @@ class Frame_Run_Plot:
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min, vmax=max, edgecolors="black", zorder=100, marker='D')
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if self.add2:
