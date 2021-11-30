@@ -191,10 +191,10 @@ class Frame_New_Planet:
         self.options_list = []
         self.list_planet_var = tk.StringVar()
         self.list_planet_om = tk.OptionMenu(self.frame_new_planet, self.list_planet_var, None)
-        self.list_planet_om.grid(column=5, row=4)
+        self.list_planet_om.grid(column=5, row=4, columnspan=3)
 
         self.delete_planet_btn = tk.Button(master=self.frame_new_planet, text="Delete Planet from list", command=self.deletePlanet, bg="red", font=('Sans', '9', 'bold'))
-        self.delete_planet_btn.grid(column=6, row=4, columnspan=3)
+        self.delete_planet_btn.grid(column=8, row=4, columnspan=2)
 
         self.input_list = pd.DataFrame()
 

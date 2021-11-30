@@ -267,6 +267,7 @@ class Frame_Run_Plot:
     min_val = None
     chosen_index = None
     check = None
+    coeff = None
 
     def __init__(self, window, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                  index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq,
@@ -782,16 +783,19 @@ class Frame_Run_Plot:
         self.check = 0
         filter_arr = None
         space = "              "
+        self.coeff = 1
         if self.choose_filter_map_var.get() == "Planet Temp":
             if self.check_teq:
                 self.chosen_index = self.index_teq
                 self.check = 1
         elif self.choose_filter_map_var.get() == "Planet Mass":
-            space = "         "
+            space = "            "
+            self.coeff = 317.8
             self.chosen_index = self.index_mass_p
             self.check = 1
         elif self.choose_filter_map_var.get() == "Planet Radius":
             self.chosen_index = self.index_rad_p
+            self.coeff = 11.2
             self.check = 1
         elif self.choose_filter_map_var.get() == "Star Temp":
             space = "        "
@@ -836,12 +840,12 @@ class Frame_Run_Plot:
         self.max_val = 3000
         if self.check:
             filter_arr = np.array(self.subsetdata[self.chosen_index])
-            self.max_val = np.max(filter_arr)
-            self.min_val = np.min(filter_arr)
+            self.max_val = np.max(filter_arr) * self.coeff
+            self.min_val = np.min(filter_arr) * self.coeff
             filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
         else:
             filter_cmap = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100)
+        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if self.check:
@@ -862,7 +866,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
+                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
@@ -876,7 +880,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='^')
+                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
@@ -890,7 +894,7 @@ class Frame_Run_Plot:
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
+            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         self.annot = self.gui.frame_output_plot.mass_radius_plot.axes.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
@@ -961,6 +965,7 @@ class Frame_Run_Plot:
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp != 0)]
+
         if self.check:
             filter_arr = np.array(tempSubData[self.chosen_index])
             self.max_val = np.max(filter_arr)
@@ -972,7 +977,7 @@ class Frame_Run_Plot:
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
         names = np.array(tempSubData[0])
-        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
+        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
                                                             vmax=self.max_val, zorder=103)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104)
@@ -988,7 +993,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
@@ -1002,7 +1007,7 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
@@ -1016,7 +1021,7 @@ class Frame_Run_Plot:
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap * self.coeff, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if self.add2:
