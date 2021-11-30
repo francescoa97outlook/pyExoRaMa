@@ -2,6 +2,7 @@ import math
 import time
 import tkinter as tk
 from tkinter import messagebox as msgbox
+import pandas as pd
 
 import matplotlib.colors as colors
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
@@ -100,16 +101,16 @@ def applyFunction(type_name, x, r):
                                                                                               1.1251826465596989e-8 * np.power(x, 10))) - np.power(10, (-0.11408792224566819 + 0.27851883673695 * x -
                                                                                                                                                         0.01997874049680844 * np.power(x,
                                                                                                                                                                                        2) - 0.002490304269884624 * np.power(
-                                                                                                                                                            x, 3) +
+                    x, 3) +
                                                                                                                                                         0.00007525048500183394 * np.power(x,
                                                                                                                                                                                           4) - 0.00007162041164677924 * np.power(
-                                                                                                                                                            x, 5) -
+                    x, 5) -
                                                                                                                                                         0.00003393158521958243 * np.power(x,
                                                                                                                                                                                           6) + 8.589995554646332e-7 * np.power(
-                                                                                                                                                            x, 7) +
+                    x, 7) +
                                                                                                                                                         1.132375249329131e-6 * np.power(x,
                                                                                                                                                                                         8) + 2.2299345660512832e-8 * np.power(
-                                                                                                                                                            x, 9) -
+                    x, 9) -
                                                                                                                                                         1.0475165171649914e-8 * np.power(x, 10))))
     elif type_name == "Silicates-H2O":
         return (r - np.power(10, (0.020013868549526272 + 0.29811170324848235 * x -
@@ -266,6 +267,10 @@ class Frame_Run_Plot:
     check_age_host = None
     choose_filter_map_var = None
     choose_filter_map = None
+    max_val = None
+    min_val = None
+    chosen_index = None
+    check = None
 
     def __init__(self, window, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                  index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq,
@@ -467,7 +472,6 @@ class Frame_Run_Plot:
         self.add1 = self.gui.frame_input_master.frame_new_planet.add_new_planet_check_var.get()
         self.filter1 = self.gui.frame_input_master.frame_new_planet.filter_new_planet_check_var.get()
         self.add2 = self.gui.frame_input_master.frame_new_planet.label_new_planet_check_var.get()
-        self.np2 = self.gui.frame_input_master.frame_new_planet.text_input.get("1.0", tk.END)
         self.subsetdata = self.data0[
             (self.mmin <= self.data0[self.index_mass_p] * self.mass_coeff) & (self.data0[self.index_mass_p] * self.mass_coeff <= self.mmax) &
             (self.rmin <= self.data0[self.index_rad_p] * self.radius_coeff) & (self.data0[self.index_rad_p] * self.radius_coeff <= self.rmax) &
@@ -495,28 +499,58 @@ class Frame_Run_Plot:
         if self.check_age_host:
             self.subsetdata = self.subsetdata[(self.age_host_min <= self.subsetdata[self.index_age_host]) & (self.subsetdata[self.index_age_host] <= self.age_host_max)]
         self.num_new_planets = 0
-        if self.add1:
-            self.newPlanets = self.np2.split("%")
+        temp_df = self.gui.frame_input_master.frame_new_planet.input_list
+        if self.add1 and len(temp_df) > 0:
+            self.newPlanets = pd.DataFrame({0: temp_df["Name"], self.index_mass_p: temp_df["Mass_p"], self.index_mass_min: temp_df["Mass_sn_p"],
+                                            self.index_mass_max: temp_df["Mass_sp_p"], self.index_rad_p: temp_df["Radius_p"], self.index_min_rad: temp_df["Radius_sn_p"],
+                                            self.index_rad_max: temp_df["Radius_sp_p"]})
+            if self.check_age_host:
+                self.newPlanets[self.index_age_host] = temp_df["Age"]
+            if self.check_tstar:
+                self.newPlanets[self.index_tstar] = temp_df["Tstar"]
+            if self.check_mass_star:
+                self.newPlanets[self.index_mass_star] = temp_df["Mstar"]
+            if self.check_radius_star:
+                self.newPlanets[self.index_radius_star] = temp_df["Rstar"]
+            if self.check_p_orb:
+                self.newPlanets[self.index_p_orb] = temp_df["p_orb"]
+            if self.check_a_orb:
+                self.newPlanets[self.index_a_orb] = temp_df["a_orb"]
+            if self.check_ecc:
+                self.newPlanets[self.index_ecc] = temp_df["Ecc"]
+            if self.check_teq:
+                self.newPlanets[self.index_teq] = temp_df["tPlanet"]
+            if self.check_FeH:
+                self.newPlanets[self.index_FeH] = temp_df["[Fe/H]"]
+            self.newPlanets = self.newPlanets[
+                (self.mmin <= self.newPlanets[self.index_mass_p] * self.mass_coeff) & (self.newPlanets[self.index_mass_p] * self.mass_coeff <= self.mmax) &
+                (self.rmin <= self.newPlanets[self.index_rad_p] * self.radius_coeff) & (self.newPlanets[self.index_rad_p] * self.radius_coeff <= self.rmax)]
+            if self.filter1:
+                self.newPlanets = self.newPlanets[(self.newPlanets[self.index_rad_max] / self.newPlanets[self.index_rad_p] <= sigmaRpercent / 100) &
+                                                  (self.newPlanets[self.index_min_rad] / self.newPlanets[self.index_rad_p] <= sigmaRpercent / 100) &
+                                                  (self.newPlanets[self.index_mass_min] / self.newPlanets[self.index_mass_p] <= sigmaMpercent / 100) &
+                                                  (self.newPlanets[self.index_mass_max] / self.newPlanets[self.index_mass_p] <= sigmaMpercent / 100) &
+                                                  (self.newPlanets[self.index_rad_p] ** 4 / self.newPlanets[self.index_mass_p] > 0.01)]
+                if self.check_p_orb:
+                    self.newPlanets = self.newPlanets[(self.Porb_min <= self.newPlanets[self.index_p_orb]) & (self.newPlanets[self.index_p_orb] <= self.Porb_max)]
+                if self.check_teq:
+                    self.newPlanets = self.newPlanets[(self.Teq_min <= self.newPlanets[self.index_teq]) & (self.newPlanets[self.index_teq] <= self.Teq_max)]
+                if self.check_tstar:
+                    self.newPlanets = self.newPlanets[(self.Teff_min <= self.newPlanets[self.index_tstar]) & (self.newPlanets[self.index_tstar] <= self.Teff_max)]
+                if self.check_ecc:
+                    self.newPlanets = self.newPlanets[(self.eccentricity_min <= self.newPlanets[self.index_ecc]) & (self.newPlanets[self.index_ecc] <= self.eccentricity_max)]
+                if self.check_mass_star:
+                    self.newPlanets = self.newPlanets[(self.mstar_min <= self.newPlanets[self.index_mass_star]) & (self.newPlanets[self.index_mass_star] <= self.mstar_max)]
+                if self.check_radius_star:
+                    self.newPlanets = self.newPlanets[(self.rstar_min <= self.newPlanets[self.index_radius_star]) & (self.newPlanets[self.index_radius_star] <= self.rstar_max)]
+                if self.check_a_orb:
+                    self.newPlanets = self.newPlanets[(self.aorb_min <= self.newPlanets[self.index_a_orb]) & (self.newPlanets[self.index_a_orb] <= self.aorb_max)]
+                if self.check_FeH:
+                    self.newPlanets = self.newPlanets[(self.FeHdex_min <= self.newPlanets[self.index_FeH]) & (self.newPlanets[self.index_FeH] <= self.FeHdex_max)]
+                if self.check_age_host:
+                    self.newPlanets = self.newPlanets[(self.age_host_min <= self.newPlanets[self.index_age_host]) & (self.newPlanets[self.index_age_host] <= self.age_host_max)]
+            self.subsetdata = self.subsetdata.append(self.newPlanets, ignore_index=True)
             self.num_new_planets = len(self.newPlanets)
-            for elem in self.newPlanets:
-                elem = elem.replace("\n", "")
-                elem = elem.replace("[", "")
-                elem = elem.replace("]", "")
-                elem = elem.replace(" ", "")
-                elem = elem.replace("\"", "")
-                subelem = elem.split(",")
-                if (self.mmin <= float(subelem[1]) <= self.mmax) and (self.rmin <= float(subelem[4]) <= self.rmax) and (
-                        (not self.filter1) or (self.filter1 and self.Teq_min <= float(subelem[7]) <= self.Teq_max)):
-                    new_row = {0: subelem[0], self.index_mass_p: float(subelem[1]) / self.mass_coeff,
-                               self.index_mass_min: float(subelem[2]),
-                               self.index_mass_max: float(subelem[3]), self.index_rad_p: float(subelem[4]) / self.radius_coeff,
-                               self.index_min_rad: float(subelem[5]),
-                               self.index_rad_max: float(subelem[6])}
-                    if self.check_teq:
-                        new_row[self.index_teq] = float(subelem[7])
-                    if self.check_age_host:
-                        new_row[self.index_age_host] = float(subelem[8])
-                    self.subsetdata = self.subsetdata.append(new_row, ignore_index=True)
         self.names = np.array(self.subsetdata[0])
 
     def plotHistogramMass(self):
@@ -623,7 +657,7 @@ class Frame_Run_Plot:
             self.plotMassRadiusHydrogenCentralDensity()
         self.plotPlanetTepCat()
         self.plotPlanetSolarSystem()
-        if self.add1:
+        if self.add1 and self.num_new_planets > 0:
             self.plotPlanetInput()
         self.gui.frame_output_plot.mass_radius_plot.axes.minorticks_off()
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
@@ -730,120 +764,118 @@ class Frame_Run_Plot:
         d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        filter_cmap = self.choose_filter_map_var.get()
-        
-        check = 0
+        self.check = 0
         filter_arr = None
         space = "              "
         if self.choose_filter_map_var.get() == "Planet Temp":
             if self.check_teq:
-                filter_arr = np.array(self.subsetdata[self.index_teq])
-                check = 1
+                self.chosen_index = self.index_teq
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Planet Mass":
             space = "         "
-            filter_arr = np.array(self.subsetdata[self.index_mass_p])
-            check = 1
+            self.chosen_index = self.index_mass_p
+            self.check = 1
         elif self.choose_filter_map_var.get() == "Planet Radius":
-            filter_arr = np.array(self.subsetdata[self.index_rad_p])
-            check = 1
+            self.chosen_index = self.index_rad_p
+            self.check = 1
         elif self.choose_filter_map_var.get() == "Star Temp":
             space = "        "
             if self.check_tstar:
-                filter_arr = np.array(self.subsetdata[self.index_tstar])
-                check = 1
+                self.chosen_index = self.index_tstar
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Star Mass":
             space = "        "
             if self.check_mass_star:
-                filter_arr = np.array(self.subsetdata[self.index_mass_star])
-                check = 1
+                self.chosen_index = self.index_mass_star
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Star Radius":
             if self.check_radius_star:
-                filter_arr = np.array(self.subsetdata[self.index_radius_star])
-                check = 1
+                self.chosen_index = self.index_radius_star
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Eccentricity":
             space = "               "
             if self.check_ecc:
-                filter_arr = np.array(self.subsetdata[self.index_ecc])
-                check = 1
+                self.chosen_index = self.index_ecc
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Semi-major axis":
             space = "                     "
             if self.check_a_orb:
-                filter_arr = np.array(self.subsetdata[self.index_a_orb])
-                check = 1
+                self.chosen_index = self.index_a_orb
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Orbital Period":
             space = "                 "
             if self.check_p_orb:
-                filter_arr = np.array(self.subsetdata[self.index_p_orb])
-                check = 1
+                self.chosen_index = self.index_p_orb
+                self.check = 1
         elif self.choose_filter_map_var.get() == "Age":
             space = "       "
             if self.check_age_host:
-                filter_arr = np.array(self.subsetdata[self.index_age_host])
-                check = 1
+                self.chosen_index = self.index_age_host
+                self.check = 1
         else:
             space = "    "
             if self.check_FeH:
-                filter_arr = np.array(self.subsetdata[self.index_FeH])
-                check = 1
-        min_val = 1
-        max_val = 3000
-        if filter_arr is not None:
-            max_val = np.max(filter_arr)
-            min_val = np.min(filter_arr)
-        if check:
-            filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
+                self.chosen_index = self.index_FeH
+                self.check = 1
+        self.min_val = 1
+        self.max_val = 3000
+        if self.check:
+            filter_arr = np.array(self.subsetdata[self.chosen_index])
+            self.max_val = np.max(filter_arr)
+            self.min_val = np.min(filter_arr)
+            filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
         else:
-            filter1 = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100)
+            filter_cmap = None
+        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
-        if check:
+        if self.check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
             if self.cbl is not None:
                 self.cbl.remove()
-            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[min_val, max_val])
-            self.cbl.ax.set_title(space + filter_cmap, fontsize=8)
+            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[self.min_val, self.max_val])
+            self.cbl.ax.set_title(space + self.choose_filter_map_var.get(), fontsize=8)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
-            if check:
-                filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
+            if self.check:
+                filter_cmap = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
             else:
-                filter1 = None
+                filter_cmap = None
             d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='v')
+                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
-            if check:
-                filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
+            if self.check:
+                filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
             else:
-                filter1 = None
+                filter_cmap = None
             d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='^')
+                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
-        if check:
-            filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
+        if self.check:
+            filter_cmap = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
         else:
-            filter1 = None
+            filter_cmap = None
         d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='D')
+            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         self.annot = self.gui.frame_output_plot.mass_radius_plot.axes.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
@@ -914,107 +946,62 @@ class Frame_Run_Plot:
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        check = 0
-        filter_arr = None
-        if self.choose_filter_map_var.get() == "Planet Temp":
-            if self.check_teq:
-                filter_arr = np.array(tempSubData[self.index_teq])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Planet Mass":
-            filter_arr = np.array(tempSubData[self.index_mass_p])
-            check = 1
-        elif self.choose_filter_map_var.get() == "Planet Radius":
-            filter_arr = np.array(tempSubData[self.index_rad_p])
-            check = 1
-        elif self.choose_filter_map_var.get() == "Star Temp":
-            if self.check_tstar:
-                filter_arr = np.array(tempSubData[self.index_tstar])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Star Mass":
-            if self.check_mass_star:
-                filter_arr = np.array(tempSubData[self.index_mass_star])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Star Radius":
-            if self.check_radius_star:
-                filter_arr = np.array(tempSubData[self.index_radius_star])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Eccentricity":
-            if self.check_ecc:
-                filter_arr = np.array(tempSubData[self.index_ecc])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Semi-major axis":
-            if self.check_a_orb:
-                filter_arr = np.array(tempSubData[self.index_a_orb])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Orbital Period":
-            if self.check_p_orb:
-                filter_arr = np.array(tempSubData[self.index_p_orb])
-                check = 1
-        elif self.choose_filter_map_var.get() == "Age":
-            if self.check_age_host:
-                filter_arr = np.array(tempSubData[self.index_age_host])
-                check = 1
+        if self.check:
+            filter_arr = np.array(tempSubData[self.chosen_index])
+            self.max_val = np.max(filter_arr)
+            self.min_val = np.min(filter_arr)
+            filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
         else:
-            if self.check_FeH:
-                filter_arr = np.array(tempSubData[self.index_FeH])
-                check = 1
-        min_val = 1
-        max_val = 3000
-        if filter_arr is not None:
-            max_val = np.max(filter_arr)
-            min_val = np.min(filter_arr)
-        if check:
-            filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
-        else:
-            filter1 = None
+            filter_arr = None
+            filter_cmap = None
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
         names = np.array(tempSubData[0])
-        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val,
-                                                            vmax=max_val, zorder=103)
+        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
+                                                            vmax=self.max_val, zorder=103)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
-            if check:
-                filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
+            if self.check:
+                filter_cmap = filter_arr[np.logical_and(deltaXm == 0, deltaXp != 0)]
             else:
-                filter1 = None
+                filter_cmap = None
             d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='v')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
-            if check:
-                filter1 = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
+            if self.check:
+                filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp == 0)]
             else:
-                filter1 = None
+                filter_cmap = None
             d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
+                self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
                     self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
-        if check:
-            filter1 = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
+        if self.check:
+            filter_cmap = filter_arr[np.logical_and(deltaXm == 0, deltaXp == 0)]
         else:
-            filter1 = None
+            filter_cmap = None
         d1 = deltaYm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d2 = deltaYp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter1, cmap=plt.cm.get_cmap("jet"), vmin=min_val, vmax=max_val, edgecolors="black", zorder=100, marker='D')
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
                 self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
         if self.add2:
