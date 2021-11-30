@@ -100,17 +100,13 @@ def applyFunction(type_name, x, r):
                                                                                               8.211419885278952e-7 * np.power(x, 8) + 3.47368749025812e-8 * np.power(x, 9) -
                                                                                               1.1251826465596989e-8 * np.power(x, 10))) - np.power(10, (-0.11408792224566819 + 0.27851883673695 * x -
                                                                                                                                                         0.01997874049680844 * np.power(x,
-                                                                                                                                                                                       2) - 0.002490304269884624 * np.power(
-                    x, 3) +
+                                                                                                                                                                                       2) - 0.002490304269884624 * np.power(x, 3) +
                                                                                                                                                         0.00007525048500183394 * np.power(x,
-                                                                                                                                                                                          4) - 0.00007162041164677924 * np.power(
-                    x, 5) -
+                                                                                                                                                                                          4) - 0.00007162041164677924 * np.power(x, 5) -
                                                                                                                                                         0.00003393158521958243 * np.power(x,
-                                                                                                                                                                                          6) + 8.589995554646332e-7 * np.power(
-                    x, 7) +
+                                                                                                                                                                                          6) + 8.589995554646332e-7 * np.power(x, 7) +
                                                                                                                                                         1.132375249329131e-6 * np.power(x,
-                                                                                                                                                                                        8) + 2.2299345660512832e-8 * np.power(
-                    x, 9) -
+                                                                                                                                                                                        8) + 2.2299345660512832e-8 * np.power(x, 9) -
                                                                                                                                                         1.0475165171649914e-8 * np.power(x, 10))))
     elif type_name == "Silicates-H2O":
         return (r - np.power(10, (0.020013868549526272 + 0.29811170324848235 * x -
@@ -338,7 +334,26 @@ class Frame_Run_Plot:
         self.radius_verse_btn.grid(column=5, row=1)
         self.radius_label_verse = tk.Label(master=self.frame_run_plot, text='Forward', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.radius_label_verse.grid(column=6, row=1)
-        options_list = ["Planet Mass", "Planet Radius", "Planet Temp", "Star Mass", "Star Radius", "Star Temp", "[Fe/H]", "Eccentricity", "Age", "Orbital Period", "Semi-major axis"]
+
+        options_list = ["Planet Mass", "Planet Radius"]
+        if self.check_teq:
+            options_list.append("Planet Temp")
+        if self.check_mass_star:
+            options_list.append("Star Mass")
+        if self.check_radius_star:
+            options_list.append("Star Radius")
+        if self.check_tstar:
+            options_list.append("Star Temp")
+        if self.check_FeH:
+            options_list.append("[Fe/H]")
+        if self.check_ecc:
+            options_list.append("Eccentricity")
+        if self.check_age_host:
+            options_list.append("Age")
+        if self.check_p_orb:
+            options_list.append("Orbital Period")
+        if self.check_a_orb:
+            options_list.append("Semi-major axis")
         self.choose_filter_map_var = tk.StringVar()
         self.choose_filter_map = tk.OptionMenu(self.frame_run_plot, self.choose_filter_map_var, *options_list)
         self.choose_filter_map.grid(column=7, row=1)
