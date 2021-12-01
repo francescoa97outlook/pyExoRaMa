@@ -69,38 +69,38 @@ class Frame_New_Planet:
         self.label_new_planet_check = tk.Checkbutton(master=self.frame_new_planet, text="Show label(s)?", variable=self.label_new_planet_check_var, fg="#cc3300", font=('Sans', '9', 'bold'))
         self.label_new_planet_check.grid(column=6, row=0, columnspan=3)
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Mass P:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
         self.mass_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_np.grid(column=1, row=1)
         self.mass_np.insert(tk.END, "0.0913")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Mass \u03C3- P:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3- Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=2, row=1)
         self.mass_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sn_np.grid(column=3, row=1)
         self.mass_sn_np.insert(tk.END, "5")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Mass \u03C3+ P:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3+ Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=4, row=1)
         self.mass_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sp_np.grid(column=5, row=1)
         self.mass_sp_np.insert(tk.END, "5")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Radius P:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='R Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=6, row=1)
         self.radius_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_np.grid(column=7, row=1)
         self.radius_np.insert(tk.END, "0.473")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Radius \u03C3- P:', fg="blue",
+        self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3- Pl:', fg="blue",
                               font=('Sans', '9', 'bold'))
         self.label.grid(column=8, row=1)
         self.radius_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_sn_np.grid(column=9, row=1)
         self.radius_sn_np.insert(tk.END, "0.1")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Radius \u03C3+ P:', fg="blue",
+        self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3+ Pl:', fg="blue",
                               font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=2)
         self.radius_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
@@ -163,7 +163,7 @@ class Frame_New_Planet:
         if not check_FeH:
             self.fe_h_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Temp P:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='Temp Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=6, row=3)
         self.tplanet_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.tplanet_np.grid(column=7, row=3)
@@ -197,12 +197,6 @@ class Frame_New_Planet:
         self.delete_planet_btn.grid(column=7, row=4, columnspan=3)
 
         self.input_list = pd.DataFrame()
-
-        # self.label_input = tk.Label(master=self.frame_new_planet, text='Input example: [\"planet-name\", Mass, \u03C3m+, \u03C3m-, Radius, \u03C3r+, \u03C3r-, T_eq(K), Age]%[...]', fg="blue", font=('Sans', '9', 'bold'))
-        # self.label_input.grid(column=0, row=1, columnspan=3)
-        # self.text_input = tk.Text(master=self.frame_new_planet, height=7)
-        # self.text_input.grid(column=0, row=2, columnspan=3)
-        # self.text_input.insert(tk.END, "[\"TOI-1710 b\", 29, 5, 5, 5.3, 0.1, 0.1, 700, 0.14]")
         self.frame_new_planet.pack(padx=3, pady=3)
 
     def deletePlanet(self):
