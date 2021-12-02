@@ -9,23 +9,26 @@ tags:
   - Composition
   - Structure
 authors:
-  - name: Francesco Amadori #^[first author] # note this makes a footnote saying 'co-first author'
+  - name: Francesco Amadori^[first author]
     orcid: 0000-0003-1316-1033
-    affiliation: 1 # (Multiple affiliations must be quoted)
-  - name: Mario Damasso # ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+    affiliation: 1
+  - name: Mario Damasso^[co-first author]
     orcid: 0000-0001-9984-4278
     affiliation: 1
-  - name: Li Zeng # ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Li Zeng^[co-first author]
     orcid: 0000-0003-1957-6635
-    affiliation: 2, 3
+    affiliation: "2, 3"
+  - name: Alessandro Sozzetti^[co-first author]
+    orcid: 0000-0002-7504-365X
+    affiliation: 1
 affiliations:
- - name: INAF-Astrophysical Observatory of Torino, Via Osservatorio 20, Pino T.se (To), Italy
-   index: 1
- - name: Department of Earth and Planetary Sciences, Harvard University, 20 Oxford Street, Cambridge, MA 02138, USA
-   index: 2
- - name: Harvard-Smithsonian Center for Astrophysics, 60 Garden Street, Cambridge, MA 02138, USA
-   index: 3
-date: 26th November 2021
+ - index: 1
+   name: INAF-Astrophysical Observatory of Torino, Via Osservatorio 20, Pino T.se (To), Italy
+ - index: 2   
+   name: Department of Earth and Planetary Sciences, Harvard University, 20 Oxford Street, Cambridge, MA 02138, USA
+ - index: 3   
+   name: Harvard-Smithsonian Center for Astrophysics, 60 Garden Street, Cambridge, MA 02138, USA
+date: 26 November 2021
 bibliography: paper.bib
 ---
 
@@ -35,12 +38,12 @@ We present the python version of the plotting tool originally developed with Mat
 
 # Tool Purpose
 
-@Zeng:2021 presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e. planets discovered in orbit around stars different than the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We addrees the reader to the orginal paper [@Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the the planetary mass and radius to many other physical data related to exoplanets and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition, gives the possibility to identify important patterns which can help interpreting observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and intepreted by @Zeng:2021 thanks to this tool).
+[@Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e. planets discovered in orbit around stars different than the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We address the reader to the original paper [@Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition gives the possibility to identify important patterns which can help interpreting observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and interpreted by @Zeng:2021 thanks to this tool).
 Our python version, which is entirely based on the original code, has a few new utilities which allow the users, for example, to personalise more their own analysis. **mettere un riferimento a possibili sviluppi futuri del software? Per esempio, che la sua modularità può essere usata per includere altri parametri di interesse? La possibilità di espandere il codice, anche a livello individuale, è senz'altro un valore aggiunto (anche se sarebbe bello che gli sviluppatori restassimo sempre noi)**
 
 # Tool Description and Instructions
 
-This tool is divided in two different GUIs that call each other.
+This tool is divided into two different GUIs that call each other. Please, note that each frame that will be explained later contains a "?" button that displays a message box containing all the frame information
 
 ##### First GUI
 
@@ -59,20 +62,20 @@ The second GUI is divided into two macro frames too:
     1.   The load data frame, which contains only one button which purpose is to load the previous GUI to use another catalog or to change the current import settings.
     2.   The filter catalog frame, which contains the nine inputs filter related to the nine non-mandatory columns from the first GUI. Those are:
          -   "Age", the age of the system from which the planet is from, could be in Myr or Gyr, depending on the user choice.
-         -   "T Star [K]", the surface temperature of the star expressed in Kelvin.
-         -   "[Fe/H]", the star's metallicity.
+         -   "T Star \[K]", the surface temperature of the star expressed in Kelvin.
+         -   "\[Fe/H]", the star's metallicity.
          -   "M☉", the star's mass expressed in Solar mass.
          -   "R☉", the star's radius expressed in Solar radius.
          -   "P orb (days)", the exoplanet orbital period expressed in days.
          -   "a orb (AU)", the semi-major axes of the exoplanet's orbit expressed in AU.
          -   "Eccentricity", the exoplanet's orbit's eccentricity.
-         -   "T eq [K]", the equilibrium temperature of the exoplanet expressed in Kelvin.
+         -   "T eq \[K]", the equilibrium temperature of the exoplanet expressed in Kelvin.
          It also contains a checkbox that (if active) will show the exoplanet's mass and radius errors bars.
-    3.  The running frame, which contains all the widgets used to run properly the internal algorithm and plot the various histograms and graphs. The user can choose a particular upper limit for the error percentage of both mass and radius parameters. To run the current situation (defined by the filters, envelope, and other features) the user has to click the green button "Plot current situation". In case he wants to plot the graphs with a percentage error increased/decreased by one, he could click on the "+"/"-" button corresponding to the parameter (mass or radius) he wants to update. Furthermore, by clicking the "Play" button of the corresponding parameter, the related error upper limit will increase/decrease continuously every four seconds, depending on the verse chosen (Forward/Backward).
-    4.   The histogram settings frame, where the user is allowed to change the histograms characteristics, like the amount of bin (one for each histogram, mass, radius, and ζ). He can also choose the "Y" axis scale.
-    5.   The envelope frame, where the user can plot (or not) the envelope composition choosing between "H2O", "Silicates", "Fe", or "None". It is also possible to choose the CMAP color by selecting one from the proposed (all of them are default matplotlib CMAP).
-    6.   The pure-Hydrogen frame, where the user checks which pure-Hydrogen lines he wants to add to the plot (based on the mass-radius curves concerning the Hydrogen - EOS by Becker et al . 2014 ApJS).
-    7.   The new planet frame, where the user can add (and eventually plot) some personal exoplanets by respecting a defined pattern: "['planet-name, Mass, σm+, σm-, Radius, σr+, σr-, T_eq(K), Age]%[...]". It is also possible to choose to filter them using the temperature and to plot the labels permanently.
+    3.   The histogram settings frame, where the user is allowed to change the histograms characteristics, like the amount of bin (one for each histogram, mass, radius, and ζ). He can also choose the "Y" axis scale.
+    4.   The envelope frame, where the user can plot (or not) the envelope composition choosing between "H2O", "Silicates", "Fe", or "None". It is also possible to choose the CMAP color by selecting one from the proposed (all of them are default matplotlib CMAP).
+    5.   The pure-Hydrogen frame, where the user checks which mass-radius curves of the "isentropic" pure-Hydrogen compositions will be added into the background (based on the mass-radius curves reported on [Becker:2014]). Isentropic means that we assume the specific entropy of the envelope from top to bottom remains the same due to internal convection. This is usually assumed for deep fluidic envelopes because the presence of an internal heat source from the central region of the planet would drive such convection. These curves from bottom upward are for speciﬁc entropy S (eV/1000K/atom) = 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, and 1.0 correspondingly. One could see that both Saturn and Jupiter lie very close to the S (eV/1000K/atom) = 0.3 curves, which is considered to be a relatively cold isentropic profile. The nominal surface of truncation of calculation for these mass-radius curves is taken at a density of 0.01 g/cc
+    6.   The new planet frame, where the user can add (and eventually plot) planets that are not present in the catalog, to see how they will be plotted in that context. He must compile each enabled text field to correctly add the planet to the list. The user has to click on the green button "Add Planet to list" once all the fields are filled. To delete a planet from the list, the user has to choose the element to delete from the list and then click the red button "Delete Planet from list". It is also possible to choose to filter them by using the current limits imposed for each enabled characteristic, otherwise the planet will be plotted only based on the Mass Radius boundaries. The user can also choose to visualize the labels permanently.
+    7.   The running frame, which contains all the widgets used to run properly the internal algorithm and plot the various histograms and graphs. The user can choose a particular upper limit for the error percentage of both mass and radius parameters. To run the current situation (defined by the filters, envelope, and other features) the user has to click the green button "Plot current situation". In case he wants to plot the graphs with a percentage error increased/decreased by one, he could click on the "+"/"-" button corresponding to the parameter (mass or radius) he wants to update. Furthermore, by clicking the "Play" button of the corresponding parameter, the related error upper limit will increase/decrease continuously every four seconds, depending on the verse chosen (Forward/Backward).
     8.   The export frame, where is possible to export the following plot in eps, pdf, or jpg format:
          -   Mass-Radius plot.
          -   Mass histogram.
@@ -84,8 +87,8 @@ The second GUI is divided into two macro frames too:
 
 # Libraries installation
 
-This tool is developed in Python and use the Tkinter library to generate both the GUI which is composed by.
-The software imports some external libraries (i.e. Pillow, Numpy, Pandas) which installation commands are:
+This tool is developed in Python and uses the Tkinter library to generate both the GUI which is composed by.
+The software imports some external libraries (i.e. Pillow, Numpy, Pandas) whose installation commands are:
 -   tkinter: by default with the python distribution. If not, on Ubuntu, "sudo apt-get install python3-tk", on Windows reinstall Python and select Tkinter package;
 -   ImageTk: "pip3 install pillow" or "sudo apt-get install python3-pil python3-pil.imagetk" on Linux;
 -   Numpy: "pip3 install numpy";

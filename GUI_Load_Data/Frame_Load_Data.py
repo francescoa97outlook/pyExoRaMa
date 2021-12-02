@@ -1,9 +1,12 @@
 import tkinter as tk
-import numpy as np
 from tkinter import messagebox as msgbox
 import pandas as pd
 import webbrowser
 from tkinter.filedialog import askopenfilename
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 def infoPandasDocFunc():
@@ -22,6 +25,7 @@ class Frame_Load_Data:
     delim_whitespace = None
     infoPandasDoc = None
     openFile = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -36,6 +40,9 @@ class Frame_Load_Data:
 
         self.openFile = tk.Button(master=self.frame_load_Data, text=" Open File ", bg="orange", font=('Sans', '13', 'bold'), command=self.openFileFunc)
         self.openFile.grid(column=9, row=0)
+
+        self.help_button = tk.Button(master=self.frame_load_Data, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=10, row=0)
 
         self.label = tk.Label(master=self.frame_load_Data, text=' Skiprow * ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(column=0, row=1)

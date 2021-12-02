@@ -1,4 +1,9 @@
 import tkinter as tk
+from tkinter import messagebox as msgbox
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_Scale_Plot:
@@ -13,6 +18,7 @@ class Frame_Scale_Plot:
     radius_label_scale = None
     radius_min = None
     radius_max = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -33,6 +39,8 @@ class Frame_Scale_Plot:
         self.mass_max = tk.Entry(master=self.frame_scale_plot, width=10)
         self.mass_max.grid(column=6, row=0)
         self.mass_max.insert(-1, "3000")
+        self.help_button = tk.Button(master=self.frame_scale_plot, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=7, row=0)
         self.label = tk.Label(master=self.frame_scale_plot, text='R scale: ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
         self.radius_button_scale = tk.Button(master=self.frame_scale_plot, text=" Change scale ", bg="#669999", font=('Sans', '9', 'bold'), command=self.radius_change_Scale)

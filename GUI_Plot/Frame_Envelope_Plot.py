@@ -1,6 +1,11 @@
 import os
 import tkinter as tk
 from PIL import ImageTk, Image
+from tkinter import messagebox as msgbox
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_Envelope_Plot:
@@ -12,6 +17,7 @@ class Frame_Envelope_Plot:
     label_envelope = None
     choose_cmap = None
     choose_cmap_var = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -23,8 +29,6 @@ class Frame_Envelope_Plot:
         self.label_envelope = tk.Label(master=self.frame_envelope_plot, text='None', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.label_envelope.grid(column=2, row=0)
         self.img = ImageTk.PhotoImage(Image.open("Image" + os.sep + "Integral_Symbol.PNG"))
-        self.label = tk.Label(master=self.frame_envelope_plot, image=self.img)
-        self.label.grid(column=0, row=1, columnspan=6)
         self.label = tk.Label(master=self.frame_envelope_plot, text=' CMAP:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=4, row=0)
         options_list = ["inferno", "viridis", "plasma", "magma", "cividis", "Greys", "Purples", "Blues", "Greens", "Oranges", "Reds", "YlOrBr", "YlOrRd", "OrRd", "PuRd", "RdPu", "BuPu", "GnBu", "PuBu", "YlGnBu", "PuBuGn", "BuGn", "YlGn", "brg", "gist_rainbow", "rainbow", "jet", "terrain", "turbo", "nipy_spectral", "gist_ncar"]
@@ -32,6 +36,10 @@ class Frame_Envelope_Plot:
         self.choose_cmap = tk.OptionMenu(self.frame_envelope_plot, self.choose_cmap_var, *options_list)
         self.choose_cmap.grid(column=5, row=0)
         self.choose_cmap_var.set("inferno")
+        self.help_button = tk.Button(master=self.frame_envelope_plot, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=6, row=0)
+        self.label = tk.Label(master=self.frame_envelope_plot, image=self.img)
+        self.label.grid(column=0, row=1, columnspan=7)
         self.frame_envelope_plot.pack(padx=3, pady=3)
 
     def changeEnvelope(self):

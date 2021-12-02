@@ -1,6 +1,11 @@
 import tkinter as tk
+from tkinter import messagebox as msgbox
 
 import pandas as pd
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_New_Planet:
@@ -44,6 +49,7 @@ class Frame_New_Planet:
     check_radius_star = None
     check_age_host = None
     options_list = None
+    help_button = None
 
     def __init__(self, window, gui, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
         self.gui = gui
@@ -68,6 +74,9 @@ class Frame_New_Planet:
         self.label_new_planet_check_var = tk.IntVar()
         self.label_new_planet_check = tk.Checkbutton(master=self.frame_new_planet, text="Show label(s)?", variable=self.label_new_planet_check_var, fg="#cc3300", font=('Sans', '9', 'bold'))
         self.label_new_planet_check.grid(column=6, row=0, columnspan=3)
+
+        self.help_button = tk.Button(master=self.frame_new_planet, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=9, row=0)
 
         self.label = tk.Label(master=self.frame_new_planet, text='M Pl:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)

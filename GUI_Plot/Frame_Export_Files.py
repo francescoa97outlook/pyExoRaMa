@@ -1,6 +1,11 @@
 import os
 import tkinter as tk
 from datetime import datetime
+from tkinter import messagebox as msgbox
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_Export_Files:
@@ -28,6 +33,7 @@ class Frame_Export_Files:
     padding_y = None
     dpi_label = None
     dpi_entry = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -79,6 +85,8 @@ class Frame_Export_Files:
         self.dpi_entry = tk.Entry(master=self.frame_export_files, width=8)
         self.dpi_entry.grid(column=6, row=0, rowspan=6)
         self.dpi_entry.insert(-1, "300")
+        self.help_button = tk.Button(master=self.frame_export_files, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=7, row=0)
         self.label = tk.Label(master=self.frame_export_files, text='Export planet table: ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=5)
         self.export_selected_planets_table = tk.Button(master=self.frame_export_files, text=" Selected Planets ", bg="#ffff66", font=('Sans', '9', 'bold'), command=self.exportSelectedPlanets)
@@ -91,73 +99,85 @@ class Frame_Export_Files:
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.mass_radius_plot.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.pdf', format='pdf', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.pdf', format='pdf',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportMassRadiusPlotEps(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.mass_radius_plot.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.eps', format='eps', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.eps', format='eps',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportMassRadiusPlotJpg(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.mass_radius_plot.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.jpg', format='jpg', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_MassRadiusPlot.jpg', format='jpg',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetRadiusPdf(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_radius.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.pdf', format='pdf', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.pdf', format='pdf',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetRadiusEps(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_radius.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.eps', format='eps', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.eps', format='eps',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetRadiusJpg(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_radius.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.jpg', format='jpg', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramRadius.jpg', format='jpg',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetMassPdf(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_mass.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.pdf', format='pdf', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.pdf', format='pdf',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetMassEps(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_mass.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.eps', format='eps', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.eps', format='eps',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramPlanetMassJpg(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_mass.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.jpg', format='jpg', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramMass.jpg', format='jpg',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramZetaPdf(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_zeta.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.pdf', format='pdf', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.pdf', format='pdf',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramZetaEps(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_zeta.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.eps', format='eps', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.eps', format='eps',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportHistogramZetaJpg(self):
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         bbox = self.gui.frame_output_plot.histogram_zeta.get_tightbbox(self.gui.frame_output_plot.plot_combined_fig.canvas.get_renderer(), call_axes_locator=True)
-        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.jpg', format='jpg', bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
+        self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_HistogramZeta.jpg', format='jpg',
+                                                             bbox_inches=bbox.transformed(self.gui.frame_output_plot.plot_combined_fig.dpi_scale_trans.inverted()), dpi=int(self.dpi_entry.get()))
 
     def exportCombinedPlotPdf(self):
         now = datetime.now()

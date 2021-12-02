@@ -7,6 +7,10 @@ import pandas as pd
 import GUI_Plot.Gui
 
 
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+
+
 def deleteRow(data, index):
     data0 = (data.drop(index, axis=1).join(data[index].apply(pd.to_numeric, errors='coerce')))
     data0 = data0[data0[index].notnull()]
@@ -63,6 +67,7 @@ class Frame_Constrains:
     character_delete_row = None
     character_delete_row_var = None
     character_delete_row_entry = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -78,6 +83,9 @@ class Frame_Constrains:
         self.conf_entry = tk.Entry(master=self.frame_constrains)
         self.conf_entry.grid(padx=3, column=8, row=0)
         self.conf_entry.insert(tk.END, "configuration")
+
+        self.help_button = tk.Button(master=self.frame_constrains, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=9, row=0)
 
         self.save_file = tk.Button(master=self.frame_constrains, width=20, text=" Save File ", bg="#66ccff", font=('Sans', '13', 'bold'), command=self.saveFileFunc)
         self.save_file.grid(padx=3, column=7, row=1, columnspan=2)

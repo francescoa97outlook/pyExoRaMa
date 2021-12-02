@@ -1,4 +1,9 @@
 import tkinter as tk
+from tkinter import messagebox as msgbox
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_Input_Planets:
@@ -35,6 +40,7 @@ class Frame_Input_Planets:
     check_mass_star = None
     check_radius_star = None
     age_coeff = None
+    help_button = None
 
     def __init__(self, window, gui, age_coeff, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
         self.gui = gui
@@ -53,6 +59,8 @@ class Frame_Input_Planets:
             self.age_host_max.configure(state="disable")
         self.limits = tk.Label(master=self.frame_input_planet, text='i.e. {0, ' + str(14 * self.age_coeff) + '}', fg="red", font=('Sans', '9', 'bold'))
         self.limits.grid(column=3, row=0)
+        self.help_button = tk.Button(master=self.frame_input_planet, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=4, row=0)
         self.t_eff_star_min = tk.Entry(master=self.frame_input_planet, width=10)
         self.t_eff_star_min.grid(column=0, row=1)
         self.t_eff_star_min.insert(tk.END, "2500")
@@ -159,5 +167,5 @@ class Frame_Input_Planets:
         self.limits.grid(column=3, row=8)
         self.show_error_plot_var = tk.IntVar()
         self.show_error_check = tk.Checkbutton(master=self.frame_input_planet, text="Show planets mass/radius errors?", variable=self.show_error_plot_var, fg="#cc3300", font=('Sans', '9', 'bold'))
-        self.show_error_check.grid(column=4, row=0, rowspan=8)
+        self.show_error_check.grid(column=4, row=1, rowspan=7)
         self.frame_input_planet.pack(padx=3, pady=3)

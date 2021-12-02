@@ -1,4 +1,9 @@
 import tkinter as tk
+from tkinter import messagebox as msgbox
+
+
+def helpButtonFunc():
+    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
 
 
 class Frame_Histogram_Info:
@@ -15,6 +20,7 @@ class Frame_Histogram_Info:
     mass_bin_var = None
     radius_bin_var = None
     zeta_bin_var = None
+    help_button = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -39,14 +45,16 @@ class Frame_Histogram_Info:
         self.zeta_bin = tk.OptionMenu(self.frame_histogram_info, self.zeta_bin_var, *numbers)
         self.zeta_bin.grid(column=5, row=0)
         self.zeta_bin_var.set(4)
+        self.help_button = tk.Button(master=self.frame_histogram_info, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
+        self.help_button.grid(column=6, row=0)
         self.mass_btn = tk.Button(master=self.frame_histogram_info, text=" Change scale Mass ", command=self.mass_change_Scale, bg="#669999", font=('Sans', '8', 'bold'))
-        self.mass_btn.grid(column=0, row=1, columnspan=2)
+        self.mass_btn.grid(column=0, row=1)
         self.mass_label_plot = tk.Label(master=self.frame_histogram_info, text='Count', fg="#ff6600", font=('Sans', '8', 'bold'), borderwidth=2, relief="ridge")
-        self.mass_label_plot.grid(column=2, row=1)
+        self.mass_label_plot.grid(column=1, row=1)
         self.radius_btn = tk.Button(master=self.frame_histogram_info, text=" Change scale Radius ", command=self.radius_change_Scale, bg="#669999", font=('Sans', '8', 'bold'))
-        self.radius_btn.grid(column=3, row=1, columnspan=2)
+        self.radius_btn.grid(column=2, row=1, columnspan=2)
         self.radius_label_plot = tk.Label(master=self.frame_histogram_info, text='Count', fg="#ff6600", font=('Sans', '8', 'bold'), borderwidth=2, relief="ridge")
-        self.radius_label_plot.grid(column=5, row=1)
+        self.radius_label_plot.grid(column=4, row=1, columnspan=2)
         self.frame_histogram_info.pack(padx=3, pady=3)
 
     def mass_change_Scale(self):
