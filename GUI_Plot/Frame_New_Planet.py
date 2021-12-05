@@ -85,19 +85,19 @@ class Frame_New_Planet:
         self.label.grid(column=0, row=1)
         self.mass_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_np.grid(column=1, row=1)
-        self.mass_np.insert(tk.END, "0.0913")
+        self.mass_np.insert(tk.END, str(round(7.72 / mass_coeff, 3)))
 
         self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3- Pl [' + mass + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=2, row=1)
         self.mass_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sn_np.grid(column=3, row=1)
-        self.mass_sn_np.insert(tk.END, "0.0157")
+        self.mass_sn_np.insert(tk.END, str(round(0.38 / mass_coeff, 3)))
 
         self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3+ Pl [' + mass + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=4, row=1)
         self.mass_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sp_np.grid(column=5, row=1)
-        self.mass_sp_np.insert(tk.END, "0.0157")
+        self.mass_sp_np.insert(tk.END, str(round(0.286 / mass_coeff, 3)))
 
         if radius_coeff == 1:
             rad = "⊕"
@@ -108,21 +108,21 @@ class Frame_New_Planet:
         self.label.grid(column=6, row=1)
         self.radius_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_np.grid(column=7, row=1)
-        self.radius_np.insert(tk.END, "0.473")
+        self.radius_np.insert(tk.END, str(round(1.89 / radius_coeff, 3)))
 
         self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3- Pl [' + rad + ']:', fg="blue",
                               font=('Sans', '8', 'bold'))
         self.label.grid(column=8, row=1)
         self.radius_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_sn_np.grid(column=9, row=1)
-        self.radius_sn_np.insert(tk.END, "0.0089")
+        self.radius_sn_np.insert(tk.END, str(round(0.0437 / radius_coeff, 3)))
 
         self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3+ Pl [' + rad + ']:', fg="blue",
                               font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=2)
         self.radius_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_sp_np.grid(column=1, row=2)
-        self.radius_sp_np.insert(tk.END, "0.0089")
+        self.radius_sp_np.insert(tk.END, str(round(0.00459 / radius_coeff, 3)))
 
         if age_coeff == 1000:
             age = "Myr"
@@ -140,7 +140,7 @@ class Frame_New_Planet:
         self.label.grid(column=4, row=2)
         self.tstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.tstar_np.grid(column=5, row=2)
-        self.tstar_np.insert(tk.END, "0")
+        self.tstar_np.insert(tk.END, "5172")
         if not check_tstar:
             self.tstar_np.configure(state="disable")
 
@@ -148,7 +148,7 @@ class Frame_New_Planet:
         self.label.grid(column=6, row=2)
         self.mstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mstar_np.grid(column=7, row=2)
-        self.mstar_np.insert(tk.END, "0")
+        self.mstar_np.insert(tk.END, "0.873")
         if not check_mass_star:
             self.mstar_np.configure(state="disable")
 
@@ -156,15 +156,15 @@ class Frame_New_Planet:
         self.label.grid(column=8, row=2)
         self.rstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.rstar_np.grid(column=9, row=2)
-        self.rstar_np.insert(tk.END, "0")
+        self.rstar_np.insert(tk.END, "0.954")
         if not check_radius_star:
             self.rstar_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='P orb [days]:', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='P orb [years]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=3)
         self.p_orb_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.p_orb_np.grid(column=1, row=3)
-        self.p_orb_np.insert(tk.END, "0")
+        self.p_orb_np.insert(tk.END, "0.737")
         if not check_p_orb:
             self.p_orb_np.configure(state="disable")
 
@@ -172,7 +172,7 @@ class Frame_New_Planet:
         self.label.grid(column=2, row=3)
         self.a_orb_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.a_orb_np.grid(column=3, row=3)
-        self.a_orb_np.insert(tk.END, "0")
+        self.a_orb_np.insert(tk.END, "0.0154")
         if not check_a_orb:
             self.a_orb_np.configure(state="disable")
 
@@ -180,7 +180,7 @@ class Frame_New_Planet:
         self.label.grid(column=4, row=3)
         self.fe_h_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.fe_h_np.grid(column=5, row=3)
-        self.fe_h_np.insert(tk.END, "0")
+        self.fe_h_np.insert(tk.END, "0.35")
         if not check_FeH:
             self.fe_h_np.configure(state="disable")
 
@@ -188,7 +188,7 @@ class Frame_New_Planet:
         self.label.grid(column=6, row=3)
         self.tplanet_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.tplanet_np.grid(column=7, row=3)
-        self.tplanet_np.insert(tk.END, "700")
+        self.tplanet_np.insert(tk.END, "2349")
         if not check_teq:
             self.tplanet_np.configure(state="disable")
 
@@ -196,7 +196,7 @@ class Frame_New_Planet:
         self.label.grid(column=8, row=3)
         self.ecc_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.ecc_np.grid(column=9, row=3)
-        self.ecc_np.insert(tk.END, "0")
+        self.ecc_np.insert(tk.END, "0.05")
         if not check_ecc:
             self.ecc_np.configure(state="disable")
 
@@ -204,7 +204,7 @@ class Frame_New_Planet:
         self.label.grid(column=0, row=4)
         self.name_np = tk.Entry(master=self.frame_new_planet, width=10)
         self.name_np.grid(column=1, row=4)
-        self.name_np.insert(tk.END, "TOI-1710 b")
+        self.name_np.insert(tk.END, "55_Cnc_e")
 
         self.add_planet_btn = tk.Button(master=self.frame_new_planet, text="Add Planet to list", command=self.addPlanet, bg="#00ff00", font=('Sans', '9', 'bold'))
         self.add_planet_btn.grid(column=2, row=4, columnspan=3)

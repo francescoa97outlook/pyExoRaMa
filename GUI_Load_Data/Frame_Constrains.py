@@ -176,7 +176,7 @@ class Frame_Constrains:
         self.R_star_entry.insert(tk.END, "10")
 
         self.P_orb_planet_check_var = tk.BooleanVar()
-        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb (days) ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb [years] ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.P_orb_planet_check_var.set(True)
         self.P_orb_planet_check.grid(padx=3, column=4, row=6)
         self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
@@ -186,7 +186,7 @@ class Frame_Constrains:
         self.P_orb_planet_entry.insert(tk.END, "19")
 
         self.semi_major_axes_planet_check_var = tk.BooleanVar()
-        self.semi_major_axes_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" a orb (AU) ", variable=self.semi_major_axes_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.semi_major_axes_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" a orb [AU] ", variable=self.semi_major_axes_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.semi_major_axes_planet_check_var.set(True)
         self.semi_major_axes_planet_check.grid(padx=3, column=5, row=6)
         self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
@@ -206,7 +206,7 @@ class Frame_Constrains:
         self.eccentricity_planet_entry.insert(tk.END, "20")
 
         self.T_eq_planet_check_var = tk.BooleanVar()
-        self.T_eq_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" T eq (K) ", variable=self.T_eq_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.T_eq_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" T eq [K] ", variable=self.T_eq_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.T_eq_planet_check_var.set(True)
         self.T_eq_planet_check.grid(padx=3, column=7, row=6)
         self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
@@ -216,7 +216,7 @@ class Frame_Constrains:
         self.T_eq_planet_entry.insert(tk.END, "38")
 
         self.age_host_check_var = tk.BooleanVar()
-        self.age_host_check = tk.Checkbutton(master=self.frame_constrains, text=" Age (Myr) ", variable=self.age_host_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.age_host_check = tk.Checkbutton(master=self.frame_constrains, text=" Age ", variable=self.age_host_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.age_host_check_var.set(False)
         self.age_host_check.grid(padx=3, column=8, row=6)
         self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))
