@@ -45,11 +45,15 @@ class Frame_Input_Planets:
     def __init__(self, window, gui, age_coeff, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
         self.gui = gui
         self.age_coeff = age_coeff
+        if age_coeff == 1000:
+            age = "Myr"
+        else:
+            age = "Gyr"
         self.frame_input_planet = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
         self.age_host_min = tk.Entry(master=self.frame_input_planet, width=10)
         self.age_host_min.grid(column=0, row=0)
         self.age_host_min.insert(tk.END, "0")
-        self.label = tk.Label(master=self.frame_input_planet, text=' <= Age <= ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_input_planet, text=' <= Age [' + age + ']<= ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=1, row=0)
         self.age_host_max = tk.Entry(master=self.frame_input_planet, width=10)
         self.age_host_max.grid(column=2, row=0)

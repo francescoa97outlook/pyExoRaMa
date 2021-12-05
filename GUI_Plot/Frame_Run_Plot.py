@@ -502,7 +502,7 @@ class Frame_Run_Plot:
             (self.data0[self.index_min_rad] / self.data0[self.index_rad_p] <= sigmaRpercent / 100) &
             (self.data0[self.index_mass_min] / self.data0[self.index_mass_p] <= sigmaMpercent / 100) &
             (self.data0[self.index_mass_max] / self.data0[self.index_mass_p] <= sigmaMpercent / 100) &
-            (self.data0[self.index_rad_p] ** 4 / self.data0[self.index_mass_p] > 0.01)]
+            ((self.data0[self.index_rad_p] * self.radius_coeff) ** 4 / (self.data0[self.index_mass_p] * self.mass_coeff) > 0.01)]
         if self.check_p_orb:
             self.subsetdata = self.subsetdata[(self.Porb_min <= self.subsetdata[self.index_p_orb]) & (self.subsetdata[self.index_p_orb] <= self.Porb_max)]
         if self.check_teq:
@@ -553,7 +553,7 @@ class Frame_Run_Plot:
                                                   (self.newPlanets[self.index_min_rad] / self.newPlanets[self.index_rad_p] <= sigmaRpercent / 100) &
                                                   (self.newPlanets[self.index_mass_min] / self.newPlanets[self.index_mass_p] <= sigmaMpercent / 100) &
                                                   (self.newPlanets[self.index_mass_max] / self.newPlanets[self.index_mass_p] <= sigmaMpercent / 100) &
-                                                  (self.newPlanets[self.index_rad_p] ** 4 / self.newPlanets[self.index_mass_p] > 0.01)]
+                                                  ((self.newPlanets[self.index_rad_p] * self.radius_coeff) ** 4 / (self.newPlanets[self.index_mass_p] * self.mass_coeff) > 0.01)]
                 if self.check_p_orb:
                     self.newPlanets = self.newPlanets[(self.Porb_min <= self.newPlanets[self.index_p_orb]) & (self.newPlanets[self.index_p_orb] <= self.Porb_max)]
                 if self.check_teq:
@@ -694,6 +694,7 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.mass_radius_plot.set_title(
             "Planet Mass-Radius: \u03C3Mp/Mp(%)<=" + str(self.mass_step.get()) + "% \u03C3Rp/Rp(%)<=" + str(
                 self.radius_step.get()) + "%", fontsize=10)
+        self.gui.frame_output_plot.mass_radius_plot.legend(loc="upper left")
         self.gui.frame_output_plot.plot_combined_canvas.draw()
         self.gui.frame_output_plot.plot_combined_canvas.mpl_connect("motion_notify_event", self.hover)
 
@@ -744,7 +745,6 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.mass_radius_plot.plot(xx, yy, "green", label="Silicates")
         yy = pureFunction("pure-high-pressure-ices", x_values)
         self.gui.frame_output_plot.mass_radius_plot.plot(xx, yy, "blue", label="Ices")
-        self.gui.frame_output_plot.mass_radius_plot.legend(loc="upper left")
 
     def plotMassRadiusHydrogen(self):
         self.gui.frame_output_plot.mass_radius_plot.plot(MassRadiusDB.massradiusS03Becker[:, 0], MassRadiusDB.massradiusS03Becker[:, 1])
@@ -777,10 +777,10 @@ class Frame_Run_Plot:
     def plotPlanetTepCat(self):
         X = np.array(self.subsetdata[self.index_mass_p] * self.mass_coeff)
         Y = np.array(self.subsetdata[self.index_rad_p] * self.radius_coeff)
-        deltaYm = np.array(self.subsetdata[self.index_min_rad])
-        deltaYp = np.array(self.subsetdata[self.index_rad_max])
-        deltaXm = np.array(self.subsetdata[self.index_mass_min])
-        deltaXp = np.array(self.subsetdata[self.index_mass_max])
+        deltaYm = np.array(self.subsetdata[self.index_min_rad]) * self.radius_coeff
+        deltaYp = np.array(self.subsetdata[self.index_rad_max]) * self.radius_coeff
+        deltaXm = np.array(self.subsetdata[self.index_mass_min]) * self.mass_coeff
+        deltaXp = np.array(self.subsetdata[self.index_mass_max]) * self.mass_coeff
         d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
@@ -853,9 +853,9 @@ class Frame_Run_Plot:
             filter_cmap = filter_cmap * self.coeff
         else:
             filter_cmap = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100)
+        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, label="Planets")
         if self.show_error_plot:
-            self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+            self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         if self.check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
             if self.cbl is not None:
@@ -875,9 +875,9 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp != 0)]
             d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp != 0)]
             if x1.size != 0:
-                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
+                self.sc1 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v', label="Planets (only \u03C3+ mass)")
                 if self.show_error_plot:
-                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if self.check:
@@ -890,9 +890,9 @@ class Frame_Run_Plot:
             d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp == 0)]
             d4 = deltaXp[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if x1.size != 0:
-                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='^')
+                self.sc2 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='^', label="Planets (only \u03C3- mass)")
                 if self.show_error_plot:
-                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if self.check:
@@ -905,9 +905,9 @@ class Frame_Run_Plot:
         d3 = deltaXm[np.logical_and(deltaXm == 0, deltaXp == 0)]
         d4 = deltaXp[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if x1.size != 0:
-            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
+            self.sc3 = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D', label="Planets (no \u03C3 mass)")
             if self.show_error_plot:
-                self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         self.annot = self.gui.frame_output_plot.mass_radius_plot.axes.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
                                                                                bbox=dict(boxstyle="round", fc="w"),
                                                                                arrowprops=dict(arrowstyle="->"), zorder=102)
@@ -968,10 +968,10 @@ class Frame_Run_Plot:
         tempSubData = self.subsetdata.tail(self.num_new_planets)
         X = np.array(tempSubData[self.index_mass_p] * self.mass_coeff)
         Y = np.array(tempSubData[self.index_rad_p] * self.radius_coeff)
-        deltaYm = np.array(tempSubData[self.index_min_rad])
-        deltaYp = np.array(tempSubData[self.index_rad_max])
-        deltaXm = np.array(tempSubData[self.index_mass_min])
-        deltaXp = np.array(tempSubData[self.index_mass_max])
+        deltaYm = np.array(tempSubData[self.index_min_rad]) * self.radius_coeff
+        deltaYp = np.array(tempSubData[self.index_rad_max]) * self.radius_coeff
+        deltaXm = np.array(tempSubData[self.index_mass_min]) * self.radius_coeff
+        deltaXp = np.array(tempSubData[self.index_mass_max]) * self.radius_coeff
         d1 = deltaYm[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d2 = deltaYp[np.logical_and(deltaXm != 0, deltaXp != 0)]
         d3 = deltaXm[np.logical_and(deltaXm != 0, deltaXp != 0)]
@@ -992,7 +992,7 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
                                                             vmax=self.max_val, zorder=103)
         if self.show_error_plot:
-            self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104)
+            self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=104, alpha=0.5)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
@@ -1008,7 +1008,7 @@ class Frame_Run_Plot:
             if x1.size != 0:
                 self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='v')
                 if self.show_error_plot:
-                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
             x1 = X[np.logical_and(deltaXm != 0, deltaXp == 0)]
             y1 = Y[np.logical_and(deltaXm != 0, deltaXp == 0)]
             if self.check:
@@ -1023,7 +1023,7 @@ class Frame_Run_Plot:
             if x1.size != 0:
                 self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=max, edgecolors="black", zorder=100, marker='^')
                 if self.show_error_plot:
-                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                    self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         x1 = X[np.logical_and(deltaXm == 0, deltaXp == 0)]
         y1 = Y[np.logical_and(deltaXm == 0, deltaXp == 0)]
         if self.check:
@@ -1038,7 +1038,7 @@ class Frame_Run_Plot:
         if x1.size != 0:
             self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap, cmap=plt.cm.get_cmap("jet"), vmin=self.min_val, vmax=self.max_val, edgecolors="black", zorder=100, marker='D')
             if self.show_error_plot:
-                self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101)
+                self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         if self.add2:
             for i in range(self.num_new_planets):
                 if X[i] >= self.mmax / 3:

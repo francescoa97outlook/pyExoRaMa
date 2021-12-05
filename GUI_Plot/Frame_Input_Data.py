@@ -55,7 +55,7 @@ class Frame_Input_Data:
         # Pure Hydrogen
         self.frame_pure_hydrogen = Frame_Pure_Hydrogen.Frame_Pure_Hydrogen(self.frame_input_master, gui)
         # New Planet
-        self.frame_new_planet = Frame_New_Planet.Frame_New_Planet(self.frame_input_master, gui, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star)
+        self.frame_new_planet = Frame_New_Planet.Frame_New_Planet(self.frame_input_master, gui, mass_coeff, radius_coeff, age_coeff, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star)
         # Run Plot
         self.frame_run_plot = Frame_Run_Plot.Frame_Run_Plot(self.frame_input_master, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb,
                                                             index_teq, index_mass_min, index_min_rad, index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host,
