@@ -159,7 +159,7 @@ def applyFunction(type_name, x, r):
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Plot options. \n\nThe user can plot planets with mass and radius measured with a relative uncertainty better than a specific threshold (in %). \nThe threshold can be increased/decreased by steps of 1% by using the +/- button. \nBy pushing the button '\u25B6', the threshold (for mass or radius) is increased automatically by steps of 1%, and the mass-radius diagram is updated in a sequence, adding progressively to the plot the planets with less precise measurements. \n\nFrom the drop down menu, the user can select the parameter to be used in the 3D colormap plot. \n\nThe green button 'Plot' will refresh the mass-radius diagram after any change to the input values and selected options made by the user.")
 
 
 class Frame_Run_Plot:
@@ -322,8 +322,6 @@ class Frame_Run_Plot:
         self.mass_verse_btn.grid(column=5, row=0)
         self.mass_label_verse = tk.Label(master=self.frame_run_plot, text='Forward', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.mass_label_verse.grid(column=6, row=0)
-        self.label = tk.Label(master=self.frame_run_plot, text='Choose scatter plot characterization:', fg="blue", font=('Sans', '9', 'bold'))
-        self.label.grid(column=7, row=0, columnspan=2)
         self.help_button = tk.Button(master=self.frame_run_plot, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
         self.help_button.grid(column=9, row=0)
         self.label = tk.Label(master=self.frame_run_plot, text='\u03C3Rp/Rp(%)', fg="blue", font=('Sans', '9', 'bold'))
@@ -364,12 +362,12 @@ class Frame_Run_Plot:
             options_list.append("Semi-major axis")
         self.choose_filter_map_var = tk.StringVar()
         self.choose_filter_map = tk.OptionMenu(self.frame_run_plot, self.choose_filter_map_var, *options_list)
-        self.choose_filter_map.grid(column=7, row=1)
+        self.choose_filter_map.grid(column=7, row=0, rowspan=2)
         self.choose_filter_map_var.set("None")
-        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text="Plot Current Situation", height=2,
-                                                    bg="#00ff00", font=('Sans', '9', 'bold'),
+        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text="PLOT", width=15,
+                                                    bg="#00ff00", font=('Sans', '13', 'bold'),
                                                     command=self.plotCurrentSituation)
-        self.plot_current_situation_btn.grid(column=8, row=1)
+        self.plot_current_situation_btn.grid(column=8, row=0, rowspan=2)
         self.frame_run_plot.pack(padx=3, pady=3)
 
     def massStepBackBtn(self):

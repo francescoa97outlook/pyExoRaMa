@@ -69,7 +69,7 @@ class Frame_Load_Data:
         self.label = tk.Label(master=self.frame_load_Data, text='')
         self.label.grid(column=0, columnspan=5, row=3)
 
-        self.label = tk.Label(master=self.frame_load_Data, text=' Click the following button for more information ', fg="red", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_load_Data, text=' Click the yellow button for more information ', fg="red", font=('Sans', '13', 'bold'))
         self.label.grid(column=0, columnspan=5, row=4)
 
         self.infoPandasDoc = tk.Button(master=self.frame_load_Data, text=" Pandas Documentation read_csv ", bg="yellow", width=30, font=('Sans', '13', 'bold'), command=infoPandasDocFunc)

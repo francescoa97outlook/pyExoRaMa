@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot options. Single/new planets can be included and highlighted in the mass-radius diagram. The 'Add Planet to the list' button will allow the user to build a list of planets to be included in the mass-radius diagram. The list of added planets will appear in the drop down menu on the right. By pushing the 'Delete Planet to the list' will remove the planet appearing in the drop down menu from the list of planets to be plotted.")
+    msgbox.showinfo(title="INFO", message="Plot options: \nSingle/new planets can be included and highlighted in the mass-radius diagram. \nThe 'Add Planet to the list' button will allow the user to build a list of planets to be included in the mass-radius diagram. \nThe list of added planets will appear in the drop down menu on the right. \nBy pushing the 'Delete Planet to the list' will remove the planet appearing in the drop down menu from the list of planets to be plotted. \nThe user can select the option 'filter new planet(s)' to plot the newly added planets on the diagram only if all the planet and star parameters are within the ranges initially defined. \nBy deselecting this option, the newly added planet is included in the plot regardless of the user-defined constraints on the parameters.")
 
 
 class Frame_New_Planet:
@@ -227,7 +227,7 @@ class Frame_New_Planet:
 
     def addPlanet(self):
         if self.name_np.get() in self.options_list:
-            msgbox.showinfo(title="Error", message="The planet is already present in the list.")
+            msgbox.showinfo(title="Error", message="The planet is already present in the list. Delete and add it again to the list after the changes have been applied")
             return
         new_row = {"Name": self.name_np.get(), "Mass_p": float(self.mass_np.get()), "Mass_sn_p": float(self.mass_sn_np.get()),
                    "Mass_sp_p": float(self.mass_sp_np.get()), "Radius_p": float(self.radius_np.get()), "Radius_sn_p": float(self.radius_sn_np.get()),

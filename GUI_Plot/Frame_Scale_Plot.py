@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot and statistical options: Modify the scale and range of planet mass and radius to be used in the diagram.")
+    msgbox.showinfo(title="INFO", message="Plot and statistical options: \nModify the scale and range of planet mass and radius to be used in the diagram.")
 
 
 class Frame_Scale_Plot:

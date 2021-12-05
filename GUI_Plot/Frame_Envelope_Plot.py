@@ -5,7 +5,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot options: Choose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). The corresponding mass-radius theroretical models will be plotted, with the different speciﬁc entropy S (eV/1000K/atom) countours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).")
+    msgbox.showinfo(title="INFO", message="Plot options: \nChoose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). \nThe corresponding mass-radius theoretical models will be plotted, with the different specific entropy S (eV/1000K/atom) contours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).")
 
 
 class Frame_Envelope_Plot:

@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot options: Selecting this options will plot mass-radius curves of different specific entropy S which are especially interesting for comparing exoplanet gas giants.")
+    msgbox.showinfo(title="INFO", message="Plot options: \nSelecting this options will plot mass-radius curves of different specific entropy S which are especially interesting for comparing exoplanet gas giants.")
 
 
 class Frame_Pure_Hydrogen:

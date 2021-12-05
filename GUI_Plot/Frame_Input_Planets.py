@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot and statistical options: Insert the range for each selected parameter. Any of this parameter can be used as the third variable in the 3D colormap plot.\n\nSelect the “Show planet mass(radius) errors?” if you want the error bars to be displayed in the mass-radius diagram.")
+    msgbox.showinfo(title="INFO", message="Plot and statistical options: \nInsert the range for each selected parameter. Any of this parameter can be used as the third variable in the 3D colormap plot.\n\nSelect the “Show planet mass(radius) errors?” if you want the error bars to be displayed in the mass-radius diagram.")
 
 
 class Frame_Input_Planets:
@@ -64,7 +64,7 @@ class Frame_Input_Planets:
         self.limits = tk.Label(master=self.frame_input_planet, text='i.e. {0, ' + str(14 * self.age_coeff) + '}', fg="red", font=('Sans', '9', 'bold'))
         self.limits.grid(column=3, row=0)
         self.help_button = tk.Button(master=self.frame_input_planet, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
-        self.help_button.grid(column=4, row=0)
+        self.help_button.grid(column=5, row=0)
         self.t_eff_star_min = tk.Entry(master=self.frame_input_planet, width=10)
         self.t_eff_star_min.grid(column=0, row=1)
         self.t_eff_star_min.insert(tk.END, "2500")

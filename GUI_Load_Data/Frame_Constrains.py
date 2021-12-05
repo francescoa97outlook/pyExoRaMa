@@ -76,7 +76,7 @@ class Frame_Constrains:
         self.label = tk.Label(master=self.frame_constrains, text='Planet and stellar parameters selection tool.', fg="green", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=0, columnspan=7)
 
-        self.label = tk.Label(master=self.frame_constrains, text='Please note: \n1) CN = column number \n2) a string (with no blank spaces) with the planet name must be the first (CN=0) ', fg="green", font=('Sans', '13', 'normal'))
+        self.label = tk.Label(master=self.frame_constrains, text='Please note: \n1) CN = column number \n2) The column containing the planet name must be the first (CN=0) ', fg="green", font=('Sans', '13', 'normal'))
         self.label.grid(padx=3, column=0, row=1, columnspan=7, rowspan=2)
 
         self.label = tk.Label(master=self.frame_constrains, text=' Filename (without extension) ', fg="#66ccff", font=('Sans', '13', 'bold'))
