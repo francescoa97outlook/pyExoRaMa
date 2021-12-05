@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Plot options. Single/new planets can be included and highlighted in the mass-radius diagram. The 'Add Planet to the list' button will allow the user to build a list of planets to be included in the mass-radius diagram. The list of added planets will appear in the drop down menu on the right. By pushing the 'Delete Planet to the list' will remove the planet appearing in the drop down menu from the list of planets to be plotted.")
 
 
 class Frame_New_Planet:
@@ -214,6 +214,9 @@ class Frame_New_Planet:
         self.update_menu()
 
     def addPlanet(self):
+        if self.name_np.get() in self.options_list:
+            msgbox.showinfo(title="Error", message="The planet is already present in the list.")
+            return
         new_row = {"Name": self.name_np.get(), "Mass_p": float(self.mass_np.get()), "Mass_sn_p": float(self.mass_sn_np.get()),
                    "Mass_sp_p": float(self.mass_sp_np.get()), "Radius_p": float(self.radius_np.get()), "Radius_sn_p": float(self.radius_sn_np.get()),
                    "Radius_sp_p": float(self.radius_sp_np.get())}

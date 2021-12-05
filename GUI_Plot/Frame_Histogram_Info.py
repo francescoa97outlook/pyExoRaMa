@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Plot and statistical options: Modify the number of bins to be used for the planet mass/radius histograms, and how to represent the counts (linear or logarithmic scale).")
 
 
 class Frame_Histogram_Info:

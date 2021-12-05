@@ -366,7 +366,7 @@ class Frame_Run_Plot:
         self.choose_filter_map = tk.OptionMenu(self.frame_run_plot, self.choose_filter_map_var, *options_list)
         self.choose_filter_map.grid(column=7, row=1)
         self.choose_filter_map_var.set("None")
-        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text="Plot Current Situation",
+        self.plot_current_situation_btn = tk.Button(master=self.frame_run_plot, text="Plot Current Situation", height=2,
                                                     bg="#00ff00", font=('Sans', '9', 'bold'),
                                                     command=self.plotCurrentSituation)
         self.plot_current_situation_btn.grid(column=8, row=1)

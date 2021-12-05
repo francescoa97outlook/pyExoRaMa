@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Plot and statistical options: Insert the range for each selected parameter. Any of this parameter can be used as the third variable in the 3D colormap plot.\n\nSelect the “Show planet mass(radius) errors?” if you want the error bars to be displayed in the mass-radius diagram.")
 
 
 class Frame_Input_Planets:

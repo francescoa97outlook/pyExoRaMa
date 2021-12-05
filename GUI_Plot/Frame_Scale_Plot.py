@@ -3,7 +3,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Plot and statistical options: Modify the scale and range of planet mass and radius to be used in the diagram.")
 
 
 class Frame_Scale_Plot:
@@ -23,7 +23,7 @@ class Frame_Scale_Plot:
     def __init__(self, window, gui):
         self.gui = gui
         self.frame_scale_plot = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
-        self.label = tk.Label(master=self.frame_scale_plot, text='M scale: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_scale_plot, text='Planet mass scale: ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=0)
         self.mass_button_scale = tk.Button(master=self.frame_scale_plot, text=" Change scale ", bg="#669999", font=('Sans', '9', 'bold'), command=self.mass_change_Scale)
         self.mass_button_scale.grid(column=1, row=0)
@@ -41,7 +41,7 @@ class Frame_Scale_Plot:
         self.mass_max.insert(-1, "3000")
         self.help_button = tk.Button(master=self.frame_scale_plot, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
         self.help_button.grid(column=7, row=0)
-        self.label = tk.Label(master=self.frame_scale_plot, text='R scale: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_scale_plot, text='Planet radius scale: ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=1)
         self.radius_button_scale = tk.Button(master=self.frame_scale_plot, text=" Change scale ", bg="#669999", font=('Sans', '9', 'bold'), command=self.radius_change_Scale)
         self.radius_button_scale.grid(column=1, row=1)

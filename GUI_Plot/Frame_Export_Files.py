@@ -5,7 +5,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Here can be exported each plot by clicking on the effective button. It is also possible to plot all the charts in one figure. The user can choose the DPI of each file.\n\nThe last two buttons allow to export all or the selected planets from the catalogue in a CSV file.")
 
 
 class Frame_Export_Files:

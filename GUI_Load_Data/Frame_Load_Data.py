@@ -6,7 +6,7 @@ from tkinter.filedialog import askopenfilename
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Skiprow: is an integer. If 1, the first row (header) will be ignored (it is required for the on-line TEPCAT catalogue. If 0, the file does not contain an header.\n\nDelim_whitespace: select this option if the columns of the catalogue are separated by blank spaces.\n\nDelimiter: is a string. It represents the character used in the catalogue to separate the columns.")
 
 
 def infoPandasDocFunc():
@@ -44,7 +44,7 @@ class Frame_Load_Data:
         self.help_button = tk.Button(master=self.frame_load_Data, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
         self.help_button.grid(column=10, row=0)
 
-        self.label = tk.Label(master=self.frame_load_Data, text=' Skiprow * ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_load_Data, text=' Skiprow ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(column=0, row=1)
 
         self.skiprow = tk.Entry(master=self.frame_load_Data, width=10)
@@ -52,11 +52,11 @@ class Frame_Load_Data:
         self.skiprow.insert(tk.END, "1")
 
         self.delim_whitespace_var = tk.BooleanVar()
-        self.delim_whitespace = tk.Checkbutton(master=self.frame_load_Data, text=" Delim_whitespace ** ", variable=self.delim_whitespace_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.delim_whitespace = tk.Checkbutton(master=self.frame_load_Data, text=" Delim_whitespace ", variable=self.delim_whitespace_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.delim_whitespace_var.set(True)
         self.delim_whitespace.grid(column=5, row=1)
 
-        self.label = tk.Label(master=self.frame_load_Data, text=' Delimiter *** ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_load_Data, text=' Delimiter ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(column=8, row=1)
 
         self.delimiter = tk.Entry(master=self.frame_load_Data, width=10)
@@ -66,13 +66,14 @@ class Frame_Load_Data:
         self.loadData = tk.Button(master=self.frame_load_Data, width=30, height=2, text=" Load Data ", bg="#00ff00", font=('Sans', '13', 'bold'), command=self.loadDataFunc)
         self.loadData.grid(column=0, columnspan=10, row=2)
 
-        self.label = tk.Label(master=self.frame_load_Data,
-                              text='NB: header is automatically skipped\n* In some cases (like Tepcat catalogue) skiprow should remain at least 1 to avoid the reading of merged columns (or column names)\n** Check if your table uses space as delimiter\n*** The columns delimiter\n\nClick the button below for more information',
-                              fg="red", font=('Sans', '13', 'bold'))
-        self.label.grid(column=0, row=3, columnspan=10)
+        self.label = tk.Label(master=self.frame_load_Data, text='')
+        self.label.grid(column=0, columnspan=5, row=3)
+
+        self.label = tk.Label(master=self.frame_load_Data, text=' Click the following button for more information ', fg="red", font=('Sans', '13', 'bold'))
+        self.label.grid(column=0, columnspan=5, row=4)
 
         self.infoPandasDoc = tk.Button(master=self.frame_load_Data, text=" Pandas Documentation read_csv ", bg="yellow", width=30, font=('Sans', '13', 'bold'), command=infoPandasDocFunc)
-        self.infoPandasDoc.grid(column=2, row=4, columnspan=5)
+        self.infoPandasDoc.grid(column=5, row=4, columnspan=5)
 
         self.frame_load_Data.pack(padx=3, pady=3)
 

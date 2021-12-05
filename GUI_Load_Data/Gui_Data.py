@@ -15,7 +15,7 @@ class GUI_Data:
     def __init__(self):
         # Window
         self.window = tk.Tk()
-        self.window.geometry("1600x775+100+100")
+        self.window.geometry("1600x620+100+100")
         self.window.title("Import Catalogue Helper")
         self.window.resizable(False, False)
         # Planet Inputs

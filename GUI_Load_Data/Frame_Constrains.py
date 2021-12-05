@@ -8,7 +8,7 @@ import GUI_Plot.Gui
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Unable to load Data, check your the path/URL or the connection")
+    msgbox.showinfo(title="INFO", message="Filename: it is a configuration file containing the data columns selected and saved previously using the corresponding buttons. This avoids doing the column assignments once again if the format of a catalogue did not change.\n\n[Field name] CN: integer number. It indicates the number of the column in the catalogue where the corresponding planetary (or stellar) parameter is located. The column numbering starts from zero. Planet mass and radius (and their errors) are indicated in blue and are always required. Other planetary (or stellar) parameters can be optionally selected. Please note: Don’t modify any of these fields (selected columns and their number) if you uploaded the on-line TEPCAT catalogue.\n\nPlanet mass/radius units: are those used in the catalogue. They are automatically converted to Earth units for plotting the data in the mass-radius diagram.")
 
 
 def deleteRow(data, index):
@@ -73,13 +73,14 @@ class Frame_Constrains:
         self.gui = gui
         self.frame_constrains = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
 
-        self.label = tk.Label(master=self.frame_constrains,
-                              text='Check the constrains that will/can be applied to the dataframe.\nAdd the right column index for each constrains according to your input file.\nPlease, note that the planet\'s mass and radius are mandatory, like their sigma.\nThe software will assume that the planet name is located in the first column.\nNB those constrains are valid for the Tepcat files. \nCN = Column Number',
-                              fg="green", font=('Sans', '13', 'bold'))
-        self.label.grid(padx=3, column=0, row=0, columnspan=7, rowspan=3)
+        self.label = tk.Label(master=self.frame_constrains, text='Planet and stellar parameters selection tool.', fg="green", font=('Sans', '13', 'bold'))
+        self.label.grid(padx=3, column=0, row=0, columnspan=7)
 
-        self.label = tk.Label(master=self.frame_constrains, text=' Filename (no .csv) ', fg="#66ccff", font=('Sans', '13', 'bold'))
-        self.label.grid(padx=3, column=7, row=0)
+        self.label = tk.Label(master=self.frame_constrains, text='Please note: \n1) CN = column number \n2) a string (with no blank spaces) with the planet name must be the first (CN=0) ', fg="green", font=('Sans', '13', 'normal'))
+        self.label.grid(padx=3, column=0, row=1, columnspan=7, rowspan=2)
+
+        self.label = tk.Label(master=self.frame_constrains, text=' Filename (without extension) ', fg="#66ccff", font=('Sans', '13', 'bold'))
+        self.label.grid(padx=3, column=6, row=0, columnspan=2)
         self.conf_entry = tk.Entry(master=self.frame_constrains)
         self.conf_entry.grid(padx=3, column=8, row=0)
         self.conf_entry.insert(tk.END, "configuration")
@@ -88,10 +89,10 @@ class Frame_Constrains:
         self.help_button.grid(column=9, row=0)
 
         self.save_file = tk.Button(master=self.frame_constrains, width=20, text=" Save File ", bg="#66ccff", font=('Sans', '13', 'bold'), command=self.saveFileFunc)
-        self.save_file.grid(padx=3, column=7, row=1, columnspan=2)
+        self.save_file.grid(padx=3, column=6, row=1, columnspan=2)
 
         self.runPlot = tk.Button(master=self.frame_constrains, width=20, text=" Load File ", bg="#cc9900", font=('Sans', '13', 'bold'), command=self.loadFileFunc)
-        self.runPlot.grid(padx=3, pady=3, column=7, row=2, columnspan=2)
+        self.runPlot.grid(padx=3, pady=3, column=6, row=2, columnspan=2)
 
         self.label = tk.Label(master=self.frame_constrains, text=' Mass Planet CN ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=3)
@@ -230,7 +231,7 @@ class Frame_Constrains:
         self.label.grid(padx=3, column=0, row=9, columnspan=9)
 
         words_mass = ["Earth Mass", "Jupiter Mass"]
-        self.label = tk.Label(master=self.frame_constrains, text=' Mass expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Planet mass expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=0, row=10, columnspan=2)
         self.mass_expressed_var = tk.StringVar()
         self.mass_expressed = tk.OptionMenu(self.frame_constrains, self.mass_expressed_var, *words_mass)
@@ -238,7 +239,7 @@ class Frame_Constrains:
         self.mass_expressed_var.set("Jupiter Mass")
 
         words_radius = ["Earth Radius", "Jupiter Radius"]
-        self.label = tk.Label(master=self.frame_constrains, text=' Radius expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Planet radius expressed in: ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=3, row=10, columnspan=2)
         self.radius_expressed_var = tk.StringVar()
         self.radius_expressed = tk.OptionMenu(self.frame_constrains, self.radius_expressed_var, *words_radius)
@@ -246,7 +247,7 @@ class Frame_Constrains:
         self.radius_expressed_var.set("Jupiter Radius")
 
         words_age = ["Gyr", "Myr"]
-        self.label = tk.Label(master=self.frame_constrains, text=' Year expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
+        self.label = tk.Label(master=self.frame_constrains, text=' Age expressed in:  ', fg="blue", font=('Sans', '13', 'bold'))
         self.label.grid(padx=3, column=6, row=10, columnspan=2)
         self.age_expressed_var = tk.StringVar()
         self.age_expressed = tk.OptionMenu(self.frame_constrains, self.age_expressed_var, *words_age)
