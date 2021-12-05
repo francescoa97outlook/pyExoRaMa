@@ -81,19 +81,19 @@ class Frame_New_Planet:
         else:
             mass = "Jup"
 
-        self.label = tk.Label(master=self.frame_new_planet, text='M Pl [' + mass + ']:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M Pl [' + mass + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=1)
         self.mass_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_np.grid(column=1, row=1)
         self.mass_np.insert(tk.END, "0.0913")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3- Pl [' + mass + ']:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3- Pl [' + mass + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=2, row=1)
         self.mass_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sn_np.grid(column=3, row=1)
         self.mass_sn_np.insert(tk.END, "0.0157")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3+ Pl [' + mass + ']:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M \u03C3+ Pl [' + mass + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=4, row=1)
         self.mass_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mass_sp_np.grid(column=5, row=1)
@@ -104,21 +104,21 @@ class Frame_New_Planet:
         else:
             rad = "Jup"
 
-        self.label = tk.Label(master=self.frame_new_planet, text='R Pl [' + rad + ']:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='R Pl [' + rad + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=6, row=1)
         self.radius_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_np.grid(column=7, row=1)
         self.radius_np.insert(tk.END, "0.473")
 
         self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3- Pl [' + rad + ']:', fg="blue",
-                              font=('Sans', '9', 'bold'))
+                              font=('Sans', '8', 'bold'))
         self.label.grid(column=8, row=1)
         self.radius_sn_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_sn_np.grid(column=9, row=1)
         self.radius_sn_np.insert(tk.END, "0.0089")
 
         self.label = tk.Label(master=self.frame_new_planet, text='R \u03C3+ Pl [' + rad + ']:', fg="blue",
-                              font=('Sans', '9', 'bold'))
+                              font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=2)
         self.radius_sp_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.radius_sp_np.grid(column=1, row=2)
@@ -128,7 +128,7 @@ class Frame_New_Planet:
             age = "Myr"
         else:
             age = "Gyr"
-        self.label = tk.Label(master=self.frame_new_planet, text='Age [' + age + ']:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='Age [' + age + ']:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=2, row=2)
         self.age_host_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.age_host_np.grid(column=3, row=2)
@@ -136,7 +136,7 @@ class Frame_New_Planet:
         if not check_age_host:
             self.age_host_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='T Star [K]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='T Star [K]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=4, row=2)
         self.tstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.tstar_np.grid(column=5, row=2)
@@ -144,7 +144,7 @@ class Frame_New_Planet:
         if not check_tstar:
             self.tstar_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='M Star [☉]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='M Star [☉]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=6, row=2)
         self.mstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.mstar_np.grid(column=7, row=2)
@@ -152,7 +152,7 @@ class Frame_New_Planet:
         if not check_mass_star:
             self.mstar_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='R Star [☉]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='R Star [☉]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=8, row=2)
         self.rstar_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.rstar_np.grid(column=9, row=2)
@@ -160,7 +160,7 @@ class Frame_New_Planet:
         if not check_radius_star:
             self.rstar_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='P orb [days]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='P orb [days]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=3)
         self.p_orb_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.p_orb_np.grid(column=1, row=3)
@@ -168,7 +168,7 @@ class Frame_New_Planet:
         if not check_p_orb:
             self.p_orb_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='a orb [AU]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='a orb [AU]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=2, row=3)
         self.a_orb_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.a_orb_np.grid(column=3, row=3)
@@ -176,7 +176,7 @@ class Frame_New_Planet:
         if not check_a_orb:
             self.a_orb_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='[Fe/H]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='[Fe/H]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=4, row=3)
         self.fe_h_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.fe_h_np.grid(column=5, row=3)
@@ -184,7 +184,7 @@ class Frame_New_Planet:
         if not check_FeH:
             self.fe_h_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='T Pl [K]:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='T Pl [K]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=6, row=3)
         self.tplanet_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.tplanet_np.grid(column=7, row=3)
@@ -192,7 +192,7 @@ class Frame_New_Planet:
         if not check_teq:
             self.tplanet_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Ecc:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='Ecc:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=8, row=3)
         self.ecc_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.ecc_np.grid(column=9, row=3)
@@ -200,7 +200,7 @@ class Frame_New_Planet:
         if not check_ecc:
             self.ecc_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='Name:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='Name:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=4)
         self.name_np = tk.Entry(master=self.frame_new_planet, width=10)
         self.name_np.grid(column=1, row=4)
