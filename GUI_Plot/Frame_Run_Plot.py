@@ -977,8 +977,6 @@ class Frame_Run_Plot:
 
         if self.check:
             filter_arr = np.array(tempSubData[self.chosen_index])
-            self.max_val = np.max(filter_arr)
-            self.min_val = np.min(filter_arr)
             filter_cmap = filter_arr[np.logical_and(deltaXm != 0, deltaXp != 0)]
             filter_cmap = filter_cmap * self.coeff
         else:
