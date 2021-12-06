@@ -176,7 +176,7 @@ class Frame_Constrains:
         self.R_star_entry.insert(tk.END, "10")
 
         self.P_orb_planet_check_var = tk.BooleanVar()
-        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb [years] ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
+        self.P_orb_planet_check = tk.Checkbutton(master=self.frame_constrains, text=" P orb [days] ", variable=self.P_orb_planet_check_var, fg="#cc3300", font=('Sans', '13', 'bold'))
         self.P_orb_planet_check_var.set(True)
         self.P_orb_planet_check.grid(padx=3, column=4, row=6)
         self.label = tk.Label(master=self.frame_constrains, text=' CN ', fg="blue", font=('Sans', '13', 'bold'))

@@ -160,7 +160,7 @@ class Frame_New_Planet:
         if not check_radius_star:
             self.rstar_np.configure(state="disable")
 
-        self.label = tk.Label(master=self.frame_new_planet, text='P orb [years]:', fg="blue", font=('Sans', '8', 'bold'))
+        self.label = tk.Label(master=self.frame_new_planet, text='P orb [days]:', fg="blue", font=('Sans', '8', 'bold'))
         self.label.grid(column=0, row=3)
         self.p_orb_np = tk.Entry(master=self.frame_new_planet, width=6)
         self.p_orb_np.grid(column=1, row=3)

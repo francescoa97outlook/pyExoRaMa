@@ -120,7 +120,7 @@ class Frame_Input_Planets:
         self.P_orb_planet_min = tk.Entry(master=self.frame_input_planet, width=10)
         self.P_orb_planet_min.grid(column=0, row=5)
         self.P_orb_planet_min.insert(tk.END, "0.1")
-        self.label = tk.Label(master=self.frame_input_planet, text=' <= P orb [years] <= ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_input_planet, text=' <= P orb [days] <= ', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=1, row=5)
         self.P_orb_planet_max = tk.Entry(master=self.frame_input_planet, width=10)
         self.P_orb_planet_max.grid(column=2, row=5)
