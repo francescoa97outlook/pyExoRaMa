@@ -1,5 +1,5 @@
 ---
-# A python tool for visualizing and analysing the mass-radius diagram for exoplanets in a multi-dimensional framework
+title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanet systems and their hos stars in a multi-dimensional framework
 tags:
   - Python
   - Astronomy
@@ -32,33 +32,34 @@ date: 26 November 2021
 bibliography: paper.bib
 ---
 
-# Summary
+# The power of the mass-radius diagram: A python tool for comparative studies of exoplanet systems and their hos stars in a multi-dimensional framework
 
-We present the python version of the plotting tool originally developed with Mathematica and presented by @Zeng:2021. The code represents a very useful tool for visualizing and manipulating data of extrasolar planets and their host stars in a multi-dimensional parameter space. Our transposition to python presents some new utilities with respect to the original version, and due to the popularity of python in the astrophysics community, the tool can be accessed by a larger number of users interested in exoplanet studies.
+## Summary
 
-# Purpose of the tool
+We present the python version of the plotting tool originally developed with Mathematica and presented by [Zeng:2021]. The code represents a very useful tool for visualizing and manipulating data of extrasolar planets and their host stars in a multi-dimensional parameter space. Our transposition to python presents some new utilities with respect to the original version, and due to the popularity of python in the astrophysics community, the tool can be accessed by a larger number of users interested in exoplanet studies.
 
-[@Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e. planets discovered in orbit around stars different from the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We address the reader to the original paper [@Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets, and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition gives the possibility to identify important patterns which can help to interpret observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and interpreted by @Zeng:2021 thanks to this tool).
-Our python version, which is entirely based on the original code, has a few new utilities which allow the users, for example, to personalise more their own analysis, as detailed in the next Section.
+## Purpose of the tool
 
-# Description of the tool and basic instructions
+[Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e., planets discovered in orbit around stars different from the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We address the reader to the original paper [Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets, and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition gives the possibility to identify important patterns which can help to interpret observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and interpreted by [Zeng:2021] thanks to this tool).
+Our python version, which is entirely based on the original code, has a few new utilities and options which allow the users, for example, to further customize their own analysis, as detailed in the next Section.
 
-This tool is divided into two different GUIs that call each other. Please, note that each frame that will be explained later contains a "?" button that displays a message box containing all the frame information
+## Description of the tool and basic instructions
+
+This tool is divided into two different GUIs that call each other. Please, note that each frame contains a "?" button that displays a message box with details about the frame content.
 
 ##### First GUI
 
 ![GUI that helps the user to personalized the imports process](Import_Catalogue_Helper.PNG)
 
-As the figure above shows, the interface is divided into two macro frames:
--   First frame contains all the widgets used to import the catalog rightness. The user can load his personal exoplanets catalog both by pasting a link (in case the file is from the internet, like the default chosen) or by clicking on the "Open File" button and selecting it from the disk. After that, the user should personalize the import parameters (i.e. skiprow, delimiter) by adapting them to his file. All the parameters' information can be found by following the GUI instructions and clicking on the yellow button named "Pandas documentation read_csv", to open the documentation in the browser.
--   Second frame contains the widgets used to adapt the code to the catalog. Six columns are mandatory to fill to run the tool correctly, which are the planet mass and radius plus their sigma errors (superior and inferior). Note that in case a catalog uses only one column to describe both the superior and inferior sigma, the user has just to write the same column index for both of them. Just below, nine planet characteristics are not mandatory but are useful if the user wants to add more filters to the selection of planets that will be plotted in the following GUI. In case a field is selected, the user must provide the corresponding column index in the appropriate text field. The last part of this frame contains two dropdown menus that indicate if the masses and radius are expressed using the Jovian or Earth characteristics, while the last is used to select the unit of measurement of the age column in the catalog (if present). The final personalization widget (if checked) indicates the character used to delete all the rows that contain it in the first column. At the end of the personalization, the user should press the button "Run Algorithm" to transfer all the important information to the second GUI, which is the core of the tool.
+Fig. 1 shows the GUI that opens when the tool is launched in the terminal. This is the interface which allows the user to upload the catalogue containing the planetary and stellar parameters, and to select which ones will be passed to the second GUI for the analysis. The GUI is divided into two macro frames. The first frame contains all the widgets to import the database in form of a text file. The user can load his own exoplanet catalog both by through a link or by clicking on the "Open File" button and selecting it from a local folder. The link to the on-line TEPCAT cataologue [Southworth:2011] is provided as the default option. 
+The second frame contains the widgets to specify which data columns from the catalog will be passed to the software for further analysis. Six columns are mandatory in order to run the tool correctly, i.e., the planet mass and radius and their upper and lower uncertainties (in case there only one column is used to store the error, the user can use the same column index). The user must provide the column indexes of the selected parameters which correspond to the actual position in the uploaded database. The column indexes corresponding to the TEPCAT catalogue are provided by default. Once pressed the "Run Algorithm" button, the set-up information will be transferred to the second GUI, which represents the core of the tool.
 
 ##### Second GUI
 
 ![GUI for the plots visualization](Manipulate_Planet_Code.PNG)
 
-The second GUI is divided into two macro frames too:
--   The left frame, which in turn is composed of several sub-frames:
+Mirroring the original tool, the second GUI is divided into two macro frames (Fig. 2). The first one contains the options and commands that the user must use to produce plots and histograms, which are shown in the second frame.   
+The frame in the left half of the GUI is composed of several sub-frames, which we describe hereafter briefly:
     1.   The load data frame, which contains only one button which purpose is to load the previous GUI to use another catalog or to change the current import settings.
     2.   The filter catalog frame, which contains the nine inputs filter related to the nine non-mandatory columns from the first GUI. Those are:
          -   "Age", the age of the system from which the planet is from, could be in Myr or Gyr, depending on the user choice.
@@ -73,7 +74,7 @@ The second GUI is divided into two macro frames too:
          It also contains a checkbox that (if active) will show the exoplanet's mass and radius errors bars.
     3.   The histogram settings frame, where the user is allowed to change the histograms characteristics, like the amount of bin (one for each histogram, mass, radius, and ζ). He can also choose the "Y" axis scale.
     4.   The envelope frame, where the user can plot (or not) the envelope composition choosing between "H2O", "Silicates", "Fe", or "None". It is also possible to choose the CMAP color by selecting one from the proposed (all of them are default matplotlib CMAP).
-    5.   The pure-Hydrogen frame, where the user checks which mass-radius curves of the "isentropic" pure-Hydrogen compositions will be added into the background (based on the mass-radius curves reported on [Becker:2014]). Isentropic means that we assume the specific entropy of the envelope from top to bottom remains the same due to internal convection. This is usually assumed for deep fluidic envelopes because the presence of an internal heat source from the central region of the planet would drive such convection. These curves from bottom upward are for speciﬁc entropy S (eV/1000K/atom) = 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, and 1.0 correspondingly. One could see that both Saturn and Jupiter lie very close to the S (eV/1000K/atom) = 0.3 curves, which is considered to be a relatively cold isentropic profile. The nominal surface of truncation of calculation for these mass-radius curves is taken at a density of 0.01 g/cc
+    5.   A frame where the user can use to visualize mass-radius theoretical curves for the iso-entropic pure-Hydrogen composition of the envelope (based on the results of [Becker:2014]). This feature is not present in the original tool by [Zeng:2021]. Iso-entropic means that we assume that the specific entropy of the envelope, from the top to the bottom, remains the same due to internal convection. This is usually assumed for deep fluidic envelopes because the presence of an internal heat source from the central region of the planet would drive such convection. The curves are given for speciﬁc entropy S = 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, and 1.0 (eV/1000K/atom). One could see that both Saturn and Jupiter lie very close to the S (eV/1000K/atom) = 0.3 curves, which is considered to be a relatively cold isentropic profile. The nominal surface of truncation of calculation for these mass-radius curves is taken at a density of 0.01 g/cc
     6.   The new planet frame, where the user can add (and eventually plot) planets that are not present in the catalog, to see how they will be plotted in that context. He must compile each enabled text field to correctly add the planet to the list. The user has to click on the green button "Add Planet to list" once all the fields are filled. To delete a planet from the list, the user has to choose the element to delete from the list and then click the red button "Delete Planet from list". It is also possible to choose to filter them by using the current limits imposed for each enabled characteristic, otherwise the planet will be plotted only based on the Mass Radius boundaries. The user can also choose to visualize the labels permanently.
     7.   The running frame, which contains all the widgets used to run properly the internal algorithm and plot the various histograms and graphs. The user can choose a particular upper limit for the error percentage of both mass and radius parameters. To run the current situation (defined by the filters, envelope, and other features) the user has to click the green button "Plot current situation". In case he wants to plot the graphs with a percentage error increased/decreased by one, he could click on the "+"/"-" button corresponding to the parameter (mass or radius) he wants to update. Furthermore, by clicking the "Play" button of the corresponding parameter, the related error upper limit will increase/decrease continuously every four seconds, depending on the verse chosen (Forward/Backward).
     8.   The export frame, where is possible to export the following plot in eps, pdf, or jpg format:
@@ -83,9 +84,10 @@ The second GUI is divided into two macro frames too:
          -   ζ histogram.
          -   All the plots in one picture.
          The user can also export in CSV format the complete exoplanets catalog or the filtered catalog (with the currently applied filters).
--   The right frame, which contains the plots only.
 
-# Libraries installation
+The modularity of the tool allows to expand the tool further in the future and increase the size of the parameter space, by including new planetary and stellar parameters, and additional theoretical mass-radius curves.
+
+## Libraries installation
 
 This tool is developed in Python and uses the Tkinter library to generate both the GUI which is composed by.
 The software imports some external libraries (i.e. Pillow, Numpy, Pandas) whose installation commands are:
