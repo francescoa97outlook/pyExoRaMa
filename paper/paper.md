@@ -1,5 +1,5 @@
 ---
-title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanet systems and their hos stars in a multi-dimensional framework
+title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their hos stars in a multi-dimensional framework
 tags:
   - Python
   - Astronomy
@@ -32,20 +32,20 @@ date: 26 November 2021
 bibliography: paper.bib
 ---
 
-# The power of the mass-radius diagram: A python tool for comparative studies of exoplanet systems and their hos stars in a multi-dimensional framework
+# The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their hos stars in a multi-dimensional framework
 
 ## Summary
 
-We present the python version of the plotting tool originally developed with Mathematica and presented by [Zeng:2021]. The code represents a very useful tool for visualizing and manipulating data of extrasolar planets and their host stars in a multi-dimensional parameter space. Our transposition to python presents some new utilities with respect to the original version, and due to the popularity of python in the astrophysics community, the tool can be accessed by a larger number of users interested in exoplanet studies.
+We present the python version of the software originally developed with Mathematica by [Zeng:2021]. The code represents a very useful tool for visualizing and manipulating data related to extrasolar planets (or exoplanets, i.e., planets discovered in orbit around stars different from the Sun) and their host stars in a multi-dimensional parameter space. Its versatility enables statistical studies based on the large and constantly increasing number of detected exoplanets, to identify possible interdependence among several physical parameters, and to compare observables with theoretical models describing the exoplanet composition and structure. Our transposition to python presents some new utilities with respect to the original version, and due to the popularity of python in the astrophysics community, the tool is made accessible by a larger number of users interested in exoplanet studies.
 
 ## Purpose of the tool
 
-[Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets (or exoplanets), i.e., planets discovered in orbit around stars different from the Sun. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We address the reader to the original paper [Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that the main advantage is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets, and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition gives the possibility to identify important patterns which can help to interpret observational results on a statistical basis (as for the case of the so-called "exoplanet radius gap" investigated and interpreted by [Zeng:2021] thanks to this tool).
-Our python version, which is entirely based on the original code, has a few new utilities and options which allow the users, for example, to further customize their own analysis, as detailed in the next Section.
+[Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets. Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. We address the reader to the original paper [Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. Here, we only recall that a main advantage offered by this software is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets and their host stars data. Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition, gives the possibility to identify important patterns which can help to interpret observational results on a statistical basis (as for the very interesting case of the so-called "exoplanet radius gap", which has been extensively investigated and discussed by [Zeng:2021]).
+The python version of the code, which is entirely based on the original one, has a few new utilities and options which, in particular, allow the users to further customize their own analysis, as detailed in the next Section. The modularity of the tool allows to expand it further in the future and increase the size of the parameter space, by including new planetary and stellar parameters, and additional theoretical mass-radius curves.
 
 ## Description of the tool and basic instructions
 
-This tool is divided into two different GUIs that call each other. Please, note that each frame contains a "?" button that displays a message box with details about the frame content.
+This tool is divided into two different GUIs that call each other. Please, note that the frames in each GUI contains a "?" button that displays a message box providing details about the frame contents.
 
 ##### First GUI
 
@@ -58,7 +58,7 @@ The second frame contains the widgets to specify which data columns from the cat
 
 ![GUI for the plots visualization](Manipulate_Planet_Code.PNG)
 
-Mirroring the original tool, the second GUI is divided into two macro frames (Fig. 2). The first one contains the options and commands that the user must use to produce plots and histograms, which are shown in the second frame.   
+Mirroring the original tool, the second GUI is divided into two macro frames (Fig. 2). The first one contains the options and commands that enable the user to produce plots and histograms, which are shown in the second frame.   
 The frame in the left half of the GUI is composed of several sub-frames, which we describe hereafter briefly:
     1.   The load data frame, which contains only one button which purpose is to load the previous GUI to use another catalog or to change the current import settings.
     2.   The filter catalog frame, which contains the nine inputs filter related to the nine non-mandatory columns from the first GUI. Those are:
@@ -85,7 +85,7 @@ The frame in the left half of the GUI is composed of several sub-frames, which w
          -   All the plots in one picture.
          The user can also export in CSV format the complete exoplanets catalog or the filtered catalog (with the currently applied filters).
 
-The modularity of the tool allows to expand the tool further in the future and increase the size of the parameter space, by including new planetary and stellar parameters, and additional theoretical mass-radius curves.
+
 
 ## Libraries installation
 
