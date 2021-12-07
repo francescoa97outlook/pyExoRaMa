@@ -1,5 +1,6 @@
 ---
 title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their hos stars in a multi-dimensional framework
+
 tags:
   - Python
   - Astronomy
@@ -8,28 +9,49 @@ tags:
   - Radius
   - Composition
   - Structure
+
 authors:
   - name: Francesco Amadori^[first author]
+    
     orcid: 0000-0003-1316-1033
+    
     affiliation: 1
+    
   - name: Mario Damasso^[co-first author]
+    
     orcid: 0000-0001-9984-4278
+    
     affiliation: 1
+    
   - name: Li Zeng^[co-first author]
+    
     orcid: 0000-0003-1957-6635
+    
     affiliation: "2, 3"
+    
   - name: Alessandro Sozzetti^[co-first author]
+    
     orcid: 0000-0002-7504-365X
+    
     affiliation: 1
+    
 affiliations:
  - index: 1
+   
    name: INAF-Astrophysical Observatory of Torino, Via Osservatorio 20, Pino T.se (To), Italy
+   
  - index: 2   
+   
    name: Department of Earth and Planetary Sciences, Harvard University, 20 Oxford Street, Cambridge, MA 02138, USA
+   
  - index: 3   
+   
    name: Harvard-Smithsonian Center for Astrophysics, 60 Garden Street, Cambridge, MA 02138, USA
+
 date: 26 November 2021
+
 bibliography: paper.bib
+
 ---
 
 # The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their hos stars in a multi-dimensional framework
