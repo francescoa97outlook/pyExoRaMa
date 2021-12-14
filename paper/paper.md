@@ -1,5 +1,5 @@
 ---
-title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their hos stars in a multi-dimensional framework
+title: The power of the mass-radius diagram: A python tool for comparative studies of exoplanetary systems and their host stars in a multi-dimensional framework
 
 tags:
   - Python
