@@ -38,15 +38,19 @@ We present the python version of the software originally developed with Mathemat
 
 The code represents a very useful tool for visualizing and manipulating data related to extrasolar planets (or exoplanets, i.e., planets discovered in orbit around stars different from the Sun) and their host stars in a multi-dimensional parameter space. 
 Its versatility enables statistical studies based on the large and constantly increasing number of detected exoplanets, to identify possible interdependence among several physical parameters, and to compare observables with theoretical models describing the exoplanet composition and structure.
+
 Our transposition to python presents some new features with respect to the original version, and due to the popularity of python in the astrophysics community, the tool is made accessible by a larger number of users interested in exoplanet studies.
 
 ## Purpose of the tool
 
 [@Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets. 
+
 Examining how extrasolar planets, with measured mass and radius, distribute on such a diagram is a key aspect to understand their diversity, and to investigate their physical structure and composition. 
 We address the reader to the original paper [@Zeng:2021] for a detailed description of the scientific rationale that inspired this tool. 
+
 Here, we only recall that a main advantage offered by this software is the possibility to connect the planetary mass and radius to many other physical data related to exoplanets and their host stars data. 
 Cross-checking data in a multi-dimensional parameter space, and the opportunity to compare the measurements with models of planetary structure and composition, gives the possibility to identify important patterns which can help to interpret observational results on a statistical basis (as for the very interesting case of the so-called "exoplanet radius gap", which has been extensively investigated and discussed by [@Zeng:2021]).
+
 The python version of the code, which is entirely based on the original one, has a few new features and options which, in particular, allow the users to further customize their own analysis, as detailed in the next Section. The modularity of the tool allows to expand it further in the future and increase the size of the parameter space, by including new planetary and stellar parameters, and additional theoretical mass-radius curves.
 
 ## Description of the tool and basic instructions
@@ -60,14 +64,16 @@ Please, note that the frames in each GUI contains a "?" button that displays a m
 
 Fig. 1 shows the GUI that opens when the tool is launched in the terminal. 
 This is the interface which allows the user to upload the catalogue containing the planetary and stellar parameters, and to select which ones will be passed to the second GUI for the analysis. 
-The GUI is divided into two macro frames. 
-The first frame contains all the widgets to import the database in form of a text file. 
-The user can load his own exoplanet catalog both by through a link or by clicking on the "Open File" button and selecting it from a local folder. 
-The link to the on-line TEPCAT cataologue [@Southworth:2011] is provided as the default option. 
-The second frame contains the widgets to specify which data columns from the catalog will be passed to the software for further analysis.
+
+The GUI is divided into two macro frames:
+
+- The first frame contains all the widgets to import the database in form of a text file. The user can load his own exoplanet catalog both by through a link or by clicking on the "Open File" button and selecting it from a local folder. The link to the on-line TEPCAT cataologue [@Southworth:2011] is provided as the default option. 
+
+- The second frame contains the widgets to specify which data columns from the catalog will be passed to the software for further analysis.
 Six columns are mandatory in order to run the tool correctly, i.e., the planet mass and radius and their upper and lower uncertainties (in case there only one column is used to store the error, the user can use the same column index).
 The user must provide the column indexes of the selected parameters which correspond to the actual position in the uploaded database. 
 The column indexes corresponding to the TEPCAT catalogue are provided by default.
+  
 Once pressed the "Run Algorithm" button, the set-up information will be transferred to the second GUI, which represents the core of the tool.
 
 ##### Second GUI
@@ -75,8 +81,9 @@ Once pressed the "Run Algorithm" button, the set-up information will be transfer
 ![GUI for the plots visualization](Manipulate_Planet_Code.PNG)
 
 Mirroring the original tool, the second GUI is divided into two macro frames (Fig. 2). 
-The first one contains the options and commands that enable the user to produce plots and histograms, which are shown in the second frame.   
-The frame in the left half of the GUI is composed of several sub-frames, which we describe hereafter briefly:
+
+The first one (in the left half of the GUI) contains the options and commands that enable the user to produce plots and histograms, which are shown in the second frame.   
+It is composed of several sub-frames, which we describe hereafter briefly:
 
 1. The load data frame, which contains only one button which purpose is to load the previous GUI to use another catalog or to change the current import settings.
 2. The filter catalog frame, which contains the nine inputs filter related to the nine non-mandatory columns from the first GUI. Those are:
@@ -113,6 +120,7 @@ The frame in the left half of the GUI is composed of several sub-frames, which w
 ## Libraries installation
 
 This tool is developed in Python and uses the Tkinter library to generate both the GUI which is composed by.
+
 The software imports some external libraries (i.e. Pillow, Numpy, Pandas) whose installation commands are:
 
 - tkinter: by default with the python distribution. If not, on Ubuntu, "sudo apt-get install python3-tk", on Windows reinstall Python and select Tkinter package;
