@@ -1,5 +1,5 @@
 ---
-title: 'Exoplanets Mass-Radius Diagram Generator: A python tool for comparative studies of exoplanetary systems and their host stars in a multi-dimensional framework'
+title: 'pyExoRaMa: an interactive tool to investigate the radius-mass diagram for exoplanets'
 tags:
   - Python
   - Astronomy
