@@ -32,7 +32,7 @@ date: 26 November 2021
 bibliography: paper.bib
 ---
  
-## Summary
+# Summary
 
 We present the python version of the software originally developed with Mathematica by [@Zeng:2021]. 
 
@@ -41,7 +41,7 @@ Its versatility enables statistical studies based on the large and constantly in
 
 Our transposition to python presents some new features with respect to the original version, and due to the popularity of python in the astrophysics community, the tool is made accessible by a larger number of users interested in exoplanet studies.
 
-## Purpose of the tool
+# Statement of need  
 
 [@Zeng:2021] presented a software devised to guide the analysis of the mass-radius diagram of extrasolar planets. 
 
@@ -53,7 +53,7 @@ Cross-checking data in a multi-dimensional parameter space, and the opportunity 
 
 The python version of the code, which is entirely based on the original one, has a few new features and options which, in particular, allow the users to further customize their own analysis, as detailed in the next Section. The modularity of the tool allows to expand it further in the future and increase the size of the parameter space, by including new planetary and stellar parameters, and additional theoretical mass-radius curves.
 
-## Description of the tool and basic instructions
+# Description of the tool and basic instructions
 
 This tool is divided into two different GUIs that call each other. 
 Please, note that the frames in each GUI contains a "?" button that displays a message box providing details about the frame contents.
@@ -115,9 +115,20 @@ It is composed of several sub-frames, which we describe hereafter briefly:
 
    The user can also export in CSV format the complete exoplanets catalog or the filtered catalog (with the currently applied filters).
 
+# Differences between original and python version
 
+Here there is a table showing the differences and new features between the code version written in Mathematica by [@Zeng:2021] and the code written in python:
 
-## Libraries installation
+| Features                                                          | Mathematica                                                                                                                                                                                                                                                                 | Python                                                                                                                                                                                                                                                                                                                                                     |
+|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Import catalog                                                    | TEPCAT is the only catalog currently supported                                                                                                                                                                                                                              | The user can import the catalogue he wants, in each format (i.e. txt, csv, etc.) or online. He must adjust the pandas module import by choosing the right properties in the first GUI                                                                                                                                                                      |
+| Import catalogue options                                          | Due to the fact there is only one catalogue, there are no import options                                                                                                                                                                                                    | The user can choose which properties will be used as constraints (i.e. star data, orbital period, etc.). He can also choose the "measurement units" for planets' masses (Earth or Jupiter), planets' radius (Earth or Jupiter), and host age (Myr, Gyr). These options are added to give the user the possibility to use any personalized catalog he wants |
+| Age import properties                                             | Not present                                                                                                                                                                                                                                                                 | Added the age import properties, to have a filter that allows studying exoplanets with similar age                                                                                                                                                                                                                                                         |
+| Choosing of the third-dimensional variable                        | The only variable is the exoplanet equilibrium temperature                                                                                                                                                                                                                  | It is possible to choose one of the properties selected to import the catalog properly.                                                                                                                                                                                                                                                                    |
+| Mass-radius theoretical curves for the iso-entropic pure-Hydrogen | Not present                                                                                                                                                                                                                                                                 | The user can check these options (described in the previous paragraphs) to visualize mass-radius theoretical curves for the iso-entropic pure-Hydrogen composition of the envelope (based on the results of [@Becker:2014]).                                                                                                                               |
+| Ways to add a new planet                                          | The user needs to write a string in the appropriate text area to add a planet not present in the catalog. This string must contain the planet mass and radius information (expressed in the right measurement unit and with given error) and the temperature of equilibrium | The adding new planet frame requires all the planets' properties given in the first guy. It is possible to add infinite planets due to the fact they are saved in a list                                                                                                                                                                                   |
+
+# Libraries installation
 
 This tool is developed in Python and uses the Tkinter library to generate both the GUI which is composed by.
 
@@ -128,3 +139,5 @@ The software imports some external libraries (i.e. Pillow, Numpy, Pandas) whose 
 - Numpy: "pip3 install numpy";
 - Pandas: "pip3 install pandas";
 - matplotlib: "pip3 install matplotlib".
+
+# References 
