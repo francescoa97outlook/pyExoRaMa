@@ -9,10 +9,7 @@ Anyone is free to use and/or modify their own version of this software for resea
 
 When using the software, please enter the following references:
 
-- for the original version, refer to one of the following quotes:
-
-   - "https://ui.adsabs.harvard.edu/abs/2021ApJ...923..247Z/abstract"
-   - "Zeng, L., Jacobsen, S. B., Hyung, E., Levi, A., Nava, C., Kirk, J., Piaulet, C., Lacedelli, G., Sasselov, D. D., Petaev, M. I., Stewart, S. T., Alam, M. K., López-Morales, M., Damasso, M., & Latham, D. W. (2021). New perspectives on the exoplanet radius gap from a Mathematica tool and visualized water equation of state. The Astrophysical Journal, 923(2), 247. https://doi.org/10.3847/1538-4357/ac3137"
+- for the original version, refer to "https://ui.adsabs.harvard.edu/abs/2021ApJ...923..247Z/abstract";
 - for the python version, refer to the GitHub page (until will be written a dedicated research paper) using the following link: "https://github.com/francescoa97outlook/pyExoRaMa". 
 
 
