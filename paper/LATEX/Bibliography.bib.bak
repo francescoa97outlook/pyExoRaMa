@@ -1,0 +1,27 @@
+@Article{Southworth2011,
+  author    = {John Southworth},
+  journal   = {Monthly Notices of the Royal Astronomical Society},
+  title     = {Homogeneous studies of transiting extrasolar planets - {IV}. Thirty systems with space-based light curves},
+  year      = {2011},
+  month     = {sep},
+  number    = {3},
+  pages     = {2166--2196},
+  volume    = {417},
+  doi       = {10.1111/j.1365-2966.2011.19399.x},
+  publisher = {Oxford University Press ({OUP})},
+}
+
+@Article{Becker2014,
+  author    = {Andreas Becker and Winfried Lorenzen and Jonathan J. Fortney and Nadine Nettelmann and Manuel Schöttler and Ronald Redmer},
+  journal   = {The Astrophysical Journal Supplement Series},
+  title     = {{AB} {INITIO} {EQUATIONS} {OF} {STATE} {FOR} {HYDROGEN} (H-{REOS}.3) {AND} {HELIUM} (He-{REOS}.3) {AND} {THEIR} {IMPLICATIONS} {FOR} {THE} {INTERIOR} {OF} {BROWN} {DWARFS}},
+  year      = {2014},
+  month     = {dec},
+  number    = {2},
+  pages     = {21},
+  volume    = {215},
+  doi       = {10.1088/0067-0049/215/2/21},
+  publisher = {American Astronomical Society},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

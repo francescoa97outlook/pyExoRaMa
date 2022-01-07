@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: model2-names.bst.bst
+Database file #1: Bibliography.bib
+Warning--I didn't find a database entry for "Zeng2021"
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+You've used 2 entries,
+            2990 wiz_defined-function locations,
+            755 strings with 6969 characters,
+and the built_in function-call counts, 1455 in all, are:
+= -- 105
+> -- 60
+< -- 1
++ -- 23
+- -- 21
+* -- 162
+:= -- 219
+add.period$ -- 8
+call.type$ -- 2
+change.case$ -- 17
+chr.to.int$ -- 2
+cite$ -- 2
+duplicate$ -- 102
+empty$ -- 101
+format.name$ -- 25
+if$ -- 259
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 21
+newline$ -- 27
+num.names$ -- 8
+pop$ -- 31
+preamble$ -- 1
+purify$ -- 15
+quote$ -- 0
+skip$ -- 30
+stack$ -- 0
+substring$ -- 59
+swap$ -- 79
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 18
+warning$ -- 0
+while$ -- 9
+width$ -- 0
+write$ -- 46
+(There was 1 warning)
