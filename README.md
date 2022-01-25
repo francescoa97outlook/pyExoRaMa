@@ -11,8 +11,8 @@ When using the software, please enter the following references:
 
 - for the original version, refer to "https://ui.adsabs.harvard.edu/abs/2021ApJ...923..247Z/abstract";
 - for the python version:
-  - refer to the GitHub page (until will be written a dedicated research paper) using the following link: "https://github.com/francescoa97outlook/pyExoRaMa";
-  - refer to https://ascl.net/code/v/3171.  
+  - refer to the GitHub page using the following link: "https://github.com/francescoa97outlook/pyExoRaMa";
+  - refer to this DOI: "doi.org/10.5281/zenodo.5899601"; 
 
 
 #Library installation:
