@@ -163,7 +163,8 @@ def helpButtonFunc():
 
 
 class Frame_Run_Plot:
-    cbl = None
+    cbl_third_coord = None
+    cbl_cmap = None
     gui = None
     frame_run_plot = None
     label = None
@@ -273,6 +274,11 @@ class Frame_Run_Plot:
     check = None
     coeff = None
     help_button = None
+    font_labels = None
+    font_ticks = None
+    ticks_y_lim = None
+    ticks_x_lim = None
+    show_all_planets_labels = None
 
     def __init__(self, window, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                  index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq,
@@ -456,6 +462,10 @@ class Frame_Run_Plot:
             self.radius_label_verse["text"] = "Forward"
 
     def dataAcquisition(self, sigmaMpercent, sigmaRpercent):
+        self.ticks_x_lim = int(self.gui.frame_input_master.frame_export_file.x_ticks_entry.get())
+        self.ticks_y_lim = int(self.gui.frame_input_master.frame_export_file.y_ticks_entry.get())
+        self.font_labels = float(self.gui.frame_input_master.frame_export_file.font_labels_entry.get())
+        self.font_ticks = float(self.gui.frame_input_master.frame_export_file.font_ticks_entry.get())
         self.mmin = float(self.gui.frame_input_master.frame_scale_plot.mass_min.get())
         self.mmax = float(self.gui.frame_input_master.frame_scale_plot.mass_max.get())
         self.rmin = float(self.gui.frame_input_master.frame_scale_plot.radius_min.get())
@@ -486,6 +496,7 @@ class Frame_Run_Plot:
         self.logcountinmass = self.gui.frame_input_master.frame_histogram_info.mass_label_plot["text"]
         self.logcountinradius = self.gui.frame_input_master.frame_histogram_info.radius_label_plot["text"]
         self.show_error_plot = self.gui.frame_input_master.frame_input_planet.show_error_plot_var.get()
+        self.show_all_planets_labels = self.gui.frame_input_master.frame_input_planet.show_planets_labels_var.get()
         self.env2 = self.gui.frame_input_master.frame_envelope_plot.label_envelope["text"]
         self.env1 = (self.env2 != "None")
         self.env3 = self.gui.frame_input_master.frame_pure_hydrogen.mass_radius_check_var.get()
@@ -577,12 +588,12 @@ class Frame_Run_Plot:
     def plotHistogramMass(self):
         array = self.subsetdata[self.index_mass_p] * self.mass_coeff
         self.gui.frame_output_plot.histogram_mass.clear()
-        self.ticks_x = np.linspace(self.mmin, self.mmax, self.histmassbin)
-        self.gui.frame_output_plot.histogram_mass.set_title('Histogram of Mp/M⊕', fontsize=10)
+        self.ticks_x = np.linspace(self.mmin, self.mmax, self.ticks_x_lim)
+        self.gui.frame_output_plot.histogram_mass.set_title('Histogram of Mp/M⊕', fontsize=self.font_labels)
         if self.xscale == "Log":
             hist, bins, _ = plt.hist(array, self.histmassbin)
             self.gui.frame_output_plot.histogram_mass.axes.set_xscale("log")
-            self.ticks_x = np.logspace(math.log10(min(array)), math.log10(max(array)), self.histmassbin)
+            self.ticks_x = np.logspace(math.log10(min(array)), math.log10(max(array)), self.ticks_x_lim)
             histmassbin = np.logspace(np.log10(bins[0]), np.log10(bins[-1]), len(bins))
             arr = self.gui.frame_output_plot.histogram_mass.hist(array, histmassbin, color='#f9d616', edgecolor='black')
         else:
@@ -592,12 +603,12 @@ class Frame_Run_Plot:
             self.ticks_x = np.delete(self.ticks_x, index)
         self.gui.frame_output_plot.histogram_mass.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
         self.gui.frame_output_plot.histogram_mass.axes.set_xticks(self.ticks_x)
-        self.gui.frame_output_plot.histogram_mass.axes.set_xticklabels(np.round(self.ticks_x, 1), fontsize=7)
+        self.gui.frame_output_plot.histogram_mass.axes.set_xticklabels(np.round(self.ticks_x, 1), fontsize=self.font_ticks)
         if self.logcountinmass == "Count":
-            self.gui.frame_output_plot.histogram_mass.set_ylabel('Count', fontsize=9)
+            self.gui.frame_output_plot.histogram_mass.set_ylabel('Count', fontsize=self.font_labels)
         else:
             self.gui.frame_output_plot.histogram_mass.axes.set_yscale("log")
-            self.gui.frame_output_plot.histogram_mass.set_ylabel('Log Count', fontsize=9)
+            self.gui.frame_output_plot.histogram_mass.set_ylabel('Log Count', fontsize=self.font_labels)
         self.gui.frame_output_plot.histogram_mass.axes.minorticks_off()
         for i in range(self.histmassbin):
             self.gui.frame_output_plot.histogram_mass.text(arr[1][i], arr[0][i], str(arr[0][i]), fontsize=7)
@@ -605,12 +616,12 @@ class Frame_Run_Plot:
     def plotHistogramRadius(self):
         array = self.subsetdata[self.index_rad_p] * self.radius_coeff
         self.gui.frame_output_plot.histogram_radius.clear()
-        self.ticks_y = np.linspace(self.rmin, self.rmax, self.histradiusbin)
-        self.gui.frame_output_plot.histogram_radius.set_title('Histogram of Rp/R⊕', fontsize=10)
+        self.ticks_y = np.linspace(self.rmin, self.rmax, self.ticks_y_lim)
+        self.gui.frame_output_plot.histogram_radius.set_title('Histogram of Rp/R⊕', fontsize=self.font_labels)
         if self.yscale == "Log":
             hist, bins, _ = plt.hist(array, self.histradiusbin)
             self.gui.frame_output_plot.histogram_radius.axes.set_yscale("log")
-            self.ticks_y = np.logspace(math.log10(min(array)), math.log10(max(array)), self.histradiusbin)
+            self.ticks_y = np.logspace(math.log10(min(array)), math.log10(max(array)), self.ticks_y_lim)
             histradiusbin = np.logspace(np.log10(bins[0]), np.log10(bins[-1]), len(bins))
             arr = self.gui.frame_output_plot.histogram_radius.hist(array, histradiusbin, orientation="horizontal", color='#f9d616', edgecolor='black')
         else:
@@ -623,10 +634,10 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.histogram_radius.axes.set_yticklabels(np.round(self.ticks_y, 1))
         plt.setp(self.gui.frame_output_plot.histogram_radius.axes.get_yticklabels(), rotation=-90, fontsize=7, horizontalalignment='right')
         if self.logcountinradius == "Count":
-            self.gui.frame_output_plot.histogram_radius.set_xlabel('Count', fontsize=9)
+            self.gui.frame_output_plot.histogram_radius.set_xlabel('Count', fontsize=self.font_labels)
         else:
             self.gui.frame_output_plot.histogram_radius.axes.set_xscale("log")
-            self.gui.frame_output_plot.histogram_radius.set_xlabel('Log Count', fontsize=9)
+            self.gui.frame_output_plot.histogram_radius.set_xlabel('Log Count', fontsize=self.font_labels)
         self.gui.frame_output_plot.histogram_radius.axes.minorticks_off()
         for i in range(self.histradiusbin):
             self.gui.frame_output_plot.histogram_radius.text(arr[0][i], arr[1][i], str(arr[0][i]), fontsize=7)
@@ -635,7 +646,7 @@ class Frame_Run_Plot:
     def plotHistogramZeta(self):
         array = (self.subsetdata[self.index_rad_p] * self.radius_coeff) / ((self.subsetdata[self.index_mass_p] * self.mass_coeff) ** (1 / 4))
         self.gui.frame_output_plot.histogram_zeta.clear()
-        self.gui.frame_output_plot.histogram_zeta.set_title('Histogram of ζ = (Rp/R⊕)/(Mp/M⊕)^1/4', fontsize=10)
+        self.gui.frame_output_plot.histogram_zeta.set_title('Histogram of \nζ = (Rp/R⊕)/(Mp/M⊕)^1/4', fontsize=self.font_labels)
         hist, bins, _ = plt.hist(array, self.histzetabin)
         self.gui.frame_output_plot.histogram_zeta.axes.set_xscale("log")
         ticks = np.logspace(math.log10(min(array)), math.log10(max(array)), self.histzetabin)
@@ -645,9 +656,9 @@ class Frame_Run_Plot:
             index = [i for i in range(2, len(ticks), 2)]
             ticks = np.delete(ticks, index)
         self.gui.frame_output_plot.histogram_zeta.axes.set_xticks(ticks)
-        self.gui.frame_output_plot.histogram_zeta.axes.set_xticklabels(np.round(ticks, 1), fontsize=7)
+        self.gui.frame_output_plot.histogram_zeta.axes.set_xticklabels(np.round(ticks, 1), fontsize=self.font_ticks)
         self.gui.frame_output_plot.histogram_zeta.axes.minorticks_off()
-        self.gui.frame_output_plot.histogram_zeta.set_ylabel('Count', fontsize=9)
+        # self.gui.frame_output_plot.histogram_zeta.set_ylabel('Count', fontsize=self.font_labels)
         for i in range(self.histzetabin):
             self.gui.frame_output_plot.histogram_zeta.text(arr[1][i], arr[0][i], str(arr[0][i]), fontsize=7)
 
@@ -684,14 +695,14 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
         self.gui.frame_output_plot.mass_radius_plot.axes.set_ylim(ymin=self.rmin, ymax=self.rmax)
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xticks(self.ticks_x)
-        self.gui.frame_output_plot.mass_radius_plot.axes.set_xticklabels(np.round(self.ticks_x, 1), fontsize=7)
+        self.gui.frame_output_plot.mass_radius_plot.axes.set_xticklabels(np.round(self.ticks_x, 1), fontsize=self.font_ticks)
         self.gui.frame_output_plot.mass_radius_plot.axes.set_yticks(self.ticks_y)
-        self.gui.frame_output_plot.mass_radius_plot.axes.set_yticklabels(np.round(self.ticks_y, 1), fontsize=7)
-        self.gui.frame_output_plot.mass_radius_plot.set_ylabel("Planet Radius (Rp/R⊕)", fontsize=9)
-        self.gui.frame_output_plot.mass_radius_plot.set_xlabel("Planet Mass (Mp/M⊕)", fontsize=9)
+        self.gui.frame_output_plot.mass_radius_plot.axes.set_yticklabels(np.round(self.ticks_y, 1), fontsize=self.font_ticks)
+        self.gui.frame_output_plot.mass_radius_plot.set_ylabel("Planet Radius (Rp/R⊕)", fontsize=self.font_labels)
+        self.gui.frame_output_plot.mass_radius_plot.set_xlabel("Planet Mass (Mp/M⊕)", fontsize=self.font_labels)
         self.gui.frame_output_plot.mass_radius_plot.set_title(
-            "Planet Mass-Radius: \u03C3Mp/Mp(%)<=" + str(self.mass_step.get()) + "% \u03C3Rp/Rp(%)<=" + str(
-                self.radius_step.get()) + "%", fontsize=10)
+            "Planet Mass-Radius: \n\u03C3Mp/Mp(%)<=" + str(self.mass_step.get()) + "% \u03C3Rp/Rp(%)<=" + str(
+                self.radius_step.get()) + "%", fontsize=self.font_labels)
         self.gui.frame_output_plot.mass_radius_plot.legend(loc="upper left")
         self.gui.frame_output_plot.plot_combined_canvas.draw()
         self.gui.frame_output_plot.plot_combined_canvas.mpl_connect("motion_notify_event", self.hover)
@@ -700,9 +711,9 @@ class Frame_Run_Plot:
         # Density Plot for Fe - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
         xx, yy = np.meshgrid(np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500), np.logspace(np.log10(self.rmin), np.log10(self.rmax), 500))
         x_values = np.log10(xx)
-        self.densityPlot("Fe-Silicates", xx, x_values, yy)
+        # self.densityPlot("Fe-Silicates", xx, x_values, yy)
         # Density Plot for Silicates - H2O Contour Mesh, approximated by Power - Series in lg[mass]
-        self.densityPlot("Silicates-H2O", xx, x_values, yy)
+        # self.densityPlot("Silicates-H2O", xx, x_values, yy)
         # Density Plot for Envelope - H2O Contour Mesh, approximated by Power - Series in lg[mass]
         self.densityPlot("Envelope-H2O", xx, x_values, yy)
 
@@ -710,7 +721,7 @@ class Frame_Run_Plot:
         # Density Plot for Fe - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
         xx, yy = np.meshgrid(np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500), np.logspace(np.log10(self.rmin), np.log10(self.rmax), 500))
         x_values = np.log10(xx)
-        self.densityPlot("Fe-Silicates", xx, x_values, yy)
+        # self.densityPlot("Fe-Silicates", xx, x_values, yy)
         # Density Plot for Envelope - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
         self.densityPlot("Envelope-Silicates", xx, x_values, yy)
 
@@ -728,11 +739,20 @@ class Frame_Run_Plot:
         valid[index == 0] = np.max(Z)
         Z[index == 0] = np.min(Z) - 1
         maxv = np.max(Z)
+        str_max = str(round(maxv, 2))
         if maxv >= 5:
             maxv = 5
+            str_max = ">=5"
         minv = np.min(valid)
-        self.gui.frame_output_plot.mass_radius_plot.pcolormesh(xx, yy, Z, cmap=self.newcmp, shading="nearest", vmin=minv, vmax=maxv)
-        self.gui.frame_output_plot.mass_radius_plot.contour(xx, yy, Z, colors="#5d5857", levels=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5])
+        ax = self.gui.frame_output_plot.mass_radius_plot.pcolormesh(xx, yy, Z, cmap=self.newcmp, shading="gouraud", edgecolors=None,  vmin=minv, vmax=maxv)
+        cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=7)
+        if self.cbl_cmap is not None:
+            self.cbl_cmap.remove()
+        self.cbl_cmap = plt.colorbar(ax, cax=cbaxes, ticks=[minv, maxv])
+        self.cbl_cmap.ax.set_yticklabels([str(round(minv, 2)), str_max])
+        self.cbl_cmap.ax.set_title("Z contours      ", fontsize=8)
+        self.cbl_cmap.ax.yaxis.set_ticks_position('left')
+        self.gui.frame_output_plot.mass_radius_plot.contour(xx, yy, Z, colors="#5d5857", levels=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 4, 5])
 
     def plotPureLine(self):
         xx = np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500)
@@ -856,10 +876,10 @@ class Frame_Run_Plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None", zorder=101, alpha=0.5)
         if self.check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
-            if self.cbl is not None:
-                self.cbl.remove()
-            self.cbl = plt.colorbar(self.sc, cax=cbaxes, ticks=[self.min_val, self.max_val])
-            self.cbl.ax.set_title(space + self.choose_filter_map_var.get(), fontsize=8)
+            if self.cbl_third_coord is not None:
+                self.cbl_third_coord.remove()
+            self.cbl_third_coord = plt.colorbar(self.sc, cax=cbaxes, ticks=[self.min_val, self.max_val])
+            self.cbl_third_coord.ax.set_title(space + self.choose_filter_map_var.get(), fontsize=8)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
             y1 = Y[np.logical_and(deltaXm == 0, deltaXp != 0)]
@@ -910,6 +930,21 @@ class Frame_Run_Plot:
                                                                                bbox=dict(boxstyle="round", fc="w"),
                                                                                arrowprops=dict(arrowstyle="->"), zorder=102)
         self.annot.set_visible(False)
+        if self.show_all_planets_labels:
+            names = np.array(self.subsetdata[0])
+            for i in range(len(X)):
+                if X[i] >= self.mmax / 3:
+                    x = -60
+                else:
+                    x = 20
+                if X[i] >= self.rmax / 2:
+                    y = -20
+                else:
+                    y = 20
+                self.gui.frame_output_plot.mass_radius_plot.axes.annotate(str(names[i]), xy=(X[i], Y[i]), xytext=(x, y),
+                                                                          textcoords="offset points",
+                                                                          bbox=dict(boxstyle="round", fc="w"),
+                                                                          arrowprops=dict(arrowstyle="->"))
 
     def update_annot(self, ind, sc):
         pos = sc.get_offsets()[ind["ind"][0]]

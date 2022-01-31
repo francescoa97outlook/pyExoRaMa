@@ -41,6 +41,8 @@ class Frame_Input_Planets:
     check_radius_star = None
     age_coeff = None
     help_button = None
+    show_planets_labels_var = None
+    show_planets_labels_check = None
 
     def __init__(self, window, gui, age_coeff, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
         self.gui = gui
@@ -171,5 +173,8 @@ class Frame_Input_Planets:
         self.limits.grid(column=3, row=8)
         self.show_error_plot_var = tk.IntVar()
         self.show_error_check = tk.Checkbutton(master=self.frame_input_planet, text="Show planets mass/radius errors?", variable=self.show_error_plot_var, fg="#cc3300", font=('Sans', '9', 'bold'))
-        self.show_error_check.grid(column=4, row=1, rowspan=7)
+        self.show_error_check.grid(column=4, row=1, rowspan=4)
+        self.show_planets_labels_var = tk.IntVar()
+        self.show_planets_labels_check = tk.Checkbutton(master=self.frame_input_planet, text="Show planets labels?", variable=self.show_planets_labels_var, fg="#cc3300", font=('Sans', '9', 'bold'))
+        self.show_planets_labels_check.grid(column=4, row=4)
         self.frame_input_planet.pack(padx=3, pady=3)

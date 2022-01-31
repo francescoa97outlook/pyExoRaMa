@@ -31,9 +31,12 @@ class Frame_Export_Files:
     export_combined_jpg = None
     padding_x = None
     padding_y = None
-    dpi_label = None
     dpi_entry = None
+    font_ticks_entry = None
+    font_labels_entry = None
     help_button = None
+    x_ticks_entry = None
+    y_ticks_entry = None
 
     def __init__(self, window, gui):
         self.gui = gui
@@ -80,11 +83,31 @@ class Frame_Export_Files:
         self.export_combined_eps.grid(column=2, row=4)
         self.export_combined_jpg = tk.Button(master=self.frame_export_files, text=" jpg ", bg="cyan", font=('Sans', '9', 'bold'), command=self.exportCombinedPlotJpg)
         self.export_combined_jpg.grid(column=3, row=4)
-        self.dpi_label = tk.Label(master=self.frame_export_files, text='DPI ', fg="blue", font=('Sans', '9', 'bold'))
-        self.dpi_label.grid(column=5, row=0, rowspan=6)
+        self.label = tk.Label(master=self.frame_export_files, text='DPI ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=5, row=0)
         self.dpi_entry = tk.Entry(master=self.frame_export_files, width=8)
-        self.dpi_entry.grid(column=6, row=0, rowspan=6)
+        self.dpi_entry.grid(column=6, row=0)
         self.dpi_entry.insert(-1, "300")
+        self.label = tk.Label(master=self.frame_export_files, text='N. mass ticks: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=5, row=1)
+        self.x_ticks_entry = tk.Entry(master=self.frame_export_files, width=8)
+        self.x_ticks_entry.grid(column=6, row=1)
+        self.x_ticks_entry.insert(-1, "8")
+        self.label = tk.Label(master=self.frame_export_files, text='N. radius ticks: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=5, row=2)
+        self.y_ticks_entry = tk.Entry(master=self.frame_export_files, width=8)
+        self.y_ticks_entry.grid(column=6, row=2)
+        self.y_ticks_entry.insert(-1, "8")
+        self.label = tk.Label(master=self.frame_export_files, text='Font size ticks: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=5, row=3)
+        self.font_ticks_entry = tk.Entry(master=self.frame_export_files, width=12)
+        self.font_ticks_entry.grid(column=6, row=3)
+        self.font_ticks_entry.insert(-1, "8")
+        self.label = tk.Label(master=self.frame_export_files, text='Font size labels:', fg="blue", font=('Sans', '9', 'bold'))
+        self.label.grid(column=5, row=4)
+        self.font_labels_entry = tk.Entry(master=self.frame_export_files, width=12)
+        self.font_labels_entry.grid(column=6, row=4)
+        self.font_labels_entry.insert(-1, "12")
         self.help_button = tk.Button(master=self.frame_export_files, text="?", command=helpButtonFunc, bg="black", fg="yellow", font=('Sans', '10', 'bold'))
         self.help_button.grid(column=7, row=0)
         self.label = tk.Label(master=self.frame_export_files, text='Export planet table: ', fg="blue", font=('Sans', '9', 'bold'))

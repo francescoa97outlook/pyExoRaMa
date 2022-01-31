@@ -5,7 +5,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Plot options: \nChoose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). \nThe corresponding mass-radius theoretical models will be plotted, with the different specific entropy S (eV/1000K/atom) contours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).")
+    msgbox.showinfo(title="INFO", message="Plot options: \nChoose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). \nThe corresponding mass-radius theoretical models will be plotted, with the different specific entropy S (eV/1000K/atom) contours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).\nNB: the user selects a CMAP to visualize the Z contour values for each coordinate.")
 
 
 class Frame_Envelope_Plot:
@@ -22,9 +22,9 @@ class Frame_Envelope_Plot:
     def __init__(self, window, gui):
         self.gui = gui
         self.frame_envelope_plot = tk.Frame(window, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
-        self.label = tk.Label(master=self.frame_envelope_plot, text=' Envelope: ', fg="blue", font=('Sans', '9', 'bold'))
+        self.label = tk.Label(master=self.frame_envelope_plot, text='Add gaseous envelope:', fg="blue", font=('Sans', '9', 'bold'))
         self.label.grid(column=0, row=0)
-        self.envelope_btn = tk.Button(master=self.frame_envelope_plot, text=" Change envelope ", command=self.changeEnvelope, bg="#669999", font=('Sans', '9', 'bold'))
+        self.envelope_btn = tk.Button(master=self.frame_envelope_plot, text="Select planet core composition", command=self.changeEnvelope, bg="#669999", font=('Sans', '9', 'bold'))
         self.envelope_btn.grid(column=1, row=0)
         self.label_envelope = tk.Label(master=self.frame_envelope_plot, text='None', fg="#ff6600", font=('Sans', '9', 'bold'), borderwidth=2, relief="ridge")
         self.label_envelope.grid(column=2, row=0)

@@ -22,7 +22,7 @@ class Frame_Output_Plot:
         self.frame_master = tk.Frame(window, width=self.frame_width, height=self.frame_height, highlightbackground="black", highlightthickness=1, padx=5, pady=2)
         self.plot_combined_fig = plt.Figure()
         self.grid = plt.GridSpec(20, 20)
-        self.grid.update(wspace=0.5, hspace=0.5)
+        self.grid.update(wspace=4, hspace=6)
         self.histogram_mass = self.plot_combined_fig.add_subplot(self.grid[0:5, 0:14])
         self.histogram_zeta = self.plot_combined_fig.add_subplot(self.grid[0:5, 15:20])
         self.mass_radius_plot = self.plot_combined_fig.add_subplot(self.grid[6:20, 0:14])
