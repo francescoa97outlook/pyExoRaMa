@@ -6,7 +6,7 @@ from tkinter import messagebox as msgbox
 
 def helpButtonFunc():
     msgbox.showinfo(title="INFO",
-                    message="Plot options: \nChoose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). \nThe corresponding mass-radius theoretical models will be plotted, with the different specific entropy S (eV/1000K/atom) contours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).\nNB: the user selects a CMAP to visualize the Z contour values for each coordinate.")
+                    message="Plot options: \nChoose the type of light gaseous envelope on top of planet cores (made up of different compositions: Fe/metals, silicates, or ices). \nThe corresponding mass-radius theoretical models will be plotted, with the different specific entropy S (eV/1000K/atom) contours that are based on the definition of the integral parameter z, as detailed in Eq. 17 of Zeng et al. (2021).\n\nThe core contours closely resemble two-component core-mass-fraction (CMF=0%, 20%, 40%, 60%, 80%, 100%) planet between Fe-Silicates, and Silicates-H2O planets. These inter-contours are useful, because some planets lie in these area and some are inferred to have different core mass fractions (CMF), i.e., the proportion between their iron and silicate components. \n\nNB: the user selects a CMAP to visualize the Z contour values for each coordinate.")
 
 
 class Frame_Envelope_Plot:
@@ -55,7 +55,7 @@ class Frame_Envelope_Plot:
         self.label.grid(column=1, row=1, columnspan=5)
         self.core_contours_var = tk.IntVar()
         self.core_contours_check = tk.Checkbutton(master=self.frame_envelope_plot,
-                                                  text="Add core contours \n[0.2, 0.4, 0.6, 0.8]",
+                                                  text="Add core contours",
                                                   variable=self.core_contours_var, fg="#cc3300",
                                                   font=('Sans', '9', 'bold'))
         self.core_contours_check.grid(column=6, row=1)
