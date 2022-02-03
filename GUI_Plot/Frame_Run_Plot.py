@@ -279,6 +279,7 @@ class Frame_Run_Plot:
     ticks_y_lim = None
     ticks_x_lim = None
     show_all_planets_labels = None
+    core_contours = None
 
     def __init__(self, window, gui, data0, mass_coeff, radius_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                  index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq,
@@ -498,6 +499,7 @@ class Frame_Run_Plot:
         self.show_error_plot = self.gui.frame_input_master.frame_input_planet.show_error_plot_var.get()
         self.show_all_planets_labels = self.gui.frame_input_master.frame_input_planet.show_planets_labels_var.get()
         self.env2 = self.gui.frame_input_master.frame_envelope_plot.label_envelope["text"]
+        self.core_contours = self.gui.frame_input_master.frame_envelope_plot.core_contours_var.get()
         self.env1 = (self.env2 != "None")
         self.env3 = self.gui.frame_input_master.frame_pure_hydrogen.mass_radius_check_var.get()
         self.env4 = self.gui.frame_input_master.frame_pure_hydrogen.central_density_check_var.get()
@@ -711,27 +713,29 @@ class Frame_Run_Plot:
         # Density Plot for Fe - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
         xx, yy = np.meshgrid(np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500), np.logspace(np.log10(self.rmin), np.log10(self.rmax), 500))
         x_values = np.log10(xx)
-        # self.densityPlot("Fe-Silicates", xx, x_values, yy)
-        # Density Plot for Silicates - H2O Contour Mesh, approximated by Power - Series in lg[mass]
-        # self.densityPlot("Silicates-H2O", xx, x_values, yy)
+        if self.core_contours:
+            self.densityPlot("Fe-Silicates", xx, x_values, yy, [0.2, 0.4, 0.6, 0.8])
+            # Density Plot for Silicates - H2O Contour Mesh, approximated by Power - Series in lg[mass]
+            self.densityPlot("Silicates-H2O", xx, x_values, yy, [0.2, 0.4, 0.6, 0.8])
         # Density Plot for Envelope - H2O Contour Mesh, approximated by Power - Series in lg[mass]
-        self.densityPlot("Envelope-H2O", xx, x_values, yy)
+        self.densityPlot("Envelope-H2O", xx, x_values, yy, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 4, 5])
 
     def SilicatesPlot(self):
         # Density Plot for Fe - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
         xx, yy = np.meshgrid(np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500), np.logspace(np.log10(self.rmin), np.log10(self.rmax), 500))
         x_values = np.log10(xx)
-        # self.densityPlot("Fe-Silicates", xx, x_values, yy)
+        if self.core_contours:
+            self.densityPlot("Fe-Silicates", xx, x_values, yy, [0.2, 0.4, 0.6, 0.8])
         # Density Plot for Envelope - Silicates Contour Mesh, approximated by Power - Series in lg[mass]
-        self.densityPlot("Envelope-Silicates", xx, x_values, yy)
+        self.densityPlot("Envelope-Silicates", xx, x_values, yy, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 4, 5])
 
     def FePlot(self):
         # Density Plot for Envelope - Fe Contour Mesh, approximated by Power - Series in lg[mass]
         xx, yy = np.meshgrid(np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500), np.logspace(np.log10(self.rmin), np.log10(self.rmax), 500))
         x_values = np.log10(xx)
-        self.densityPlot("Envelope-Fe", xx, x_values, yy)
+        self.densityPlot("Envelope-Fe", xx, x_values, yy, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 4, 5])
 
-    def densityPlot(self, envelope, xx, x_values, yy):
+    def densityPlot(self, envelope, xx, x_values, yy, levels):
         index = rangeFunction(envelope, x_values, yy)
         Z = applyFunction(envelope, x_values, yy)
         index = 1 * index
@@ -744,7 +748,7 @@ class Frame_Run_Plot:
             maxv = 5
             str_max = ">=5"
         minv = np.min(valid)
-        ax = self.gui.frame_output_plot.mass_radius_plot.pcolormesh(xx, yy, Z, cmap=self.newcmp, shading="gouraud", edgecolors=None,  vmin=minv, vmax=maxv)
+        ax = self.gui.frame_output_plot.mass_radius_plot.pcolormesh(xx, yy, Z, cmap=self.newcmp, shading="nearest", edgecolors=None,  vmin=minv, vmax=maxv)
         cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=7)
         if self.cbl_cmap is not None:
             self.cbl_cmap.remove()
@@ -752,7 +756,7 @@ class Frame_Run_Plot:
         self.cbl_cmap.ax.set_yticklabels([str(round(minv, 2)), str_max])
         self.cbl_cmap.ax.set_title("Z contours      ", fontsize=8)
         self.cbl_cmap.ax.yaxis.set_ticks_position('left')
-        self.gui.frame_output_plot.mass_radius_plot.contour(xx, yy, Z, colors="#5d5857", levels=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.5, 2, 2.5, 3, 4, 5])
+        self.gui.frame_output_plot.mass_radius_plot.contour(xx, yy, Z, colors="#5d5857", levels=levels)
 
     def plotPureLine(self):
         xx = np.logspace(np.log10(self.mmin), np.log10(self.mmax), 500)
