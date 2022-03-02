@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import os
 from GUI_Load_Data import Frame_Load_Data
 from GUI_Load_Data import Frame_Constrains
 
@@ -15,6 +15,10 @@ class GUI_Data:
     def __init__(self):
         # Window
         self.window = tk.Tk()
+        if "nt" == os.name:
+            self.window.wm_iconbitmap(bitmap="pyExoRaMa-logos.ico")
+        else:
+            self.window.wm_iconbitmap(bitmap="@pyExoRaMa-logos.xbm")
         self.window.geometry("1600x620+100+100")
         self.window.title("Import Catalogue Helper")
         self.window.resizable(False, False)
