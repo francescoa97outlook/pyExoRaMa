@@ -50,9 +50,11 @@ class Frame_New_Planet:
     check_age_host = None
     options_list = None
     help_button = None
+    name_from_duplicate = None
 
     def __init__(self, window, gui, mass_coeff, radius_coeff, age_coeff, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
         self.gui = gui
+        self.name_from_duplicate = False
         self.check_age_host = check_age_host
         self.check_ecc = check_ecc
         self.check_FeH = check_FeH
@@ -209,9 +211,10 @@ class Frame_New_Planet:
         self.add_planet_btn = tk.Button(master=self.frame_new_planet, text="Add Planet to list", command=self.addPlanet, bg="#00ff00", font=('Sans', '9', 'bold'))
         self.add_planet_btn.grid(column=2, row=4, columnspan=3)
 
-        self.options_list = []
-        self.list_planet_var = tk.StringVar()
-        self.list_planet_om = tk.OptionMenu(self.frame_new_planet, self.list_planet_var, None)
+        self.options_list = ["None"]
+        self.list_planet_var = tk.StringVar(value="None")
+        self.list_planet_var.trace('w', lambda *args: self.update_planets_info())
+        self.list_planet_om = tk.OptionMenu(self.frame_new_planet, self.list_planet_var, "None")
         self.list_planet_om.grid(column=5, row=4, columnspan=2)
 
         self.delete_planet_btn = tk.Button(master=self.frame_new_planet, text="Delete Planet from list", command=self.deletePlanet, bg="red", font=('Sans', '9', 'bold'))
@@ -221,14 +224,28 @@ class Frame_New_Planet:
         self.frame_new_planet.pack(padx=3, pady=3)
 
     def deletePlanet(self):
-        self.input_list = self.input_list[self.input_list.Name != self.list_planet_var.get()]
-        self.options_list = [value for value in self.options_list if value != self.list_planet_var.get()]
+        if self.name_from_duplicate:
+            name = self.name_np.get()
+        else:
+            name = self.list_planet_var.get()
+        if self.list_planet_var.get() == "None":
+            return
+        self.input_list = self.input_list[self.input_list.Name != name]
+        self.options_list = [value for value in self.options_list if value != name]
         self.update_menu()
 
     def addPlanet(self):
-        if self.name_np.get() in self.options_list:
-            msgbox.showinfo(title="Error", message="The planet is already present in the list. Delete and add it again to the list after the changes have been applied")
+        if self.name_np.get() == "None":
+            msgbox.showerror(title="None is not a valid name", message="None")
             return
+        if self.name_np.get() in self.options_list:
+            risp = msgbox.askyesno(title="Update Values", message="The planet is already present in the list. Do you want to update it with the current values?")
+            if risp:
+                self.name_from_duplicate = True
+                self.deletePlanet()
+                self.name_from_duplicate = False
+            else:
+                return
         new_row = {"Name": self.name_np.get(), "Mass_p": float(self.mass_np.get()), "Mass_sn_p": float(self.mass_sn_np.get()),
                    "Mass_sp_p": float(self.mass_sp_np.get()), "Radius_p": float(self.radius_np.get()), "Radius_sn_p": float(self.radius_sn_np.get()),
                    "Radius_sp_p": float(self.radius_sp_np.get())}
@@ -260,7 +277,52 @@ class Frame_New_Planet:
         for string in self.options_list:
             menu.add_command(label=string,
                              command=lambda value=string: self.list_planet_var.set(value))
-        if len(self.options_list) > 0:
-            self.list_planet_var.set(self.options_list[-1])
-        else:
-            self.list_planet_var.set("")
+
+    # noinspection PyArgumentList
+    def update_planets_info(self):
+        if self.input_list is None:
+            return
+        if self.list_planet_var.get() == "None":
+            return
+        elem = self.input_list.loc[self.input_list['Name'] == self.list_planet_var.get()]
+        self.name_np.delete(0, tk.END)
+        self.name_np.insert(tk.END, str(elem["Name"].iloc[0]))
+        self.mass_np.delete(0, tk.END)
+        self.mass_np.insert(tk.END, str(elem["Mass_p"].iloc[0]))
+        self.mass_sn_np.delete(0, tk.END)
+        self.mass_sn_np.insert(tk.END, str(elem["Mass_sn_p"].iloc[0]))
+        self.mass_sp_np.delete(0, tk.END)
+        self.mass_sp_np.insert(tk.END, str(elem["Mass_sp_p"].iloc[0]))
+        self.radius_np.delete(0, tk.END)
+        self.radius_np.insert(tk.END, str(elem["Radius_p"].iloc[0]))
+        self.radius_sn_np.delete(0, tk.END)
+        self.radius_sn_np.insert(tk.END, str(elem["Radius_sn_p"].iloc[0]))
+        self.radius_sp_np.delete(0, tk.END)
+        self.radius_sp_np.insert(tk.END, str(elem["Radius_sp_p"].iloc[0]))
+        if self.check_age_host:
+            self.age_host_np.delete(0, tk.END)
+            self.age_host_np.insert(tk.END, str(elem["Age"].iloc[0]))
+        if self.check_tstar:
+            self.tstar_np.delete(0, tk.END)
+            self.tstar_np.insert(tk.END, str(elem["Tstar"].iloc[0]))
+        if self.check_mass_star:
+            self.mstar_np.delete(0, tk.END)
+            self.mstar_np.insert(tk.END, str(elem["Mstar"].iloc[0]))
+        if self.check_radius_star:
+            self.rstar_np.delete(0, tk.END)
+            self.rstar_np.insert(tk.END, str(elem["Rstar"].iloc[0]))
+        if self.check_p_orb:
+            self.p_orb_np.delete(0, tk.END)
+            self.p_orb_np.insert(tk.END, str(elem["p_orb"].iloc[0]))
+        if self.check_a_orb:
+            self.a_orb_np.delete(0, tk.END)
+            self.a_orb_np.insert(tk.END, str(elem["a_orb"].iloc[0]))
+        if self.check_ecc:
+            self.ecc_np.delete(0, tk.END)
+            self.ecc_np.insert(tk.END, str(elem["Ecc"].iloc[0]))
+        if self.check_teq:
+            self.tplanet_np.delete(0, tk.END)
+            self.tplanet_np.insert(tk.END, str(elem["tPlanet"].iloc[0]))
+        if self.check_FeH:
+            self.fe_h_np.delete(0, tk.END)
+            self.fe_h_np.insert(tk.END, str(elem["[Fe/H]"].iloc[0]))
