@@ -4,7 +4,7 @@ from tkinter import messagebox as msgbox
 
 def helpButtonFunc():
     msgbox.showinfo(title="INFO",
-                    message="Plot and statistical options: \nInsert the range for each selected parameter. Any of this parameter can be used as the third variable in the 3D colormap plot.\n\nSelect the “Show planet mass(radius) errors?” if you want the error bars to be displayed in the mass-radius diagram.")
+                    message="Plot and statistical options: \nInsert the range for each selected parameter. Any of this parameter can be used as the third variable in the 3D colormap plot.\n\nSelect the “Show planet mass(radius) errors?” if you want the error bars to be displayed in the mass-radius diagram.\n\nSelecting 'filter by systems with multiple planets?' it is possible to plot only multi-planetary systems with a minimum number N of planets as provided by the user.")
 
 
 class Frame_Input_Planets:

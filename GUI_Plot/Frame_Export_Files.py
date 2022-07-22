@@ -5,7 +5,7 @@ from tkinter import messagebox as msgbox
 
 
 def helpButtonFunc():
-    msgbox.showinfo(title="INFO", message="Export: \nHere can be exported each plot by clicking on the effective button. \nIt is also possible to plot all the charts in one figure. \nThe user can choose the DPI of each file.\n\nThe last two buttons allow to export all or the selected planets from the catalogue in a CSV file.\nAll the files will be exported in the 'Output' folder.")
+    msgbox.showinfo(title="INFO", message="Export: \nHere can be exported each plot by clicking on the effective button. \nIt is also possible to plot all the charts in one figure. \nThe user can choose the DPI of each file.\n\nThe last two buttons allow to export all or the selected planets from the catalogue in a CSV file.\n\nAll the files will be exported in the 'Output' folder.")
 
 
 class Frame_Export_Files:
