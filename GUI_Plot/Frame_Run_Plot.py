@@ -536,7 +536,11 @@ class Frame_Run_Plot:
         self.show_error_plot = self.gui.frame_input_master.frame_input_planet.show_error_plot_var.get()
         self.show_all_planets_labels = self.gui.frame_input_master.frame_input_planet.show_planets_labels_var.get()
         self.get_only_planetary_system = self.gui.frame_input_master.frame_input_planet.get_only_planetary_system_var.get()
-        self.number_planets_system = int(self.gui.frame_input_master.frame_input_planet.number_planets_system.get())
+        if self.get_only_planetary_system:
+            self.number_planets_system = int(self.gui.frame_input_master.frame_input_planet.number_planets_system.get())
+            if self.number_planets_system <= 1:
+                msgbox.showerror(title="ERROR", message="The number of planets must be greater than 1")
+                return
         self.Teq_min = float(self.gui.frame_input_master.frame_input_planet.T_eq_planet_min.get())
         self.Teq_max = float(self.gui.frame_input_master.frame_input_planet.T_eq_planet_max.get())
         self.histmassbin = int(self.gui.frame_input_master.frame_histogram_info.mass_bin_var.get())

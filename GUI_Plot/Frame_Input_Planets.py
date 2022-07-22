@@ -205,7 +205,7 @@ class Frame_Input_Planets:
         self.show_planets_labels_check.grid(column=4, row=3, columnspan=2)
         self.get_only_planetary_system_var = tk.IntVar()
         self.get_only_planetary_system_check = tk.Checkbutton(master=self.frame_input_planet,
-                                                              text="Filter by systems with mutliple planet?",
+                                                              text="Filter by systems with mutliple planets?",
                                                               variable=self.get_only_planetary_system_var,
                                                               fg="#cc3300",
                                                               font=('Sans', '9', 'bold'), command=self.numberOfPlanetEn)
@@ -215,6 +215,7 @@ class Frame_Input_Planets:
         self.label.grid(column=4, row=6)
         self.number_planets_system = tk.Entry(master=self.frame_input_planet, width=10)
         self.number_planets_system.grid(column=5, row=6)
+        self.number_planets_system.insert(tk.END, "2")
         self.number_planets_system.configure(state='disabled')
         self.frame_input_planet.pack(padx=3, pady=3)
 
@@ -223,3 +224,4 @@ class Frame_Input_Planets:
             self.number_planets_system.configure(state='normal')
         else:
             self.number_planets_system.configure(state='disabled')
+
