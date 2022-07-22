@@ -36,7 +36,7 @@ class Frame_Input_Data:
     # Import Data
     frame_import_Data = None
 
-    def __init__(self, window, gui, data0, mass_coeff, radius_coeff, age_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad, index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star):
+    def __init__(self, window, gui, data0, mass_coeff, radius_coeff, age_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad, index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star, column_names):
         self.window = gui
         self.frame_width = 750
         self.frame_height = 900
@@ -61,7 +61,7 @@ class Frame_Input_Data:
                                                             index_teq, index_mass_min, index_min_rad, index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host,
                                                             check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb, check_a_orb, check_teq, check_mass_star, check_radius_star)
         # Export File
-        self.frame_export_file = Frame_Export_Files.Frame_Export_Files(self.frame_input_master, gui)
+        self.frame_export_file = Frame_Export_Files.Frame_Export_Files(self.frame_input_master, gui, column_names)
         # PACK
         self.frame_input_master.pack_propagate(0)
         self.frame_input_master.pack(padx=3, pady=3, fill='both', side='left', expand='True')

@@ -340,7 +340,7 @@ class Frame_Constrains:
         self.gui.window.destroy()
         gui = GUI_Plot.Gui.GUI_Planet(data0, mass_coeff, radius_coeff, age_coeff, index_ecc, index_FeH, index_tstar, index_mass_max, index_p_orb, index_a_orb, index_teq, index_mass_min, index_min_rad,
                                       index_mass_star, index_radius_star, index_rad_max, index_rad_p, index_mass_p, index_age_host, check_age_host, check_ecc, check_FeH, check_tstar, check_p_orb,
-                                      check_a_orb, check_teq, check_mass_star, check_radius_star)
+                                      check_a_orb, check_teq, check_mass_star, check_radius_star, self.gui.frame_load_data.column_names)
         gui.window.mainloop()
 
     def saveFileFunc(self):

@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox as msgbox
+import pandas as pd
 
 
 def helpButtonFunc():
@@ -37,8 +38,9 @@ class Frame_Export_Files:
     help_button = None
     x_ticks_entry = None
     y_ticks_entry = None
+    column_names = None
 
-    def __init__(self, window, gui):
+    def __init__(self, window, gui, column_names):
         self.gui = gui
         self.padding_x = 70
         self.padding_y = 40
@@ -116,6 +118,7 @@ class Frame_Export_Files:
         self.export_selected_planets_table.grid(column=1, row=5, columnspan=2)
         self.export_all_planets_table = tk.Button(master=self.frame_export_files, text=" All Planets ", bg="#6600cc", font=('Sans', '9', 'bold'), command=self.exportAllPlanets)
         self.export_all_planets_table.grid(column=3, row=5)
+        self.column_names = column_names
         self.frame_export_files.pack(padx=3, pady=3)
 
     def exportMassRadiusPlotPdf(self):
@@ -218,12 +221,16 @@ class Frame_Export_Files:
         self.gui.frame_output_plot.plot_combined_fig.savefig('Output' + os.sep + now + '_Combined.jpg', format='jpg', dpi=int(self.dpi_entry.get()))
 
     def exportSelectedPlanets(self):
+        data = self.gui.frame_input_master.frame_run_plot.subsetdata
+        data = pd.concat([self.column_names, data.loc[:]]).reset_index(drop=True)
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
         if self.gui.frame_input_master.frame_run_plot.subsetdata is not None:
-            self.gui.frame_input_master.frame_run_plot.subsetdata.to_csv("Output" + os.sep + now + "_selected_planet.csv")
+            data.to_csv("Output" + os.sep + now + "_selected_planet.csv", header=None, index=False, index_label=self.column_names)
 
     def exportAllPlanets(self):
+        data = self.gui.frame_input_master.frame_run_plot.data0
+        data = pd.concat([self.column_names, data.loc[:]]).reset_index(drop=True)
         now = datetime.now()
         now = now.strftime("%Y_%m_%d_%H_%M_%S")
-        self.gui.frame_input_master.frame_run_plot.data0.to_csv("Output" + os.sep + now + "_all_planet.csv")
+        data.to_csv("Output" + os.sep + now + "_all_planet.csv", header=None, index=False, index_label=self.column_names)

@@ -702,7 +702,10 @@ class Frame_Run_Plot:
             index = [i for i in range(2, len(self.ticks_x), 2)]
             self.ticks_x = np.delete(self.ticks_x, index)
         self.gui.frame_output_plot.histogram_mass.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
-        self.gui.frame_output_plot.histogram_mass.axes.set_xticks(self.ticks_x)
+        try:
+            self.gui.frame_output_plot.histogram_mass.axes.set_xticks(self.ticks_x)
+        except:
+            print("")
         self.gui.frame_output_plot.histogram_mass.axes.set_xticklabels(np.round(self.ticks_x, 1),
                                                                        fontsize=self.font_ticks)
         if self.logcountinmass == "Count":
@@ -733,7 +736,10 @@ class Frame_Run_Plot:
             index = [i for i in range(2, len(self.ticks_y), 2)]
             self.ticks_y = np.delete(self.ticks_y, index)
         self.gui.frame_output_plot.histogram_radius.axes.set_ylim(ymin=self.rmin, ymax=self.rmax)
-        self.gui.frame_output_plot.histogram_radius.axes.set_yticks(self.ticks_y)
+        try:
+            self.gui.frame_output_plot.histogram_radius.axes.set_yticks(self.ticks_y)
+        except:
+            print("")
         self.gui.frame_output_plot.histogram_radius.axes.set_yticklabels(np.round(self.ticks_y, 1))
         plt.setp(self.gui.frame_output_plot.histogram_radius.axes.get_yticklabels(), rotation=-90, fontsize=7,
                  horizontalalignment='right')
@@ -761,7 +767,10 @@ class Frame_Run_Plot:
         if len(ticks) >= 6:
             index = [i for i in range(2, len(ticks), 2)]
             ticks = np.delete(ticks, index)
-        self.gui.frame_output_plot.histogram_zeta.axes.set_xticks(ticks)
+        try:
+            self.gui.frame_output_plot.histogram_zeta.axes.set_xticks(ticks)
+        except:
+            print("")
         self.gui.frame_output_plot.histogram_zeta.axes.set_xticklabels(np.round(ticks, 1), fontsize=self.font_ticks)
         self.gui.frame_output_plot.histogram_zeta.axes.minorticks_off()
         # self.gui.frame_output_plot.histogram_zeta.set_ylabel('Count', fontsize=self.font_labels)
@@ -801,10 +810,16 @@ class Frame_Run_Plot:
         self.gui.frame_output_plot.mass_radius_plot.axes.minorticks_off()
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xlim(xmin=self.mmin, xmax=self.mmax)
         self.gui.frame_output_plot.mass_radius_plot.axes.set_ylim(ymin=self.rmin, ymax=self.rmax)
-        self.gui.frame_output_plot.mass_radius_plot.axes.set_xticks(self.ticks_x)
+        try:
+            self.gui.frame_output_plot.mass_radius_plot.axes.set_xticks(self.ticks_x)
+        except:
+            print("")
         self.gui.frame_output_plot.mass_radius_plot.axes.set_xticklabels(np.round(self.ticks_x, 1),
                                                                          fontsize=self.font_ticks)
-        self.gui.frame_output_plot.mass_radius_plot.axes.set_yticks(self.ticks_y)
+        try:
+            self.gui.frame_output_plot.mass_radius_plot.axes.set_yticks(self.ticks_y)
+        except:
+            print("")
         self.gui.frame_output_plot.mass_radius_plot.axes.set_yticklabels(np.round(self.ticks_y, 1),
                                                                          fontsize=self.font_ticks)
         self.gui.frame_output_plot.mass_radius_plot.set_ylabel("Planet Radius (Rp/R⊕)", fontsize=self.font_labels)

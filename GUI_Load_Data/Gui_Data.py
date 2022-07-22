@@ -19,7 +19,7 @@ class GUI_Data:
             self.window.wm_iconbitmap(bitmap="pyExoRaMa-logos.ico")
         else:
             self.window.wm_iconbitmap(bitmap="@pyExoRaMa-logos.xbm")
-        self.window.geometry("1600x620+100+100")
+        self.window.geometry("1600x670+100+100")
         self.window.title("Import Catalogue Helper")
         self.window.resizable(False, False)
         # Planet Inputs
