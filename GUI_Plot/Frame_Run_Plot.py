@@ -1042,9 +1042,14 @@ class Frame_Run_Plot:
                                                                  zorder=101, alpha=0.5)
         if self.check:
             cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=6)
-            if self.cbl_third_coord is not None:
-                self.cbl_third_coord.remove()
-            self.cbl_third_coord = plt.colorbar(self.sc, cax=cbaxes, ticks=[self.min_val, self.max_val])
+            if hasattr(self, 'cbl_third_coord') and self.cbl_third_coord is not None:
+                try:
+                    self.cbl_third_coord.remove()
+                except (KeyError, ValueError, AttributeError):
+                    pass
+                finally:
+                    self.cbl_third_coord = None
+            self.cbl_third_coord = self.gui.frame_output_plot.mass_radius_plot.figure.colorbar(self.sc, cax=cbaxes, ticks=[self.min_val, self.max_val])
             self.cbl_third_coord.ax.set_title(space + self.choose_filter_map_var.get(), fontsize=8)
         if self.index_mass_min != self.index_mass_max:
             x1 = X[np.logical_and(deltaXm == 0, deltaXp != 0)]
