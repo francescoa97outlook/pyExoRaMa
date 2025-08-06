@@ -680,7 +680,7 @@ class Frame_Run_Plot:
                 if self.check_age_host:
                     self.newPlanets = self.newPlanets[(self.age_host_min <= self.newPlanets[self.index_age_host]) & (
                             self.newPlanets[self.index_age_host] <= self.age_host_max)]
-            self.subsetdata = self.subsetdata.append(self.newPlanets, ignore_index=True)
+            self.subsetdata = pd.concat([self.subsetdata, self.newPlanets], ignore_index=True)
             self.num_new_planets = len(self.newPlanets)
         self.names = np.array(self.subsetdata[0])
 
@@ -867,7 +867,7 @@ class Frame_Run_Plot:
         index = rangeFunction(envelope, x_values, yy)
         Z = applyFunction(envelope, x_values, yy)
         index = 1 * index
-        valid = Z
+        valid = Z.copy()
         valid[index == 0] = np.max(Z)
         Z[index == 0] = np.min(Z) - 1
         maxv = np.max(Z)
@@ -879,9 +879,16 @@ class Frame_Run_Plot:
         ax = self.gui.frame_output_plot.mass_radius_plot.pcolormesh(xx, yy, Z, cmap=self.newcmp, shading="nearest",
                                                                     edgecolors=None, vmin=minv, vmax=maxv)
         cbaxes = inset_axes(self.gui.frame_output_plot.mass_radius_plot, width="3%", height="15%", loc=7)
-        if self.cbl_cmap is not None:
-            self.cbl_cmap.remove()
-        self.cbl_cmap = plt.colorbar(ax, cax=cbaxes, ticks=[minv, maxv])
+
+        if hasattr(self, 'cbl_cmap') and self.cbl_cmap is not None:
+            try:
+                self.cbl_cmap.remove()
+            except (KeyError, ValueError, AttributeError):
+                pass
+            finally:
+                self.cbl_cmap = None
+
+        self.cbl_cmap = self.gui.frame_output_plot.mass_radius_plot.figure.colorbar(ax, cax=cbaxes, ticks=[minv, maxv])
         self.cbl_cmap.ax.set_yticklabels([str(round(minv, 2)), str_max])
         self.cbl_cmap.ax.set_title("Z contours      ", fontsize=8)
         self.cbl_cmap.ax.yaxis.set_ticks_position('left')
@@ -1020,10 +1027,16 @@ class Frame_Run_Plot:
             filter_cmap = filter_cmap * self.coeff
         else:
             filter_cmap = None
-        self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap,
-                                                                      cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
-                                                                      vmax=self.max_val, edgecolors="black", zorder=100,
-                                                                      label="Planets")
+        if self.check and filter_cmap is not None:
+            self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, c=filter_cmap,
+                                                                          cmap=plt.cm.get_cmap("jet"),
+                                                                          vmin=self.min_val,
+                                                                          vmax=self.max_val, edgecolors="black",
+                                                                          zorder=100,
+                                                                          label="Planets")
+        else:
+            self.sc = self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, s=20, edgecolors="black", zorder=100,
+                                                                          label="Planets")
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None",
                                                                  zorder=101, alpha=0.5)
@@ -1192,9 +1205,12 @@ class Frame_Run_Plot:
         x1 = X[np.logical_and(deltaXm != 0, deltaXp != 0)]
         y1 = Y[np.logical_and(deltaXm != 0, deltaXp != 0)]
         names = np.array(tempSubData[0])
-        self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap,
-                                                            cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
-                                                            vmax=self.max_val, zorder=103)
+        if self.check and filter_cmap is not None:
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, c=filter_cmap,
+                                                                cmap=plt.cm.get_cmap("jet"), vmin=self.min_val,
+                                                                vmax=self.max_val, zorder=103)
+        else:
+            self.gui.frame_output_plot.mass_radius_plot.scatter(x1, y1, edgecolors="black", s=100, zorder=103)
         if self.show_error_plot:
             self.gui.frame_output_plot.mass_radius_plot.errorbar(x1, y1, yerr=[d1, d2], xerr=[d3, d4], linestyle="None",
                                                                  zorder=104, alpha=0.5)

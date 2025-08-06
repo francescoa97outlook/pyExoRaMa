@@ -267,7 +267,7 @@ class Frame_New_Planet:
             new_row["tPlanet"] = float(self.tplanet_np.get())
         if self.check_FeH:
             new_row["[Fe/H]"] = float(self.fe_h_np.get())
-        self.input_list = self.input_list.append(new_row, ignore_index=True)
+        self.input_list = pd.concat([self.input_list, pd.DataFrame([new_row])], ignore_index=True)
         self.options_list.append(self.name_np.get())
         self.update_menu()
 

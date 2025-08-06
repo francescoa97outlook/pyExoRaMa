@@ -130,12 +130,14 @@ class Frame_Load_Data:
             if self.catalog_is_a_previous_output_var.get():
                 self.data0 = pd.read_csv(text, header=None)
             else:
-                if self.delim_whitespace_var.get() or self.delimiter == "None":
-                    delimiter = None
+                if self.delim_whitespace_var.get():
+                    separator = '\s+'
+                elif self.delimiter.get() == "None":
+                    separator = None
                 else:
-                    delimiter = self.delimiter.get()
-                self.data0 = pd.read_csv(text, skiprows=int(self.skiprow.get()), delimiter=delimiter,
-                                         delim_whitespace=self.delim_whitespace_var.get(), header=None)
+                    separator = self.delimiter.get()
+
+                self.data0 = pd.read_csv(text, skiprows=int(self.skiprow.get()), sep=separator, header=None)
             if self.use_column_csv_var.get():
                 column_names = pd.read_csv(column_path, header=None)
                 self.column_names = column_names.loc[[0]]
